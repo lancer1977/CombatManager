@@ -481,12 +481,6 @@
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <ItemGroup>
-    <ProjectReference Include="..\CombatManagerCore\CombatManagerCoreDroid.csproj">
-      <Project>{2C035836-40C4-4941-8346-EB9606E84CF2}</Project>
-      <Name>CombatManagerCoreDroid</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <AndroidAsset Include="..\CombatManagerCore\Weapons.xml">
       <Link>Assets\Weapons.xml</Link>
     </AndroidAsset>

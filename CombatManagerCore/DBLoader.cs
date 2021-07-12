@@ -476,7 +476,7 @@ namespace CombatManager
 #if ANDROID
             string path = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
 #else
-            string path = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+            string path = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
 #endif
             path = Path.Combine(path, "Combat Manager");
 

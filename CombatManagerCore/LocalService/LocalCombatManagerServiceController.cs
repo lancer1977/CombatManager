@@ -13,7 +13,9 @@ using CombatManager.LocalService.Request;
 
 namespace CombatManager.LocalService
 {
-    public class LocalCombatManagerServiceController : WebApiController
+ 
+
+    public class LocalCombatManagerServiceController : WebApiController//, ILocalCombatManagerService
     {
         CombatState state;
         LocalCombatManagerService.ActionCallback actionCallback;

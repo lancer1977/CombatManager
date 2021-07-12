@@ -19,7 +19,7 @@
  *
  */
 
-﻿using System;
+ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
@@ -1417,12 +1417,7 @@ namespace ScottsUtils
                 Environment.SetEnvironmentVariable("PATH", path);
 #endif
 
-                bool use64 = false;
-
-                if (IntPtr.Size == 8)
-                {
-                    use64 = true;
-                }
+                var use64 = IntPtr.Size == 8;
 
                 if (!use64)
                 {
