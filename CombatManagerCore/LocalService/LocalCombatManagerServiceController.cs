@@ -1,13 +1,11 @@
 ﻿using EmbedIO.WebApi;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Collections.Generic; 
 using System.Threading.Tasks;
+using CombatManager.Api.Core.Data;
+using CombatManager.Api.Core.Request;
 using EmbedIO;
-using EmbedIO.Routing;
-using CombatManager.LocalService.Data;
-using CombatManager.LocalService.Request;
+using EmbedIO.Routing; 
 
 #pragma warning disable 618
 

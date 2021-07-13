@@ -94,6 +94,7 @@ namespace CombatManager
 
                     #endif
                 }
+                Debug.WriteLine(_AssemblyDir);
                 return _AssemblyDir;
             }
         }

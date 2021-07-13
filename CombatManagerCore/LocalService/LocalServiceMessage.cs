@@ -15,7 +15,7 @@ namespace CombatManager.LocalService
 
         private static int nextID = 1;
 
-        public static LocalServiceMessage Create(String name, object data)
+        public static LocalServiceMessage Create(string name, object data)
         {
             return new LocalServiceMessage() { Name = name, Data = data, ID = nextID++};
 

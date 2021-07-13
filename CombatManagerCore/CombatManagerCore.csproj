@@ -106,7 +106,10 @@
     <Compile Include="CMRegexUtilities.cs" />
     <Compile Include="CMStringUtilities.cs" />
     <Compile Include="Coin.cs" />
+    <Compile Include="CombatStateCharacterEvent.cs" />
+    <Compile Include="CombatStateCharacterEventArgs.cs" />
     <Compile Include="CombatStateNotifcation.cs" />
+    <Compile Include="CombatStateNotificationEvent.cs" />
     <Compile Include="Html\ConditionHtmlCreator.cs" />
     <Compile Include="DD5Stats.cs" />
     <Compile Include="Html\HtmlStyle.cs" />
@@ -114,27 +117,6 @@
     <Compile Include="LocalService\BinaryResourceManager.cs" />
     <Compile Include="LocalService\CombatManagerHTMLServer.cs" />
     <Compile Include="LocalService\CombatManagerNotificationServer.cs" />
-    <Compile Include="LocalService\Data\RemoteActiveCondition.cs" />
-    <Compile Include="LocalService\Data\RemoteAffliction.cs" />
-    <Compile Include="LocalService\Data\RemoteBonus.cs" />
-    <Compile Include="LocalService\Data\RemoteCharacter.cs" />
-    <Compile Include="LocalService\Data\RemoteCharacterInitState.cs" />
-    <Compile Include="LocalService\Data\RemoteCombatState.cs" />
-    <Compile Include="LocalService\Data\RemoteConditon.cs" />
-    <Compile Include="LocalService\Data\RemoteDBItem.cs" />
-    <Compile Include="LocalService\Data\RemoteDBListing.cs" />
-    <Compile Include="LocalService\Data\RemoteDie.cs" />
-    <Compile Include="LocalService\Data\RemoteDieResult.cs" />
-    <Compile Include="LocalService\Data\RemoteDieRoll.cs" />
-    <Compile Include="LocalService\Data\RemoteFeat.cs" />
-    <Compile Include="LocalService\Data\RemoteFeatList.cs" />
-    <Compile Include="LocalService\Data\RemoteInitiativeCount.cs" />
-    <Compile Include="LocalService\Data\RemoteMagicItem.cs" />
-    <Compile Include="LocalService\Data\RemoteMagicItemList.cs" />
-    <Compile Include="LocalService\Data\RemoteMonster.cs" />
-    <Compile Include="LocalService\Data\RemoteMonsterList.cs" />
-    <Compile Include="LocalService\Data\RemoteRollResult.cs" />
-    <Compile Include="LocalService\Data\RemoteSpell.cs" />
     <Compile Include="LocalService\ILocalCombatManagerService.cs" />
     <Compile Include="LocalService\ImageServer.cs" />
     <Compile Include="LocalService\LocalRemoteConverter.cs" />
@@ -142,23 +124,7 @@
     <Compile Include="LocalService\LocalServiceMessage.cs" />
     <Compile Include="LocalService\LocalServiceUtilities.cs" />
     <Compile Include="CoreSettings.cs" />
-    <Compile Include="LocalService\Data\RemoteSpellList.cs" />
-    <Compile Include="LocalService\Request\AddConditionRequest.cs" />
-    <Compile Include="LocalService\Request\CharacterRequest.cs" />
-    <Compile Include="LocalService\Request\FeatListRequest.cs" />
-    <Compile Include="LocalService\Request\FeatRequest.cs" />
-    <Compile Include="LocalService\Request\FeatsRequest.cs" />
-    <Compile Include="LocalService\Request\MagicItemListRequest.cs" />
-    <Compile Include="LocalService\Request\MagicItemRequest.cs" />
-    <Compile Include="LocalService\Request\MagicItemsRequest.cs" />
-    <Compile Include="LocalService\Request\MonsterAddRequest.cs" />
-    <Compile Include="LocalService\Request\MonsterListRequest.cs" />
-    <Compile Include="LocalService\Request\MonsterRequest.cs" />
-    <Compile Include="LocalService\Request\MonstersRequest.cs" />
-    <Compile Include="LocalService\Request\RemoveConditionRequest.cs" />
-    <Compile Include="LocalService\Request\SpellListRequest.cs" />
-    <Compile Include="LocalService\Request\SpellRequest.cs" />
-    <Compile Include="LocalService\Request\SpellsRequest.cs" />
+    <Compile Include="LocalService\User.cs" />
     <Compile Include="Personalization\ColorScheme.cs" />
     <Compile Include="CombatState.cs" />
     <Compile Include="Condition.cs" />
@@ -206,6 +172,7 @@
     <Compile Include="RulesSystem.cs" />
     <Compile Include="LocalService\LocalCombatManagerService.cs" />
     <Compile Include="LocalService\LocalCombatManagerServiceController.cs" />
+    <Compile Include="SimpleCombatListItem.cs" />
     <Compile Include="SizeMods.cs" />
     <Compile Include="SkillValue.cs" />
     <Compile Include="SourceInfo.cs" />
@@ -244,7 +211,7 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="BestiaryShort2.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Condition.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -268,13 +235,13 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="MagicItemsShort.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="NPCShort.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="NPCShort2.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="PlayerWebPage.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -287,7 +254,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="SpellsShort.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </Content>
     <Content Include="WebStyles.css">
@@ -322,6 +289,10 @@
     <Folder Include="GraphQL\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CombatManager.Api.Core\CombatManager.Api.Core.csproj">
+      <Project>{95FB767F-3818-4AF1-99CC-E5F359785D9A}</Project>
+      <Name>CombatManager.Api.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ZipDll\Zip DLL.csproj">
       <Project>{d3b0ad67-44d8-4b3d-bed9-ce1fd6de2c5a}</Project>
       <Name>Zip DLL</Name>

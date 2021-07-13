@@ -33,29 +33,6 @@ using System.Timers;
 
 namespace CombatManager
 {
-
-    [DataContract]
-    public class SimpleCombatListItem
-    {
-        [DataMember]
-        public Guid ID {get; set;}
-
-        [DataMember]
-        public List<Guid> Followers { get; set; }
-    }
-
-    public class CombatStateCharacterEventArgs
-    {
-        public Character Character { get; set; }
-        public string Property { get; set; }
-    }
-
-    public delegate void CombatStateNotificationEvent(object sender, CombatStateNotification notification);
-
-
-    public delegate void CombatStateCharacterEvent(object sender, CombatStateCharacterEventArgs e);
-
-
     [DataContract]
     public class CombatState : INotifyPropertyChanged
     {
