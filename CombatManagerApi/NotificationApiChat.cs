@@ -6,10 +6,10 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using CombatManager.Api.Core;
-using CombatManager.Api.Core.Data; 
+using CombatManager.Api.Core.Data;
 using Newtonsoft.Json;
 
-namespace CombatManagerApi
+namespace CombatManager.Api
 {
 
 

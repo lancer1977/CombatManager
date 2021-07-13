@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CombatManagerApi
+namespace CombatManager.Api.Unused
 {
     [AttributeUsage(AttributeTargets.Method, Inherited = false)]
     public class RouteAttribute : Attribute

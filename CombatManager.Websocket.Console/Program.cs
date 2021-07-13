@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.Net.Http.Headers;
 using System.Threading;
 using System.Threading.Tasks;
-using CombatManagerApi;
+using CombatManager.Api;
 
 namespace CombatManager.Websocket.ConsoleTest
 {

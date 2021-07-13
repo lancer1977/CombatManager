@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Net.WebSockets;
@@ -9,9 +8,8 @@ using System.Threading.Tasks;
 using CombatManager.Api.Core;
 using CombatManager.Api.Core.Data;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 
-namespace CombatManagerApi
+namespace CombatManager.Api
 {
     public static class NetworkingExtensions
     {

@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CombatManager.Api.Core;
 using CombatManager.Api.Core.Data;
-using CombatManager.LocalService.Data;
 
 namespace CombatManager.LocalService
 {

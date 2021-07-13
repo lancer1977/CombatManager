@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using System.Reflection;
 
-namespace CombatManagerApi
+namespace CombatManager.Api.Unused
 {
     public static class AttributeExtensions
     {

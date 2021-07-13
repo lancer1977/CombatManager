@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using CombatManagerApi;
-using CombatManagerApi.Request;
+using CombatManager.Api;
+using CombatManager.Api.Core.Request;
 using NUnit.Framework;
 
 namespace TestProject1
@@ -14,7 +14,7 @@ namespace TestProject1
     /// </summary>
     public class Tests
     {
-        CombatManagerService _service = new CombatManagerService();
+        ICombatManagerService _service;
         private string chaId = "53f7b6d8-fe60-45b7-b39a-3a3141b33bb9";
         [SetUp]
         public void Setup()

@@ -1,4 +1,4 @@
-﻿namespace CombatManagerApi
+﻿namespace CombatManager.Api.Unused
 {
     public enum HttpVerbs
     {
