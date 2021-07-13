@@ -9,6 +9,9 @@ using NUnit.Framework;
 
 namespace TestProject1
 {
+    /// <summary>
+    /// Expects Combat manager to be running, 1 player, 1 monster, probably have to fix the chaId based on local data.
+    /// </summary>
     public class Tests
     {
         CombatManagerService _service = new CombatManagerService();
@@ -16,8 +19,7 @@ namespace TestProject1
         [SetUp]
         public void Setup()
         {
-            _service = new CombatManagerService();
-            _service.RootAddress = "http://localhost:12457";
+            _service = new CombatManagerService("http://localhost:12457");
         }
         //public async Task<string> UIGoto(string place) => await Route(HttpVerbs.Get, string.Format("/ui/goto/{place}")); 
         [Test]
@@ -275,7 +277,7 @@ namespace TestProject1
             Assert.IsTrue(response.Name == "Mithral Shirt");
             //Assert.IsNotNull(response);
         }
-        
+
         [Test]
         public async Task GetMagicItems()
         {
@@ -300,7 +302,7 @@ namespace TestProject1
             Assert.IsTrue(response.Items.Any());
         }
 
-        
+
 
 
 
@@ -310,13 +312,13 @@ namespace TestProject1
             var response = await _service.ShowCombatList();
             Assert.IsNotNull(response);
         }
-         
+
         [Test]
         public async Task BringToFront()
         {
             var response = await _service.BringToFront();
             Assert.IsNotNull(response);
-        } 
+        }
 
         [Test]
         public async Task Minimize()
@@ -344,7 +346,7 @@ namespace TestProject1
             var response = await _service.GetCustomMonster(10);
             Assert.IsNotNull(response);
         }
-   
+
         [Test]
         public async Task GetMonsters()
         {

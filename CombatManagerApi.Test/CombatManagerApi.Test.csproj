@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\CombatManagerApi\CombatManagerApi.csproj" />
+    <ProjectReference Include="..\CombatManagerApi\CombatManagerApi.csproj" />
   </ItemGroup>
 
 </Project>
