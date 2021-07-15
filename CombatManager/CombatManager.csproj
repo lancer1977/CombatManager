@@ -650,6 +650,10 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CombatManager.Api.Core\CombatManager.Api.Core.csproj">
+      <Project>{95fb767f-3818-4af1-99cc-e5f359785d9a}</Project>
+      <Name>CombatManager.Api.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CombatManagerCore\CombatManagerCore.csproj">
       <Project>{89cf9a2f-fae7-46e5-b2cc-fc478d9662fa}</Project>
       <Name>CombatManagerCore</Name>

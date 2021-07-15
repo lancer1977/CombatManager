@@ -45,14 +45,15 @@ namespace CombatManager.Api
             await Task.Delay(milliseconds);
         }
 
-        public static async Task<T> PostAsync<T>(string address, object parameters)
+        public static async Task<T> PostAsync<T>(string baseaddress, string endpoint, object parameters)
         {
             var json = JsonConvert.SerializeObject(parameters);
             var data = new StringContent(json, Encoding.UTF8, "application/json");
 
             using (var client = new HttpClient())
             {
-                var response = await client.PostAsync(address, data);
+                client.BaseAddress = new Uri(baseaddress);
+                var response = await client.PostAsync(endpoint, data);
 
                 var result = await response.Content.ReadAsStringAsync();
                 Console.WriteLine(result);
@@ -60,29 +61,32 @@ namespace CombatManager.Api
             }
         }
 
-        public static async Task<T> GetAsync<T>(string address, string passcode)
+        public static async Task<T> GetAsync<T>(string baseaddress, string endpoint, string passcode)
         {
             using (var client = new HttpClient())
             {
                 client.DefaultRequestHeaders.Add("passcode", passcode);
-                client.BaseAddress = new Uri(address);
-                var result = await client.GetAsync(address);
-                var content = await result.Content.ReadAsStringAsync();
+                client.BaseAddress = new Uri(baseaddress);
+                var result = await client.GetAsync(endpoint);
                 if (result.StatusCode != HttpStatusCode.OK)
-                    throw new Exception("Error: " + result.StatusCode.ToString() + " Address: " + address);
+                    throw new Exception("Error: " + result.StatusCode.ToString() + $" Address: {baseaddress}{endpoint}");
+                var content = await result.Content.ReadAsStringAsync();
+   
                 Console.WriteLine(content);
                 Console.WriteLine(result.StatusCode);
                 return JsonConvert.DeserializeObject<T>(content);
             }
 
         }
-        public static async Task<string> GetAsync(string address, string passcode)
+        public static async Task<string> GetAsync(string baseaddress, string endpoint, string passcode)
         {
             using (var client = new HttpClient())
             {
                 client.DefaultRequestHeaders.Add("passcode", passcode);
-                client.BaseAddress = new Uri(address);
-                var result = await client.GetAsync(address);
+                client.BaseAddress = new Uri(baseaddress);
+                var result = await client.GetAsync(endpoint);
+                if (result.StatusCode != HttpStatusCode.OK)
+                    throw new Exception("Error: " + result.StatusCode.ToString() + $" Address: {baseaddress}{endpoint}");
                 var content = await result.Content.ReadAsStringAsync();
                 //var obj = JObject.FromObject( result.Content.ReadAsStreamAsync());
                 Console.WriteLine(content);

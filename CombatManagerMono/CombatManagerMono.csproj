@@ -857,4 +857,10 @@
       <Visible>false</Visible>
     </ImageAsset>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CombatManagerCore\CombatManagerCore.csproj">
+      <Project>{89cf9a2f-fae7-46e5-b2cc-fc478d9662fa}</Project>
+      <Name>CombatManagerCore</Name>
+    </ProjectReference>
+  </ItemGroup>
 </Project>

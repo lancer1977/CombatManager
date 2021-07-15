@@ -26,8 +26,7 @@ using System.Collections.ObjectModel;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Runtime.Serialization.Configuration;
+using System.Linq; 
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows;
@@ -54,7 +53,7 @@ using System.Net;
 using System.Xml.Linq;
 using System.Reflection;
 using CombatManager.Maps;
-using CombatManager.Personalization;
+using CombatManager.Personalization; 
 using CombatManager.LocalService;
 
 namespace CombatManager
@@ -162,7 +161,7 @@ namespace CombatManager
 
         private GameMapList gameMapList;
 
-        private LocalCombatManagerService localService;
+        private CombatManager.LocalService.LocalCombatManagerService localService;
 
 
         public MainWindow()
@@ -9510,7 +9509,7 @@ namespace CombatManager
         {
             if (localService == null)
             {
-                localService = new LocalCombatManagerService(combatState, UserSettings.Settings.LocalServicePort, UserSettings.Settings.LocalServicePasscode);
+                localService = new CombatManager.LocalService.LocalCombatManagerService(combatState, UserSettings.Settings.LocalServicePort, UserSettings.Settings.LocalServicePasscode);
                 localService.HPMode = UserSettings.Settings.DefaultHPMode;
                 localService.StateActionCallback = act =>
                 {
