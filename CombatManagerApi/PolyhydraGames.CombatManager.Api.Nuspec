@@ -14,7 +14,9 @@
     <releaseNotes>
 
     </releaseNotes>
- 
+     <dependencies>  
+        
+    </dependencies>
   </metadata>
     <files>  
       <file src=".\bin\Release\netstandard2.0\CombatManager.Api.*" target="lib\netstandard2.0" /> 
