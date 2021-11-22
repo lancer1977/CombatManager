@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package >
   <metadata>
-    <id>PolyhydraGames.CombatManager.Api</id> 
+    <id>CombatManager.Api</id> 
     <version>1.0.0.1</version>
     <authors>Polyhydra Games</authors>
     <owners>Polyhydra Games</owners>

@@ -6,7 +6,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CombatManagerApi\CombatManager.Api.csproj" />
+    <ProjectReference Include="..\CombatManager.Api.Core\CombatManager.Api.Core.csproj" />
+    <ProjectReference Include="..\CombatManager.Api\CombatManager.Api.csproj" />
   </ItemGroup>
 
 </Project>
