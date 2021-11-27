@@ -1,20 +1,17 @@
-﻿using System.Diagnostics;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using CombatManager.Api.Core;
 using CombatManager.Api.Core.Data;
-using CombatManager.Api.Core.Request;
-using CombatManager.Api.Unused;
+using CombatManager.Api.Core.Request; 
 
 namespace CombatManager.Api
 {
-   
-
     public class CombatManagerService : ICombatManagerService
     {
         public CombatManagerService(string address)
         {
             RootAddress = address;
-
         }
+
         public CombatManagerService()
         {
         }
