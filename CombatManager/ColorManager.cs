@@ -1,9 +1,5 @@
 ﻿using CombatManager.Personalization;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Media;
 
 namespace CombatManager
@@ -21,35 +17,35 @@ namespace CombatManager
 
         public static void SetNewScheme(int id, bool darkScheme)
         {
-            ColorScheme scheme = ColorSchemeManager.Manager.SchemeById(id);
+            var scheme = ColorSchemeManager.Manager.SchemeById(id);
 
-            for (int i = 0; i < 3; i++)
+            for (var i = 0; i < 3; i++)
             {
-                for (int j = 0; j < 5; j++)
+                for (var j = 0; j < 5; j++)
                 {
-                    String change = ColorScheme.GetColorName(i, j);
-                    String changeBrush = change + "Brush";
-                    object res = App.Current.Resources[change];
+                    var change = ColorScheme.GetColorName(i, j);
+                    var changeBrush = change + "Brush";
+                    var res = App.Current.Resources[change];
 
-                    Color c = scheme.GetColorUInt32(i, j).ToColor();
+                    var c = scheme.GetColorUInt32(i, j).ToColor();
                     App.Current.Resources[change] = c;
                     App.Current.Resources[changeBrush] = new SolidColorBrush(c);
 
                 }
             }
 
-            Color fore = (Color)( darkScheme ? App.Current.Resources["ThemeTextForegroundDark"] 
+            var fore = (Color)( darkScheme ? App.Current.Resources["ThemeTextForegroundDark"] 
                 : App.Current.Resources["ThemeTextForegroundLight"]);
-            Color back = (Color)(darkScheme ? App.Current.Resources["ThemeTextBackgroundDark"]
+            var back = (Color)(darkScheme ? App.Current.Resources["ThemeTextBackgroundDark"]
                 : App.Current.Resources["ThemeTextBackgroundLight"]);
 
-            UInt32 newFore = scheme.GetTextColor(true, darkScheme);
+            var newFore = scheme.GetTextColor(true, darkScheme);
             if (newFore != 0)
             {
                 fore = newFore.ToColor();
             }
 
-            UInt32 newBack = scheme.GetTextColor(false, darkScheme);
+            var newBack = scheme.GetTextColor(false, darkScheme);
             if (newBack != 0)
             {
                 back = newBack.ToColor();
@@ -60,7 +56,7 @@ namespace CombatManager
             App.Current.Resources["ThemeTextBackground"] = back;
             App.Current.Resources["ThemeTextBackgroundBrush"] = new SolidColorBrush(back);
 
-            Color healthBackground = (Color)(App.Current.Resources
+            var healthBackground = (Color)(App.Current.Resources
                 [darkScheme ? "HealthDarkBackground" : "HealthLightBackground"]);
             App.Current.Resources["HealthBackground"] = healthBackground;
             App.Current.Resources["HealthBackgroundBrush"] = new SolidColorBrush(healthBackground);

@@ -20,7 +20,6 @@
  */
 
 using System;
-using System.Data;
 using System.ComponentModel;
 using System.Collections.ObjectModel;
 using System.Collections.Generic;
@@ -39,7 +38,6 @@ using WinInterop = System.Windows.Interop;
 using System.Runtime.InteropServices;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Xml.Serialization;
 using Microsoft.Win32;
@@ -172,13 +170,13 @@ namespace CombatManager
 #if !DEBUG
             App.Current.DispatcherUnhandledException += new System.Windows.Threading.DispatcherUnhandledExceptionEventHandler(Current_DispatcherUnhandledException);
 #endif
-            SplashScreen splash = new SplashScreen();
+            var splash = new SplashScreen();
             splash.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             splash.Show();
 
-            DateTime t = DateTime.Now;
-            DateTime start = t;
-            DateTime last = DateTime.Now;
+            var t = DateTime.Now;
+            var start = t;
+            var last = DateTime.Now;
             InitializeComponent();
 
 
@@ -293,7 +291,7 @@ namespace CombatManager
                 }
                 else
                 {
-                    Character cha = (Character)item;
+                    var cha = (Character)item;
                     return cha.InitiativeLeader == null && !cha.IsIdle;
                 }
             };
@@ -382,7 +380,7 @@ namespace CombatManager
 
             UpdateItemsGenerateButtons();
 
-            Character ch = combatState.CurrentCharacter;
+            var ch = combatState.CurrentCharacter;
             combatState.SortCombatList(false, false);
             combatState.FixInitiativeLinksList(new List<Character>(combatState.Characters));
             if (ch != null)
@@ -405,8 +403,8 @@ namespace CombatManager
 
             MarkTime("Setup UI", ref t, ref last);
 
-            DateTime t2 = DateTime.Now;
-            TimeSpan startupTime = t2 - start;
+            var t2 = DateTime.Now;
+            var startupTime = t2 - start;
 
             System.Diagnostics.Debug.WriteLine(startupTimeText);
 
@@ -430,9 +428,9 @@ namespace CombatManager
             var v = e.Roll;
             if (v.Type == CombatState.RollType.Save)
             {
-                Monster.SaveType save = (Monster.SaveType)v.Param1;
-                RollResult res = (RollResult)v.Result;
-                String title = e.Roll.Character.Name + " " + SaveName(save) + " save";
+                var save = (Monster.SaveType)v.Param1;
+                var res = (RollResult)v.Result;
+                var title = e.Roll.Character.Name + " " + SaveName(save) + " save";
                 if (e.Roll.Target != null)
                 {
                     title += " DC " + e.Roll.Target.Value + " ";
@@ -493,7 +491,7 @@ namespace CombatManager
 
             this.Dispatcher.BeginInvoke(new Action(() =>
                 {
-                    string file = e.File;
+                    var file = e.File;
 
                     HandleFile(file);
                 }));
@@ -507,14 +505,14 @@ namespace CombatManager
 
         void HandleFile(string filename)
         {
-            FileInfo file = new FileInfo(filename);
+            var file = new FileInfo(filename);
 
             if (file.Exists)
             {
                 if (file.Extension == ".cmpt" || file.Extension == ".por" || file.Extension == ".rpgrp")
                 {
 
-                    PlayersOrMonstersDialog dlg = new PlayersOrMonstersDialog();
+                    var dlg = new PlayersOrMonstersDialog();
                     dlg.Filename = filename;
                     dlg.Owner = this;
                     if (dlg.ShowDialog() == true)
@@ -595,10 +593,10 @@ namespace CombatManager
 
         void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            string[] args = Environment.GetCommandLineArgs();
+            var args = Environment.GetCommandLineArgs();
             if (args != null && args.Length > 1)
             {
-                string file = args[1];
+                var file = args[1];
 
                 HandleFile(file);
             }
@@ -633,7 +631,7 @@ namespace CombatManager
 
         void SaveDefaultLayout()
         {
-            string defaultLayoutFile = System.IO.Path.Combine(CMFileUtilities.AppDataDir, "DefaultLayout.xml");
+            var defaultLayoutFile = System.IO.Path.Combine(CMFileUtilities.AppDataDir, "DefaultLayout.xml");
             CombatViewDockingManager.SaveLayout(defaultLayoutFile);
         }
         void RestoreDefaultLayout()
@@ -641,7 +639,7 @@ namespace CombatManager
             if (CombatViewDockingManager.IsLoaded)
             {
 
-                string defaultLayoutFile = System.IO.Path.Combine(CMFileUtilities.AppDataDir, "DefaultLayout.xml");
+                var defaultLayoutFile = System.IO.Path.Combine(CMFileUtilities.AppDataDir, "DefaultLayout.xml");
                 if (File.Exists(defaultLayoutFile))
                 {
                     try
@@ -666,7 +664,7 @@ namespace CombatManager
         {
             if (CombatViewDockingManager.IsLoaded)
             {
-                string layoutFile = System.IO.Path.Combine(CMFileUtilities.AppDataDir, "CombatLayout.xml");
+                var layoutFile = System.IO.Path.Combine(CMFileUtilities.AppDataDir, "CombatLayout.xml");
 
                 if (File.Exists(layoutFile))
                 {
@@ -687,7 +685,7 @@ namespace CombatManager
         {
             if (CombatViewDockingManager.IsLoaded)
             {
-                string layoutFile = System.IO.Path.Combine(CMFileUtilities.AppDataDir, "CombatLayout.xml");
+                var layoutFile = System.IO.Path.Combine(CMFileUtilities.AppDataDir, "CombatLayout.xml");
 
                 try
                 {
@@ -708,7 +706,7 @@ namespace CombatManager
             {
 
                 e.Handled = false;
-                Exception ex = e.Exception;
+                var ex = e.Exception;
 
 
                 WriteExceptionFile("", ex);
@@ -726,18 +724,18 @@ namespace CombatManager
         {
             try
             {
-                string file = System.IO.Path.Combine(CMFileUtilities.AppDataDir, "error" + name + DateTime.Now.Ticks + ".txt");
+                var file = System.IO.Path.Combine(CMFileUtilities.AppDataDir, "error" + name + DateTime.Now.Ticks + ".txt");
 
 
 
-                using (FileStream f = new FileStream(file, FileMode.OpenOrCreate))
+                using (var f = new FileStream(file, FileMode.OpenOrCreate))
                 {
 
-                    using (StreamWriter writer = new StreamWriter(f))
+                    using (var writer = new StreamWriter(f))
                     {
                         writer.WriteLine("Combat Manager error");
                         writer.WriteLine(DateTime.Now.ToLongTimeString());
-                        Exception writeEx = ex;
+                        var writeEx = ex;
 
                         while (writeEx != null)
                         {
@@ -767,8 +765,8 @@ namespace CombatManager
 
             if (UserSettings.Settings.MainWindowWidth >= MinWidth && UserSettings.Settings.MainWindowHeight >= MinHeight)
             {
-                int newWidth = UserSettings.Settings.MainWindowWidth;
-                int newHeight = UserSettings.Settings.MainWindowHeight;
+                var newWidth = UserSettings.Settings.MainWindowWidth;
+                var newHeight = UserSettings.Settings.MainWindowHeight;
 
                 newWidth = Math.Min(newWidth, (int)System.Windows.SystemParameters.VirtualScreenWidth);
                 newHeight = Math.Min(newHeight, (int)System.Windows.SystemParameters.VirtualScreenHeight);
@@ -778,9 +776,9 @@ namespace CombatManager
 
                 if (UserSettings.Settings.MainWindowLeft != int.MinValue && UserSettings.Settings.MainWindowTop != int.MinValue)
                 {
-                    double scaleFactor = GetScaleFactor();
+                    var scaleFactor = GetScaleFactor();
 
-                    EnumMonitorData data = new EnumMonitorData();
+                    var data = new EnumMonitorData();
                     try
                     {
 
@@ -790,7 +788,7 @@ namespace CombatManager
                             (int)((UserSettings.Settings.MainWindowLeft + Width) * scaleFactor),
                             (int)((UserSettings.Settings.MainWindowTop + Height) * scaleFactor));
                         data.FoundMatch = false;
-                        IntPtr ptr = Marshal.AllocHGlobal(Marshal.SizeOf(data));
+                        var ptr = Marshal.AllocHGlobal(Marshal.SizeOf(data));
                         Marshal.StructureToPtr(data, ptr, false);
 
                         EnumDisplayMonitors(IntPtr.Zero, IntPtr.Zero, EnumMonitors, ptr);
@@ -824,7 +822,7 @@ namespace CombatManager
         double GetScaleFactor()
         {
 
-            System.IntPtr handle = new WindowInteropHelper(this).EnsureHandle();
+            var handle = new WindowInteropHelper(this).EnsureHandle();
 
             double scaleFactor = 1;
 
@@ -863,9 +861,9 @@ namespace CombatManager
 
         bool EnumMonitors(IntPtr hMonitor, IntPtr hdcMonitor, ref RECT lprcMonitor, IntPtr dwData)
         {
-            EnumMonitorData data = (EnumMonitorData)Marshal.PtrToStructure(dwData, typeof(EnumMonitorData));
+            var data = (EnumMonitorData)Marshal.PtrToStructure(dwData, typeof(EnumMonitorData));
 
-            MONITORINFO mi = new MONITORINFO();
+            var mi = new MONITORINFO();
             GetMonitorInfo(hMonitor, mi);
 
             RECT temp;
@@ -906,7 +904,7 @@ namespace CombatManager
 
         private void SaveAsCombatState()
         {
-            Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog();
+            var dlg = new Microsoft.Win32.SaveFileDialog();
 
             dlg.Filter = saveCombatStateFileFilter;
 
@@ -927,12 +925,12 @@ namespace CombatManager
         {
             using (var undoGroup = undo.CreateUndoGroup())
             {
-                Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
+                var dlg = new Microsoft.Win32.OpenFileDialog();
 
                 dlg.Filter = loadCombatStateFileFilter;
 
                 // Show open file dialog box
-                Nullable<bool> result = dlg.ShowDialog();
+                var result = dlg.ShowDialog();
 
                 // Process open file dialog box results
                 if (result == true)
@@ -944,7 +942,7 @@ namespace CombatManager
 
         CombatState LoadCombatState(RulesSystem system)
         {
-            CombatState state = XmlLoader<CombatState>.Load(CombatStateName(system), true);
+            var state = XmlLoader<CombatState>.Load(CombatStateName(system), true);
             if (state == null)
             {
                 state = new CombatState();
@@ -976,7 +974,7 @@ namespace CombatManager
             try
             {
 
-                CombatState cs = XmlLoader<CombatState>.Load(file);
+                var cs = XmlLoader<CombatState>.Load(file);
 
                 CombatState old;
                 if (!stateDictionary.TryGetValue(cs.RulesSystem, out old))
@@ -1043,15 +1041,15 @@ namespace CombatManager
         {
             try
             {
-                DateTime x = DateTime.Now;
+                var x = DateTime.Now;
 
 
                 XmlLoader<CombatState>.Save(combatState, 
                     CombatStateName(UserSettings.Settings.RulesSystem), true);
 
-                DateTime y = DateTime.Now;
+                var y = DateTime.Now;
 
-                TimeSpan span = y - x;
+                var span = y - x;
             }
             catch (Exception ex)
             {
@@ -1070,9 +1068,9 @@ namespace CombatManager
                     {
                         if (cur is INotifyPropertyChanged)
                         {
-                            INotifyPropertyChanged prop = (INotifyPropertyChanged)cur;
+                            var prop = (INotifyPropertyChanged)cur;
                             System.Reflection.PropertyInfo undoProperty = null;
-                            Dictionary<string, object> state = new Dictionary<string, object>();
+                            var state = new Dictionary<string, object>();
                             foreach (var curProp in cur.GetType().GetProperties())
                             {
                                 if (curProp.Name == "UndoInfo")
@@ -1083,7 +1081,7 @@ namespace CombatManager
                                 {
                                     if (typeof(INotifyCollectionChanged).IsAssignableFrom(curProp.PropertyType))
                                     {
-                                        INotifyCollectionChanged temp = (INotifyCollectionChanged)curProp.GetValue(cur, null);
+                                        var temp = (INotifyCollectionChanged)curProp.GetValue(cur, null);
                                         temp.CollectionChanged += new NotifyCollectionChangedEventHandler(CollectionChangedForUndo);
                                     }
 
@@ -1114,12 +1112,12 @@ namespace CombatManager
                     var undoInfo = sender.GetType().GetProperty("UndoInfo");
                     if (undoInfo != null)
                     {
-                        Dictionary<string, object> state = (Dictionary<string, object>)undoInfo.GetValue(sender, null);
+                        var state = (Dictionary<string, object>)undoInfo.GetValue(sender, null);
 
                         var targetProp = sender.GetType().GetProperty(e.PropertyName);
                         if (targetProp != null)
                         {
-                            object newValue = targetProp.GetValue(sender, null);
+                            var newValue = targetProp.GetValue(sender, null);
 
                             if (state.ContainsKey(e.PropertyName))
                             {
@@ -1139,7 +1137,7 @@ namespace CombatManager
 
         void UndoLastAction()
         {
-            List<UndoAction> actions = undo.UndoAction();
+            var actions = undo.UndoAction();
             using (var owner = undo.TakeOwner())
             {
                 foreach (var act in actions)
@@ -1151,7 +1149,7 @@ namespace CombatManager
                             {
                                 var method = act.Collection.GetType().GetMethod("RemoveAt");
 
-                                for (int i = 0; i < act.Changes.NewItems.Count; i++)
+                                for (var i = 0; i < act.Changes.NewItems.Count; i++)
                                 {
                                     if (act.Collection.Count > act.Changes.NewStartingIndex)
                                     {
@@ -1189,7 +1187,7 @@ namespace CombatManager
 
         void RedoNextAction()
         {
-            List<UndoAction> actions = undo.RedoAction();
+            var actions = undo.RedoAction();
             using (var owner = undo.TakeOwner())
             {
                 foreach (var act in actions)
@@ -1201,7 +1199,7 @@ namespace CombatManager
                             {
                                 var method = act.Collection.GetType().GetMethod("RemoveAt");
 
-                                for (int i = 0; i < act.Changes.OldItems.Count; i++)
+                                for (var i = 0; i < act.Changes.OldItems.Count; i++)
                                 {
                                     if (act.Collection.Count > act.Changes.OldStartingIndex)
                                     {
@@ -1276,9 +1274,9 @@ namespace CombatManager
                 {
                     if (e.NewIndex > e.OldIndex)
                     {
-                        int moveCount = e.NewIndex - e.OldIndex;
+                        var moveCount = e.NewIndex - e.OldIndex;
 
-                        for (int i = 0; i < moveCount; i++)
+                        for (var i = 0; i < moveCount; i++)
                         {
                             MoveDownCharacter(e.DataItem);
                         }
@@ -1287,9 +1285,9 @@ namespace CombatManager
                     else if (e.NewIndex < e.OldIndex)
                     {
 
-                        int moveCount = e.OldIndex - e.NewIndex;
+                        var moveCount = e.OldIndex - e.NewIndex;
 
-                        for (int i = 0; i < moveCount; i++)
+                        for (var i = 0; i < moveCount; i++)
                         {
                             MoveUpCharacter(e.DataItem);
                         }
@@ -1311,7 +1309,7 @@ namespace CombatManager
             if (e.Effects == DragDropEffects.None)
                 return;
 
-            Object ob = e.Data.GetData(typeof(Object)) as Object;
+            var ob = e.Data.GetData(typeof(Object)) as Object;
             if (sender == combatListBox)
             {
                 if (!combatListDragManager.IsDragInProgress)
@@ -1370,7 +1368,7 @@ namespace CombatManager
 
             if (data.GetDataPresent(DataFormats.FileDrop))
             {
-                string[] droppedFilePaths = data.GetData(DataFormats.FileDrop, true) as string[];
+                var droppedFilePaths = data.GetData(DataFormats.FileDrop, true) as string[];
 
                 LoadPartyFiles(droppedFilePaths, isMonsters);
             }
@@ -1378,14 +1376,14 @@ namespace CombatManager
 
         void ProcessCharacterListDrop(ProcessDropEventArgs<Character> e, ListBox targetList)
         {
-            bool toMonster = (targetList == monsterListBox);
+            var toMonster = (targetList == monsterListBox);
 
             using (var undoGroup = undo.CreateUndoGroup())
             {
-                int insert = e.NewIndex;
+                var insert = e.NewIndex;
 
                 //get moving item;
-                Character chMove = e.DataItem;
+                var chMove = e.DataItem;
 
                 if (chMove.IsMonster == toMonster)
                 {
@@ -1546,11 +1544,11 @@ namespace CombatManager
 
         void LoadBestiary()
         {
-            HashSet<String> types = new HashSet<string>();
-            SortedDictionary<double, String> crs = new SortedDictionary<double, string>();
+            var types = new HashSet<string>();
+            var crs = new SortedDictionary<double, string>();
 
 
-            foreach (String typename in Monster.CreatureTypeNames)
+            foreach (var typename in Monster.CreatureTypeNames)
             {
                 types.Add(typename);
             }
@@ -1561,15 +1559,15 @@ namespace CombatManager
             crs[1.0 / 3.0] = "1/3";
             crs[1.0 / 2.0] = "1/2";
 
-            for (int i = 1; i < 31; i++)
+            for (var i = 1; i < 31; i++)
             {
                 crs[i] = i.ToString();
             }
 
 
-            foreach (String type in types)
+            foreach (var type in types)
             {
-                ComboBoxItem item = new ComboBoxItem();
+                var item = new ComboBoxItem();
                 
                 item.Content = type;
                 MonsterTypeFilterComboBox.Items.Add(item);
@@ -1601,12 +1599,12 @@ namespace CombatManager
 
         private void AddCRsToCombo(ComboBox box, SortedDictionary<double, String> crs)
         {
-            foreach (String cr in crs.Values)
+            foreach (var cr in crs.Values)
             {
 
                 if (cr != "0")
                 {
-                    ComboBoxItem item = new ComboBoxItem();
+                    var item = new ComboBoxItem();
 
                     item.Content = cr;
                     box.Items.Add(item);
@@ -1619,7 +1617,7 @@ namespace CombatManager
         {
             
             box.Items.Add("All Classes");
-            List<string> names = new List<string>();
+            var names = new List<string>();
             foreach (CharacterClassEnum e in Enum.GetValues(typeof(CharacterClassEnum)))
             {
                 if (e != CharacterClassEnum.None)
@@ -1629,7 +1627,7 @@ namespace CombatManager
 
             }
             names.Sort();
-            foreach (String s in names)
+            foreach (var s in names)
             {
                 box.Items.Add(s);
             }
@@ -1640,9 +1638,9 @@ namespace CombatManager
         {
             box.Items.Add("All Environments");
 
-            HashSet<String> set = new HashSet<string>();
+            var set = new HashSet<string>();
 
-            foreach (Monster m in Monster.Monsters)
+            foreach (var m in Monster.Monsters)
             {
                 if (m.Environment != null && m.Environment.Trim().Length > 0 && m.Environment.Trim() != "?")
                 {
@@ -1650,10 +1648,10 @@ namespace CombatManager
                 }
             }
 
-            List<String> list = new List<String>(set);
+            var list = new List<String>(set);
             list.Sort();
 
-            foreach (String s in list)
+            foreach (var s in list)
             {
                 box.Items.Add(s);
             }
@@ -1676,7 +1674,7 @@ namespace CombatManager
             SmallMonsterFlowDocument.Document.Blocks.Clear();
             if (currentViewMonster != null)
             {
-                MonsterBlockCreator creator = new MonsterBlockCreator(SmallMonsterFlowDocument.Document, BlockLinkClicked);
+                var creator = new MonsterBlockCreator(SmallMonsterFlowDocument.Document, BlockLinkClicked);
                 SmallMonsterFlowDocument.Document.Blocks.AddRange(creator.CreateBlocks(currentViewCharacter, false));
 
             }
@@ -1688,7 +1686,7 @@ namespace CombatManager
             CurrentMonsterFlowDocument.Document.Blocks.Clear();
             if (combatState != null && combatState.CurrentCharacter != null)
             {
-                MonsterBlockCreator creator = new MonsterBlockCreator(CurrentMonsterFlowDocument.Document, BlockLinkClicked);
+                var creator = new MonsterBlockCreator(CurrentMonsterFlowDocument.Document, BlockLinkClicked);
                 CurrentMonsterFlowDocument.Document.Blocks.AddRange(creator.CreateBlocks(combatState.CurrentCharacter, false));
 
             }
@@ -1715,7 +1713,7 @@ namespace CombatManager
                             AdvanceMonsterFromExpander(currentDBMonster);
                         }
 
-                        MonsterBlockCreator creator = new MonsterBlockCreator(MonsterFlowDocument.Document, BlockLinkClicked);
+                        var creator = new MonsterBlockCreator(MonsterFlowDocument.Document, BlockLinkClicked);
                         MonsterFlowDocument.Document.Blocks.AddRange(creator.CreateBlocks(currentDBMonster, true));
                     }
                 }
@@ -1743,7 +1741,7 @@ namespace CombatManager
 
 
 
-                Rule rule = Rule.Rules.FirstOrDefault(a => String.Compare(a.Name, e.Name, true) == 0);
+                var rule = Rule.Rules.FirstOrDefault(a => String.Compare(a.Name, e.Name, true) == 0);
 
                 if (rule != null)
                 {
@@ -1800,20 +1798,20 @@ namespace CombatManager
 
         void ShowFeat(string feat)
         {
-            Regex regValue = new Regex("(?<name>.+?) \\(.+?\\)");
+            var regValue = new Regex("(?<name>.+?) \\(.+?\\)");
 
-            Match m = regValue.Match(feat);
+            var m = regValue.Match(feat);
 
             if (m.Success)
             {
                 feat = m.Groups["name"].Value;
             }
 
-            Regex regGreater = new Regex("(?<type>(Greater|Improved)) (?<feat>.+)", RegexOptions.IgnoreCase);
+            var regGreater = new Regex("(?<type>(Greater|Improved)) (?<feat>.+)", RegexOptions.IgnoreCase);
             m = regGreater.Match(feat);
             if (m.Success)
             {
-                string switchName = m.Groups["feat"].Value + ", " + m.Groups["type"].Value;
+                var switchName = m.Groups["feat"].Value + ", " + m.Groups["type"].Value;
 
                 if (Feat.FeatMap.ContainsKey(switchName))
                 {
@@ -1848,14 +1846,14 @@ namespace CombatManager
         {
             if (RacialHDCheck.IsChecked == true)
             {
-                int dice = (RacialHDNumberCombo.SelectedIndex + 1) *
-                    (RacialHDTypeCombo.SelectedIndex == 0 ? 1 : -1);
+                var dice = (RacialHDNumberCombo.SelectedIndex + 1) *
+                           (RacialHDTypeCombo.SelectedIndex == 0 ? 1 : -1);
 
-                Stat stat = (Stat)RacialHDStatCombo.SelectedIndex;
+                var stat = (Stat)RacialHDStatCombo.SelectedIndex;
 
-                bool size = RacialHDSizeChangeCombo.SelectedItem == RacialHDSizeChange50Item;
+                var size = RacialHDSizeChangeCombo.SelectedItem == RacialHDSizeChange50Item;
 
-                int res = monster.AddRacialHD(dice, stat, size);
+                var res = monster.AddRacialHD(dice, stat, size);
 
                 if (res != 0)
                 {
@@ -1883,7 +1881,7 @@ namespace CombatManager
             }
             if (OtherTemplateTabControl.SelectedItem == HalfFiendTab)
             {
-                HashSet<Stat> bonusStats = new HashSet<Stat>();
+                var bonusStats = new HashSet<Stat>();
 
                 if (HalfFiendStrengthCheck.IsChecked == true)
                 {
@@ -1917,7 +1915,7 @@ namespace CombatManager
             }
             if (OtherTemplateTabControl.SelectedItem == HalfCelestialTab)
             {
-                HashSet<Stat> bonusStats = new HashSet<Stat>();
+                var bonusStats = new HashSet<Stat>();
 
                 if (HalfCelestialStrengthCheck.IsChecked == true)
                 {
@@ -1964,9 +1962,9 @@ namespace CombatManager
             }
             if (OtherTemplateTabControl.SelectedItem == SkeletonTab)
             {
-                bool bloody = (BloodySkeletonCheckBox.IsChecked == true);
-                bool burning = (BurningSkeletonCheckBox.IsChecked == true);
-                bool champion = (SkeletalChampionCheckBox.IsChecked == true);
+                var bloody = (BloodySkeletonCheckBox.IsChecked == true);
+                var burning = (BurningSkeletonCheckBox.IsChecked == true);
+                var champion = (SkeletalChampionCheckBox.IsChecked == true);
 
                 if (monster.MakeSkeleton(bloody, burning, champion))
                 {
@@ -2002,7 +2000,7 @@ namespace CombatManager
             }
             if (OtherTemplateTabControl.SelectedItem == ZombieTab)
             {
-                Monster.ZombieType zt = (Monster.ZombieType)ZombieTypeComboBox.SelectedIndex;
+                var zt = (Monster.ZombieType)ZombieTypeComboBox.SelectedIndex;
 
                 if (monster.MakeZombie(zt))
                 {
@@ -2032,11 +2030,11 @@ namespace CombatManager
             if (AdvancedMonsterCheck.IsChecked == true)
             {
 
-                int count = 1 + this.AdvancedMonsterMultiplierCombo.SelectedIndex;
+                var count = 1 + this.AdvancedMonsterMultiplierCombo.SelectedIndex;
 
-                int added = 0;
+                var added = 0;
 
-                for (int i = 0; i < count; i++)
+                for (var i = 0; i < count; i++)
                 {
                     if (monster.MakeAdvanced())
                     {
@@ -2051,12 +2049,12 @@ namespace CombatManager
             }
             if (SizeAdvancedMonsterCheck.IsChecked == true)
             {
-                int count = 1 + SizeAdvancedMultiplierCombo.SelectedIndex;
+                var count = 1 + SizeAdvancedMultiplierCombo.SelectedIndex;
 
                 if (SizeAdvancedMonsterCombo.SelectedIndex == 0)
                 {
-                    int added = 0;
-                    for (int i = 0; i < count; i++)
+                    var added = 0;
+                    for (var i = 0; i < count; i++)
                     {
                         if (monster.MakeGiant())
                         {
@@ -2075,8 +2073,8 @@ namespace CombatManager
                 }
                 else
                 {
-                    int added = 0;
-                    for (int i = 0; i < count; i++)
+                    var added = 0;
+                    for (var i = 0; i < count; i++)
                     {
                         if (monster.MakeYoung())
                         {
@@ -2138,17 +2136,17 @@ namespace CombatManager
 
             spellsView = new ListCollectionView(Spell.Spells);
 
-            foreach (string school in Spell.Schools)
+            foreach (var school in Spell.Schools)
             {
                 SpellSchoolFilterComboBox.Items.Add(StringCapitalizeConverter.Capitalize(school));
             }
 
-            foreach (string subschool in Spell.Subschools)
+            foreach (var subschool in Spell.Subschools)
             {
                 SpellSubschoolFilterComboBox.Items.Add(subschool);
             }
 
-            foreach (string descriptor in Spell.Descriptors)
+            foreach (var descriptor in Spell.Descriptors)
             {
                 SpellDescriptorFilterComboBox.Items.Add(descriptor);
             }
@@ -2178,11 +2176,11 @@ namespace CombatManager
 
         void UpdateSpellFlowDocument()
         {
-            Spell spell = (Spell)spellsView.CurrentItem;
+            var spell = (Spell)spellsView.CurrentItem;
             SpellFlowDocument.Document.Blocks.Clear();
             if (spell != null)
             {
-                SpellBlockCreator creator = new SpellBlockCreator(SpellFlowDocument.Document, BlockLinkClicked);
+                var creator = new SpellBlockCreator(SpellFlowDocument.Document, BlockLinkClicked);
                 SpellFlowDocument.Document.Blocks.AddRange(creator.CreateBlocks(spell));
             }
 
@@ -2200,9 +2198,9 @@ namespace CombatManager
 
 
 
-            foreach (string type in Feat.FeatTypes)
+            foreach (var type in Feat.FeatTypes)
             {
-                ComboBoxItem item = new ComboBoxItem();
+                var item = new ComboBoxItem();
                 item.Content = type;
                 FeatTypeFilterComboBox.Items.Add(item);
 
@@ -2236,9 +2234,9 @@ namespace CombatManager
             rulesView.CurrentChanged += new EventHandler(rulesView_CurrentChanged);
             rulesView.Filter += new Predicate<object>(RuleViewFilter);
 
-            foreach (string type in Rule.Types)
+            foreach (var type in Rule.Types)
             {
-                ComboBoxItem item = new ComboBoxItem();
+                var item = new ComboBoxItem();
                 item.Content = type;
                 RuleTypeFilterComboBox.Items.Add(item);
 
@@ -2266,17 +2264,17 @@ namespace CombatManager
             magicItemsView.CurrentChanged += new EventHandler(magicItemsView_CurrentChanged);
             magicItemsView.Filter += new Predicate<object>(MagicItemViewFilter);
 
-            foreach (string type in MagicItem.Groups)
+            foreach (var type in MagicItem.Groups)
             {
-                ComboBoxItem item = new ComboBoxItem();
+                var item = new ComboBoxItem();
                 item.Content = type;
                 MagicItemGroupFilterComboBox.Items.Add(item);
 
             }
 
-            foreach (int cl in MagicItem.CLs)
+            foreach (var cl in MagicItem.CLs)
             {
-                ComboBoxItem item = new ComboBoxItem();
+                var item = new ComboBoxItem();
                 if (cl == -1)
                 {
                     item.Content = "Varies";
@@ -2336,11 +2334,11 @@ namespace CombatManager
         void UpdateFeatFlowDocument()
         {
 
-            Feat feat = (Feat)featsView.CurrentItem;
+            var feat = (Feat)featsView.CurrentItem;
             FeatFlowDocument.Document.Blocks.Clear();
             if (feat != null)
             {
-                FeatBlockCreator creator = new FeatBlockCreator(FeatFlowDocument.Document);
+                var creator = new FeatBlockCreator(FeatFlowDocument.Document);
                 FeatFlowDocument.Document.Blocks.AddRange(creator.CreateBlocks(feat));
             }
 
@@ -2350,7 +2348,7 @@ namespace CombatManager
         void UpdateRuleFlowDocument(bool force = false)
         {
 
-            Rule rule = (Rule)rulesView.CurrentItem;
+            var rule = (Rule)rulesView.CurrentItem;
 
             if (rule != lastViewRule || force)
             {
@@ -2358,7 +2356,7 @@ namespace CombatManager
                 RuleFlowDocument.Document.Blocks.Clear();
                 if (rule != null)
                 {
-                    RuleBlockCreator creator = new RuleBlockCreator(RuleFlowDocument.Document);
+                    var creator = new RuleBlockCreator(RuleFlowDocument.Document);
                     RuleFlowDocument.Document.Blocks.AddRange(creator.CreateBlocks(rule));
                 }
             }
@@ -2369,11 +2367,11 @@ namespace CombatManager
         void UpdateMagicItemsFlowDocument()
         {
 
-            MagicItem item = (MagicItem)magicItemsView.CurrentItem;
+            var item = (MagicItem)magicItemsView.CurrentItem;
             MagicItemFlowDocument.Document.Blocks.Clear();
             if (item != null)
             {
-                MagicItemBlockCreator creator = new MagicItemBlockCreator(MagicItemFlowDocument.Document);
+                var creator = new MagicItemBlockCreator(MagicItemFlowDocument.Document);
                 MagicItemFlowDocument.Document.Blocks.AddRange(creator.CreateBlocks(item));
             }
 
@@ -2446,10 +2444,10 @@ namespace CombatManager
         {
             using (var undoGroup = undo.CreateUndoGroup())
             {
-                ListBox box = (ListBox)sender;
+                var box = (ListBox)sender;
 
 
-                ListBoxItem target = CMUIUtilities.ClickedListBoxItem(box, e);
+                var target = CMUIUtilities.ClickedListBoxItem(box, e);
 
                 if (target != null)
                 {
@@ -2463,7 +2461,7 @@ namespace CombatManager
         private void AddCurrentDBViewMonster()
         {
 
-            Monster monster = (Monster)dbView.CurrentItem;
+            var monster = (Monster)dbView.CurrentItem;
 
             if (monster != null)
             {
@@ -2511,13 +2509,13 @@ namespace CombatManager
         {
             using (var undoGroup = undo.CreateUndoGroup())
             {
-                List<Character> removeList = new List<Character>();
+                var removeList = new List<Character>();
 
                 foreach (Character character in view)
                 {
                     removeList.Add(character);
                 }
-                foreach (Character character in removeList)
+                foreach (var character in removeList)
                 {
                     RemoveCharacter(character);
                 }
@@ -2664,8 +2662,8 @@ namespace CombatManager
                 using (var undoGroup = undo.CreateUndoGroup())
                 {
 
-                    Button button = (Button)sender;
-                    Character character = (Character)button.DataContext;
+                    var button = (Button)sender;
+                    var character = (Character)button.DataContext;
                     RemoveCharacter(character);
                 }
             }
@@ -2682,10 +2680,10 @@ namespace CombatManager
 
             try
             {
-                Monster monster = (Monster)ob;
+                var monster = (Monster)ob;
 
 
-                bool res = (monster != null && DBViewTextFilter(monster) && DBViewNPCFilter(monster) && SourceFilter(monster.Source));
+                var res = (monster != null && DBViewTextFilter(monster) && DBViewNPCFilter(monster) && SourceFilter(monster.Source));
 
                 return res;
             }
@@ -2722,7 +2720,7 @@ namespace CombatManager
                 return true;
             }
 
-             bool custom = monster.DBLoaderID != 0;
+             var custom = monster.DBLoaderID != 0;
 
              if (CombatTabNPCFilterBox.SelectedItem == CombatNPCFilterCustomItem)
              {
@@ -2731,7 +2729,7 @@ namespace CombatManager
              else
              {
 
-                 bool useNPC = (CombatTabNPCFilterBox.SelectedItem == CombatNPCFilterNPCItem);
+                 var useNPC = (CombatTabNPCFilterBox.SelectedItem == CombatNPCFilterNPCItem);
 
                  return (useNPC == monster.NPC) && !custom;
              }
@@ -2750,7 +2748,7 @@ namespace CombatManager
             using (var undoGroup = undo.CreateUndoGroup())
             {
 
-                Character character = (Character)combatView.CurrentItem;
+                var character = (Character)combatView.CurrentItem;
 
                 MoveUpCharacter(character);
 
@@ -2766,7 +2764,7 @@ namespace CombatManager
             using (var undoGroup = undo.CreateUndoGroup())
             {
 
-                Character character = (Character)combatView.CurrentItem;
+                var character = (Character)combatView.CurrentItem;
 
                 MoveDownCharacter(character);
 
@@ -2846,19 +2844,19 @@ namespace CombatManager
 
         private void SaveGroup(ICollectionView view, string filter)
         {
-            Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog();
+            var dlg = new Microsoft.Win32.SaveFileDialog();
 
             dlg.Filter = filter;
 
             if (dlg.ShowDialog() == true)
             {
-                XmlSerializer serializer =
+                var serializer =
                     new XmlSerializer(typeof(List<Character>));
                 try
                 {
                     TextWriter writer = new StreamWriter(dlg.FileName);
 
-                    List<Character> list = new List<Character>();
+                    var list = new List<Character>();
 
                     foreach (Character character in view)
                     {
@@ -2879,13 +2877,13 @@ namespace CombatManager
         {
             using (var undoGroup = undo.CreateUndoGroup())
             {
-                Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
+                var dlg = new Microsoft.Win32.OpenFileDialog();
 
                 dlg.Filter = filter;
                 dlg.Multiselect = true;
 
                 // Show open file dialog box
-                Nullable<bool> result = dlg.ShowDialog();
+                var result = dlg.ShowDialog();
 
                 // Process open file dialog box results
                 if (result == true)
@@ -2899,10 +2897,10 @@ namespace CombatManager
         private void LoadPartyFiles(string[] files, bool isMonster)
         {
             // Open document
-            foreach (string filename in files)
+            foreach (var filename in files)
             {
 
-                FileInfo fi = new FileInfo(filename);
+                var fi = new FileInfo(filename);
 
                 if (String.Compare(fi.Extension, ".por", true) == 0 || String.Compare(fi.Extension, ".rpgrp", true) == 0)
                 {
@@ -2912,23 +2910,23 @@ namespace CombatManager
                 {
 
 
-                    XmlSerializer serializer = new XmlSerializer(typeof(List<Character>));
+                    var serializer = new XmlSerializer(typeof(List<Character>));
 
                     // A FileStream is needed to read the XML document.
-                    FileStream fs = new FileStream(filename, FileMode.Open);
+                    var fs = new FileStream(filename, FileMode.Open);
 
 
-                    List<Character> list = (List<Character>)serializer.Deserialize(fs);
+                    var list = (List<Character>)serializer.Deserialize(fs);
 
-                    foreach (Character character in list)
+                    foreach (var character in list)
                     {
                         //fix duplicate ID issues
                         if (combatState.GetCharacterByID(character.ID) != null)
                         {
-                            Guid original = character.ID;
+                            var original = character.ID;
                             character.ID = Guid.NewGuid();
 
-                            foreach (Character other in list)
+                            foreach (var other in list)
                             {
                                 if (other.InitiativeLeaderID == original)
                                 {
@@ -2940,7 +2938,7 @@ namespace CombatManager
                     }
 
                     //add characters
-                    foreach (Character character in list)
+                    foreach (var character in list)
                     {
                         character.IsMonster = isMonster;
 
@@ -3041,10 +3039,10 @@ namespace CombatManager
 
         private bool SpellsViewFilter(object ob)
         {
-            bool result = false;
+            var result = false;
 
 
-            Spell spell = (Spell)ob;
+            var spell = (Spell)ob;
 
             if (this.spellFilterBox.Text == null)
             {
@@ -3070,7 +3068,7 @@ namespace CombatManager
         private bool SpellsClassViewFilter(object ob)
         {
 
-            Spell spell = (Spell)ob;
+            var spell = (Spell)ob;
 
             int? spellLevel = null;
 
@@ -3088,7 +3086,7 @@ namespace CombatManager
                 }
                 else
                 {
-                    string[] classSpellLevels = new string[]
+                    var classSpellLevels = new string[]
                     {
                         spell.alchemist,
                         spell.antipaladin,
@@ -3104,7 +3102,7 @@ namespace CombatManager
                         spell.witch
                     };
 
-                    foreach (string s in classSpellLevels)
+                    foreach (var s in classSpellLevels)
                     {
                         if (CheckSpellLevel(s, spellLevel))
                         {
@@ -3181,7 +3179,7 @@ namespace CombatManager
 
         private bool SpellSchoolFilter(object ob)
         {
-            Spell sp = (Spell)ob;
+            var sp = (Spell)ob;
 
             if (SpellSchoolFilterComboBox.SelectedIndex == 0)
             {
@@ -3190,7 +3188,7 @@ namespace CombatManager
 
             else
             {
-                string text = (string)SpellSchoolFilterComboBox.SelectedItem;
+                var text = (string)SpellSchoolFilterComboBox.SelectedItem;
 
                 return String.Compare(text, sp.school, true) == 0;
             }
@@ -3199,7 +3197,7 @@ namespace CombatManager
 
         private bool SpellSubschoolFilter(object ob)
         {
-            Spell sp = (Spell)ob;
+            var sp = (Spell)ob;
 
             if (SpellSubschoolFilterComboBox.SelectedIndex == 0)
             {
@@ -3208,7 +3206,7 @@ namespace CombatManager
 
             else
             {
-                string text = (string)SpellSubschoolFilterComboBox.SelectedItem;
+                var text = (string)SpellSubschoolFilterComboBox.SelectedItem;
 
                 if (!sp.subschool.NotNullString())
                 {
@@ -3222,7 +3220,7 @@ namespace CombatManager
         }
         private bool SpellDescriptorFilter(object ob)
         {
-            Spell sp = (Spell)ob;
+            var sp = (Spell)ob;
 
             if (SpellDescriptorFilterComboBox.SelectedIndex == 0)
             {
@@ -3231,7 +3229,7 @@ namespace CombatManager
 
             else
             {
-                string text = (string)SpellDescriptorFilterComboBox.SelectedItem;
+                var text = (string)SpellDescriptorFilterComboBox.SelectedItem;
 
                 if (!sp.descriptor.NotNullString())
                 {
@@ -3275,7 +3273,7 @@ namespace CombatManager
 
         private bool SourceFilter(string source)
         {
-            SourceType st = SourceInfo.GetSourceType(source);
+            var st = SourceInfo.GetSourceType(source);
 
             switch (st)
             {
@@ -3342,7 +3340,7 @@ namespace CombatManager
         private bool FeatViewFilter(object ob)
         {
 
-            Feat feat = (Feat)ob;
+            var feat = (Feat)ob;
 
 
             return FeatTextFilter(feat) && FeatTypeFilter(feat) && SourceFilter(feat.Source) && FeatCustomFilter(feat) ;
@@ -3350,7 +3348,7 @@ namespace CombatManager
 
         private bool FeatTextFilter(Feat feat)
         {
-			string filterText = this.featFilterBox.Text.Trim();
+			var filterText = this.featFilterBox.Text.Trim();
             if (string.IsNullOrWhiteSpace(filterText))
             {
                 return true;
@@ -3368,7 +3366,7 @@ namespace CombatManager
             else
             {
 
-                ComboBoxItem item = (ComboBoxItem)FeatTypeFilterComboBox.SelectedItem;
+                var item = (ComboBoxItem)FeatTypeFilterComboBox.SelectedItem;
 
 
                 return feat.Types.Contains((string)item.Content);
@@ -3393,7 +3391,7 @@ namespace CombatManager
         private bool RuleViewFilter(object ob)
         {
 
-            Rule rule = (Rule)ob;
+            var rule = (Rule)ob;
 
 
             return RuleTextFilter(rule) && RuleTypeFilter(rule) && RuleSubtypeFilter(rule) && SourceFilter(rule.Source);
@@ -3401,7 +3399,7 @@ namespace CombatManager
 
         private bool RuleTextFilter(Rule rule)
         {
-            bool result = false;
+            var result = false;
 
             if (this.RulesTabFilterBox.Text == null)
             {
@@ -3432,7 +3430,7 @@ namespace CombatManager
             else
             {
 
-                ComboBoxItem item = (ComboBoxItem)RuleTypeFilterComboBox.SelectedItem;
+                var item = (ComboBoxItem)RuleTypeFilterComboBox.SelectedItem;
 
 
                 return String.Compare(rule.Type, (string)item.Content, true) == 0;
@@ -3449,7 +3447,7 @@ namespace CombatManager
             else
             {
 
-                string text = (string)RuleSubtypeFilterComboBox.SelectedItem;
+                var text = (string)RuleSubtypeFilterComboBox.SelectedItem;
 
 
                 return String.Compare(rule.Subtype, text, true) == 0;
@@ -3459,7 +3457,7 @@ namespace CombatManager
         private bool MagicItemViewFilter(object ob)
         {
 
-            MagicItem item = (MagicItem)ob;
+            var item = (MagicItem)ob;
 
 
             return MagicItemTextFilter(item) && MagicItemTypeFilter(item) && MagicItemCLFilter(item) && SourceFilter(item.Source);
@@ -3467,7 +3465,7 @@ namespace CombatManager
 
         private bool MagicItemTextFilter(MagicItem item)
         {
-            bool result = false;
+            var result = false;
 
             if (this.MagicItemsTabFilterBox.Text == null)
             {
@@ -3498,7 +3496,7 @@ namespace CombatManager
             else
             {
 
-                ComboBoxItem boxItem = (ComboBoxItem)MagicItemGroupFilterComboBox.SelectedItem;
+                var boxItem = (ComboBoxItem)MagicItemGroupFilterComboBox.SelectedItem;
 
 
                 return String.Compare(item.Group, (string)boxItem.Content, true) == 0;
@@ -3513,7 +3511,7 @@ namespace CombatManager
                 return true;
             }
 
-            ComboBoxItem cbi = (ComboBoxItem)MagicItemCLFilterComboBox.SelectedItem;
+            var cbi = (ComboBoxItem)MagicItemCLFilterComboBox.SelectedItem;
 
             return ((int)cbi.DataContext) == item.CL;
         }
@@ -3530,7 +3528,7 @@ namespace CombatManager
         {
             SaveMonsterTabFilter();
 
-            Visibility crVis = (MonsterCRComboBox.SelectedItem == BetweenCRsItem) ? Visibility.Visible : Visibility.Hidden;
+            var crVis = (MonsterCRComboBox.SelectedItem == BetweenCRsItem) ? Visibility.Visible : Visibility.Hidden;
 
             if (BetweenCRHighCombo != null)
             {
@@ -3581,7 +3579,7 @@ namespace CombatManager
         private bool MonsterViewFilter(object ob)
         {
 
-            Monster monster = (Monster)ob;
+            var monster = (Monster)ob;
 
 
             return MonsterTextFilter(monster) && MonsterCRFilter(monster) && MonsterTypeFilter(monster)
@@ -3591,7 +3589,7 @@ namespace CombatManager
 
         private bool MonsterTextFilter(Monster monster)
         {
-            bool result = false;
+            var result = false;
 
             if (this.MonsterTabFilterBox.Text == null)
             {
@@ -3624,13 +3622,13 @@ namespace CombatManager
                 if (monster.CR != null && monster.CR.Length > 0)
                 {
 
-                    ComboBoxItem item1 = (ComboBoxItem)BetweenCRLowCombo.SelectedItem;
-                    ComboBoxItem item2 = (ComboBoxItem)BetweenCRHighCombo.SelectedItem;
+                    var item1 = (ComboBoxItem)BetweenCRLowCombo.SelectedItem;
+                    var item2 = (ComboBoxItem)BetweenCRHighCombo.SelectedItem;
 
-                    long val1 = Monster.GetCRValue((string)item1.Content);
-                    long val2 = Monster.GetCRValue((string)item2.Content);
+                    var val1 = Monster.GetCRValue((string)item1.Content);
+                    var val2 = Monster.GetCRValue((string)item2.Content);
 
-                    long monsterVal = Monster.GetCRValue(monster.CR);
+                    var monsterVal = Monster.GetCRValue(monster.CR);
 
                     if ((monsterVal >= val1 && monsterVal <= val2)
                         || (monsterVal >= val2 && monsterVal <= val1))
@@ -3645,7 +3643,7 @@ namespace CombatManager
             }
             else
             {
-                ComboBoxItem item = (ComboBoxItem)MonsterCRComboBox.SelectedItem;
+                var item = (ComboBoxItem)MonsterCRComboBox.SelectedItem;
 
 
                 return (String.Compare(monster.CR.Trim(),
@@ -3662,7 +3660,7 @@ namespace CombatManager
             }
             else
             {
-                ComboBoxItem item = (ComboBoxItem)MonsterTypeFilterComboBox.SelectedItem;
+                var item = (ComboBoxItem)MonsterTypeFilterComboBox.SelectedItem;
 
 
                 return (String.Compare(monster.Type.Trim(),
@@ -3679,7 +3677,7 @@ namespace CombatManager
             }
             else
             {
-                bool custom = monster.DBLoaderID != 0;
+                var custom = monster.DBLoaderID != 0;
 
                 if (MonsterTabNPCComboBox.SelectedItem == NPCFilterCustomComboItem)
                 {
@@ -3688,7 +3686,7 @@ namespace CombatManager
                 else
                 {
 
-                    bool useNPC = MonsterTabNPCComboBox.SelectedItem == NPCFilterNPCComboItem;
+                    var useNPC = MonsterTabNPCComboBox.SelectedItem == NPCFilterNPCComboItem;
 
                     return (monster.NPC == useNPC) && !custom;
                 }
@@ -3722,7 +3720,7 @@ namespace CombatManager
                 return false;
             }
 
-            string environment = ((string)MonsterEnvironmentCombo.SelectedValue).ToUpper();
+            var environment = ((string)MonsterEnvironmentCombo.SelectedValue).ToUpper();
             if (environment.Length > 3 && environment.Substring(0, 4) == "ANY ")
             {
                 environment = environment.Replace("ANY ", "");
@@ -3758,7 +3756,7 @@ namespace CombatManager
             using (var undoGroup = undo.CreateUndoGroup())
             {
 
-                Monster monster = currentDBMonster;
+                var monster = currentDBMonster;
 
                 combatState.AddMonster(monster, (Character.HPMode)HPModeCombo.SelectedIndex, true, UserSettings.Settings.AddMonstersHidden);
             }
@@ -3794,27 +3792,27 @@ namespace CombatManager
         {
             hpThumbUndo = undo.CreateUndoGroup();
 
-            Thumb thumb = (Thumb)sender;
-            Character character = (Character)thumb.DataContext;
+            var thumb = (Thumb)sender;
+            var character = (Character)thumb.DataContext;
             initialHP = character.HP;
         }
 
         private void HPThumb_DragDelta(object sender, System.Windows.Controls.Primitives.DragDeltaEventArgs e)
         {
-            Thumb thumb = (Thumb)sender;
-            Character character = (Character)thumb.DataContext;
+            var thumb = (Thumb)sender;
+            var character = (Character)thumb.DataContext;
 
-            int newHP = initialHP - (int)(e.VerticalChange / 5.0);
+            var newHP = initialHP - (int)(e.VerticalChange / 5.0);
 
-            int change = newHP - character.HP;
+            var change = newHP - character.HP;
 
             AdjustCharacterHP(character, change);
         }
 
         private void HPThumb_DragCompleted(object sender, System.Windows.Controls.Primitives.DragCompletedEventArgs e)
         {
-            Thumb thumb = (Thumb)sender;
-            Character character = (Character)thumb.DataContext;
+            var thumb = (Thumb)sender;
+            var character = (Character)thumb.DataContext;
             if (character.HP == initialHP)
             {
                 if (thumb.Name == "HPUpThumb")
@@ -3839,7 +3837,7 @@ namespace CombatManager
 
         private void BottomThumb_DragDelta(object sender, System.Windows.Controls.Primitives.DragDeltaEventArgs e)
         {
-            double yadjust = this.Height + e.VerticalChange;
+            var yadjust = this.Height + e.VerticalChange;
             if (yadjust >= 0)
             {
                 this.Height = yadjust;
@@ -3883,7 +3881,7 @@ namespace CombatManager
         private void LeftThumb_DragDelta(object sender, System.Windows.Controls.Primitives.DragDeltaEventArgs e)
         {
 
-            double xadjust = this.Left + e.HorizontalChange;
+            var xadjust = this.Left + e.HorizontalChange;
 
 
             if (xadjust >= 0)
@@ -3905,7 +3903,7 @@ namespace CombatManager
 
         private void TopThumb_DragDelta(object sender, System.Windows.Controls.Primitives.DragDeltaEventArgs e)
         {
-            double yadjust = this.Top + e.VerticalChange;
+            var yadjust = this.Top + e.VerticalChange;
 
 
             if (yadjust >= 0)
@@ -3929,12 +3927,12 @@ namespace CombatManager
         private void NameTextBox_GotFocus(object sender, RoutedEventArgs e)
         {
 
-            bool ctrl = Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl);
+            var ctrl = Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl);
 			
             //select items
-            Character ch = (Character)(sender as TextBox).DataContext;
+            var ch = (Character)(sender as TextBox).DataContext;
 
-            ListBox lb = ch.IsMonster ? monsterListBox : playerListBox;
+            var lb = ch.IsMonster ? monsterListBox : playerListBox;
 
             if (ctrl)
             {
@@ -3958,7 +3956,7 @@ namespace CombatManager
         {
             using (var undoGroup = undo.CreateUndoGroup())
             {
-                OGLWindow oglWindow = new OGLWindow();
+                var oglWindow = new OGLWindow();
                 oglWindow.Owner = this;
                 oglWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
                 oglWindow.ShowDialog();
@@ -3969,7 +3967,7 @@ namespace CombatManager
         {
             using (var undoGroup = undo.CreateUndoGroup())
             {
-                AboutWindow aboutWindow = new AboutWindow();
+                var aboutWindow = new AboutWindow();
                 aboutWindow.Owner = this;
                 aboutWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
                 aboutWindow.ShowDialog();
@@ -3978,7 +3976,7 @@ namespace CombatManager
 
         void win_SourceInitialized(object sender, EventArgs e)
         {
-            System.IntPtr handle = (new WinInterop.WindowInteropHelper(this)).Handle;
+            var handle = (new WinInterop.WindowInteropHelper(this)).Handle;
             WinInterop.HwndSource.FromHwnd(handle).AddHook(new WinInterop.HwndSourceHook(WindowProc));
         }
         private System.IntPtr WindowProc(
@@ -4002,19 +4000,19 @@ namespace CombatManager
         private void WmGetMinMaxInfo(System.IntPtr hwnd, System.IntPtr lParam)
         {
 
-            MINMAXINFO mmi = (MINMAXINFO)Marshal.PtrToStructure(lParam, typeof(MINMAXINFO));
+            var mmi = (MINMAXINFO)Marshal.PtrToStructure(lParam, typeof(MINMAXINFO));
 
             // Adjust the maximized size and position to fit the work area of the correct monitor
-            System.IntPtr monitor = MonitorFromWindow(hwnd, MONITOR_DEFAULTTONEAREST);
+            var monitor = MonitorFromWindow(hwnd, MONITOR_DEFAULTTONEAREST);
 
             if (monitor != System.IntPtr.Zero)
             {
 
-                MONITORINFO monitorInfo = new MONITORINFO();
+                var monitorInfo = new MONITORINFO();
                 GetMonitorInfo(monitor, monitorInfo);
-                RECT rcWorkArea = monitorInfo.rcWork;
-                RECT rcMonitorArea = monitorInfo.rcMonitor;
-                double scaleFactor = GetScaleFactor(); ;
+                var rcWorkArea = monitorInfo.rcWork;
+                var rcMonitorArea = monitorInfo.rcMonitor;
+                var scaleFactor = GetScaleFactor(); ;
                 mmi.ptMaxPosition.x = Math.Abs(rcWorkArea.left - rcMonitorArea.left);
                 mmi.ptMaxPosition.y = Math.Abs(rcWorkArea.top - rcMonitorArea.top);
                 mmi.ptMaxSize.x = (int)(Math.Abs(rcWorkArea.right - rcWorkArea.left));
@@ -4324,8 +4322,8 @@ namespace CombatManager
                 if (this.RuleTypeFilterComboBox.SelectedIndex != 0)
                 {
 
-                    ComboBoxItem item = (ComboBoxItem)RuleTypeFilterComboBox.SelectedItem;
-                    string type = (string)item.Content;
+                    var item = (ComboBoxItem)RuleTypeFilterComboBox.SelectedItem;
+                    var type = (string)item.Content;
 
                     if (Rule.Subtypes.ContainsKey(type))
                     {
@@ -4341,7 +4339,7 @@ namespace CombatManager
                 {
                     RuleSubtypeFilterComboBox.Visibility = Visibility.Visible;
 
-                    foreach (string str in subtypes)
+                    foreach (var str in subtypes)
                     {
                         RuleSubtypeFilterComboBox.Items.Add(str);
                     }
@@ -4383,10 +4381,10 @@ namespace CombatManager
             using (var undoGroup = undo.CreateUndoGroup())
             {
 
-                Button button = (Button)sender;
-                Character character = (Character)button.DataContext;
+                var button = (Button)sender;
+                var character = (Character)button.DataContext;
 
-                TextBox box = (TextBox)button.FindName("textBox");
+                var box = (TextBox)button.FindName("textBox");
 
                 if (box != null)
                 {
@@ -4394,8 +4392,8 @@ namespace CombatManager
                     if (int.TryParse(box.Text, out val))
                     {
 
-                        int change = -val;
-                        Popup pop = (Popup)box.FindName("popup");
+                        var change = -val;
+                        var pop = (Popup)box.FindName("popup");
                         if (pop.PlacementTarget == box.FindName("HPTextBox"))
                         {
                             character.AdjustHP(change, 0, 0);
@@ -4419,18 +4417,18 @@ namespace CombatManager
             using (var undoGroup = undo.CreateUndoGroup())
             {
 
-                Button button = (Button)sender;
-                Character character = (Character)button.DataContext;
+                var button = (Button)sender;
+                var character = (Character)button.DataContext;
 
-                TextBox box = (TextBox)button.FindName("textBox");
+                var box = (TextBox)button.FindName("textBox");
 
                 if (box != null)
                 {
                     int val;
                     if (int.TryParse(box.Text, out val))
                     {
-                        int change = val;
-                        Popup pop = (Popup)box.FindName("popup");
+                        var change = val;
+                        var pop = (Popup)box.FindName("popup");
                         if (pop.PlacementTarget == box.FindName("HPTextBox"))
                         {
                             character.AdjustHP(change, 0, 0);
@@ -4459,7 +4457,7 @@ namespace CombatManager
 
         private void TextBox_GotFocus(object sender, System.Windows.RoutedEventArgs e)
         {
-            TextBox box = (TextBox)sender;
+            var box = (TextBox)sender;
 
             box.SelectAll();
         }
@@ -4472,7 +4470,7 @@ namespace CombatManager
         {
             using (var undoGroup = undo.CreateUndoGroup())
             {
-                Character character = (Character)((Button)sender).DataContext;
+                var character = (Character)((Button)sender).DataContext;
                 EditAttacks(character);
             }
         }
@@ -4481,7 +4479,7 @@ namespace CombatManager
         {
             using (var undoGroup = undo.CreateUndoGroup())
             {
-                AttacksWindow window = new AttacksWindow();
+                var window = new AttacksWindow();
                 window.Monster = character.Monster;
                 window.Owner = this;
                 window.WindowStartupLocation = System.Windows.WindowStartupLocation.CenterOwner;
@@ -4491,7 +4489,7 @@ namespace CombatManager
 
         public void EditFeats(Character character)
         {
-            FeatChangeWindow window = new FeatChangeWindow();
+            var window = new FeatChangeWindow();
             window.Character = character;
             window.Owner = this;
             window.WindowStartupLocation = System.Windows.WindowStartupLocation.CenterOwner;
@@ -4518,7 +4516,7 @@ namespace CombatManager
         {
             using (var undoGroup = undo.CreateUndoGroup())
             {
-                foreach (Character character in combatState.Characters)
+                foreach (var character in combatState.Characters)
                 {
                     character.CurrentInitiative = 0;
                 }
@@ -4539,13 +4537,13 @@ namespace CombatManager
 
         private void TextBox_GotKeyboardFocus(object sender, System.Windows.Input.KeyboardFocusChangedEventArgs e)
         {
-            Control control = (Control)sender;
+            var control = (Control)sender;
 
-            FrameworkElement ob = (FrameworkElement)control.TemplatedParent;
+            var ob = (FrameworkElement)control.TemplatedParent;
 
             if (ob != null)
             {
-                Character character = (Character)ob.DataContext;
+                var character = (Character)ob.DataContext;
 
                 if (character.IsMonster)
                 {
@@ -4571,13 +4569,13 @@ namespace CombatManager
         {
             if (e.Key == Key.Return || e.Key == Key.Enter)
             {
-                Control box = (Control)sender;
+                var box = (Control)sender;
 
-                Popup pop = (Popup)box.FindName("popup");
+                var pop = (Popup)box.FindName("popup");
                 pop.PlacementTarget = box;
                 pop.IsOpen = true;
 
-                TextBox hpBox = (TextBox)pop.FindName("textBox");
+                var hpBox = (TextBox)pop.FindName("textBox");
 
                 hpBox.Focus();
                 hpBox.SelectAll();
@@ -4588,15 +4586,15 @@ namespace CombatManager
         private void HPButton_Click(object sender, System.Windows.RoutedEventArgs e)
         {
 
-            Control box = (Control)sender;
+            var box = (Control)sender;
 
-            Popup pop = (Popup)box.FindName("popup");
+            var pop = (Popup)box.FindName("popup");
 			
-            TextBox hpBox = (TextBox)pop.FindName("HPTextBox");
+            var hpBox = (TextBox)pop.FindName("HPTextBox");
             pop.PlacementTarget = hpBox;
             pop.IsOpen = true;
 
-            TextBox tb = (TextBox)pop.FindName("textBox");
+            var tb = (TextBox)pop.FindName("textBox");
 
             tb.Focus();
             tb.SelectAll();
@@ -4606,14 +4604,14 @@ namespace CombatManager
         {
             using (var undoGroup = undo.CreateUndoGroup())
             {
-                TextBox box = (TextBox)sender;
+                var box = (TextBox)sender;
 
                 if (e.Key == Key.Return || e.Key == Key.Enter || e.Key == Key.Down ||
                     e.Key == Key.Up)
                 {
 
 
-                    Character character = (Character)((FrameworkElement)box.Parent).DataContext;
+                    var character = (Character)((FrameworkElement)box.Parent).DataContext;
 
                     if (box != null)
                     {
@@ -4633,7 +4631,7 @@ namespace CombatManager
                             }
 
 
-                            Popup pop = (Popup)box.FindName("popup");
+                            var pop = (Popup)box.FindName("popup");
                             if (pop.PlacementTarget == box.FindName("HPTextBox"))
                             {
                                 character.AdjustHP(change, 0, 0);
@@ -4655,7 +4653,7 @@ namespace CombatManager
                 else if (e.Key == Key.Escape)
                 {
 
-                    Popup pop = (Popup)box.FindName("popup");
+                    var pop = (Popup)box.FindName("popup");
                     pop.IsOpen = false;
                 }
             }
@@ -4673,7 +4671,7 @@ namespace CombatManager
                 box = playerListBox;
             }
 
-            List<Character> list = new List<Character>();
+            var list = new List<Character>();
 
 
             foreach (Character ch in box.SelectedItems)
@@ -4692,9 +4690,9 @@ namespace CombatManager
 
         private List<Character> GetViewSelectedCharacters(object sender)
         {
-            Control control = (Control)sender;
+            var control = (Control)sender;
 
-            Character source = ((Character)control.DataContext);
+            var source = ((Character)control.DataContext);
 
             return GetViewSelectedCharactersFromChar(source);
 
@@ -4703,7 +4701,7 @@ namespace CombatManager
 
         private void MenuItem_Clone(object sender, RoutedEventArgs e)
         {
-            List<Character> list = GetViewSelectedCharacters(sender);
+            var list = GetViewSelectedCharacters(sender);
             CloneCharacterList(list);
         }
 
@@ -4712,7 +4710,7 @@ namespace CombatManager
             using (var undoGroup = undo.CreateUndoGroup())
             {
 
-                foreach (Character ch in list)
+                foreach (var ch in list)
                 {
                     combatState.CloneCharacter(ch);
                 }
@@ -4724,7 +4722,7 @@ namespace CombatManager
         {
             using (var undoGroup = undo.CreateUndoGroup())
             {
-                Character character = (Character)((FrameworkElement)sender).DataContext;
+                var character = (Character)((FrameworkElement)sender).DataContext;
                 EditAttacks(character);
             }
         }
@@ -4733,7 +4731,7 @@ namespace CombatManager
         {
             using (var undoGroup = undo.CreateUndoGroup())
             {
-                Character character = (Character)((FrameworkElement)sender).DataContext;
+                var character = (Character)((FrameworkElement)sender).DataContext;
                 EditFeats(character);
             }
         }
@@ -4741,7 +4739,7 @@ namespace CombatManager
         private void MenuItem_Delete(object sender, RoutedEventArgs e)
         {
 
-            List<Character> list = GetViewSelectedCharacters(sender);
+            var list = GetViewSelectedCharacters(sender);
             DeleteCharacterList(list);
         }
 
@@ -4750,7 +4748,7 @@ namespace CombatManager
             using (var undoGroup = undo.CreateUndoGroup())
             {
 
-                foreach (Character ch in list)
+                foreach (var ch in list)
                 {
                     RemoveCharacter(ch);
                 }
@@ -4762,10 +4760,10 @@ namespace CombatManager
             using (var undoGroup = undo.CreateUndoGroup())
             {
 
-                FrameworkElement button = (FrameworkElement)sender;
+                var button = (FrameworkElement)sender;
 
 
-                Character character = (Character)((FrameworkElement)sender).DataContext;
+                var character = (Character)((FrameworkElement)sender).DataContext;
                 if (character.IsMonster)
                 {
                     monsterListBox.SelectedItem = character;
@@ -4776,7 +4774,7 @@ namespace CombatManager
                 }
 
 
-                Grid grid = (Grid)button.FindName("CharacterGrid");
+                var grid = (Grid)button.FindName("CharacterGrid");
 
                 grid.ContextMenu.PlacementTarget = (UIElement)sender;
                 grid.ContextMenu.IsOpen = true;
@@ -4786,7 +4784,7 @@ namespace CombatManager
 
         private void Grid_Loaded(object sender, System.Windows.RoutedEventArgs e)
         {
-            Grid grid = (Grid)sender;
+            var grid = (Grid)sender;
 
             ToolTipService.SetShowDuration(grid, 360000);
         }
@@ -4796,13 +4794,13 @@ namespace CombatManager
             using (var undoGroup = undo.CreateUndoGroup())
             {
 
-                FrameworkElement el = (FrameworkElement)sender;
-                ActiveCondition co = (ActiveCondition)el.DataContext;
+                var el = (FrameworkElement)sender;
+                var co = (ActiveCondition)el.DataContext;
 
                 el = (FrameworkElement)el.TemplatedParent;
-                ListBoxItem item = (ListBoxItem)el.TemplatedParent;
+                var item = (ListBoxItem)el.TemplatedParent;
                 el = (FrameworkElement)VisualTreeHelper.GetParent(item);
-                Character ch = (Character)el.DataContext;
+                var ch = (Character)el.DataContext;
 
                 ch.Stats.RemoveCondition(co);
 
@@ -4826,19 +4824,19 @@ namespace CombatManager
         {
             using (var undoGroup = undo.CreateUndoGroup())
             {
-                FlowDocumentScrollViewer viewer = (FlowDocumentScrollViewer)sender;
+                var viewer = (FlowDocumentScrollViewer)sender;
 
                 if (viewer.DataContext is ActiveCondition)
                 {
 
-                    Condition condition = (Condition)((ActiveCondition)viewer.DataContext).Condition;
+                    var condition = (Condition)((ActiveCondition)viewer.DataContext).Condition;
                     if (condition != null)
                     {
                         if (condition.Spell != null)
                         {
 
                             viewer.Document.Blocks.Clear();
-                            SpellBlockCreator b = new SpellBlockCreator(viewer.Document, BlockLinkClicked);
+                            var b = new SpellBlockCreator(viewer.Document, BlockLinkClicked);
                             viewer.Document.Blocks.AddRange(b.CreateBlocks(condition.Spell, true, false));
                         }
                     }
@@ -4850,18 +4848,18 @@ namespace CombatManager
         {
             using (var undoGroup = undo.CreateUndoGroup())
             {
-                FlowDocumentScrollViewer viewer = (FlowDocumentScrollViewer)sender;
+                var viewer = (FlowDocumentScrollViewer)sender;
                 viewer.Document.Blocks.Clear();
                 if (viewer.DataContext is ActiveCondition)
                 {
 
 
-                    Condition condition = (Condition)((ActiveCondition)viewer.DataContext).Condition;
+                    var condition = (Condition)((ActiveCondition)viewer.DataContext).Condition;
                     if (condition != null)
                     {
                         if (condition.Affliction != null)
                         {
-                            Paragraph p = new Paragraph(new Run(condition.Affliction.Text));
+                            var p = new Paragraph(new Run(condition.Affliction.Text));
                             try
                             {
                                 p.FontFamily = new FontFamily("Cabin");
@@ -4881,7 +4879,7 @@ namespace CombatManager
 
         private void MiniTemplateGrid_Loaded(object sender, RoutedEventArgs e)
         {
-            Grid grid = (Grid)sender;
+            var grid = (Grid)sender;
             ToolTipService.SetShowDuration(grid, 360000);
         }
 
@@ -4890,7 +4888,7 @@ namespace CombatManager
             using (var undoGroup = undo.CreateUndoGroup())
             {
 
-                ConditionSelector conditionSelector = new ConditionSelector();
+                var conditionSelector = new ConditionSelector();
                 conditionSelector.InitiativeCount = combatState.CurrentInitiativeCount;
                 conditionSelector.Owner = this;
                 conditionSelector.WindowStartupLocation = System.Windows.WindowStartupLocation.CenterOwner;
@@ -4953,7 +4951,7 @@ namespace CombatManager
         private void AfflictionMenuItem_Loaded(object sender, RoutedEventArgs e)
         {
 
-            MenuItem mi = (MenuItem)sender;
+            var mi = (MenuItem)sender;
 
             SetAfflictionItemData(mi);
         }
@@ -4961,7 +4959,7 @@ namespace CombatManager
         private void AfflictionMenuItem_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
 
-            MenuItem mi = (MenuItem)sender;
+            var mi = (MenuItem)sender;
 
             SetAfflictionItemData(mi);
         }
@@ -4976,7 +4974,7 @@ namespace CombatManager
             {
                 using (var undoGroup = undo.CreateUndoGroup())
                 {
-                    MenuItem mi = (MenuItem)sender;
+                    var mi = (MenuItem)sender;
 
                     SetAfflictionItemData(mi);
                 }
@@ -4989,7 +4987,7 @@ namespace CombatManager
             {
                 using (var undoGroup = undo.CreateUndoGroup())
                 {
-                    MenuItem mi = (MenuItem)sender;
+                    var mi = (MenuItem)sender;
 
 
                     SetInitiativeItemData(mi);
@@ -5001,7 +4999,7 @@ namespace CombatManager
         {
             using (var undoGroup = undo.CreateUndoGroup())
             {
-                MenuItem mi = (MenuItem)sender;
+                var mi = (MenuItem)sender;
 
                 SetInitiativeItemData(mi);
             }
@@ -5038,24 +5036,24 @@ namespace CombatManager
         private void SetInitiativeItemData(MenuItem mi)
         {
 
-            FrameworkElement el = (FrameworkElement)mi.Parent;
+            var el = (FrameworkElement)mi.Parent;
 
             if (el.DataContext != null && el.DataContext.GetType() == typeof(Character))
             {
 
-                List<InitiativeItemData> availableCharacters = new List<InitiativeItemData>();
+                var availableCharacters = new List<InitiativeItemData>();
 
-                Character ch = (Character)el.DataContext;
+                var ch = (Character)el.DataContext;
 
-                List<Character> list = GetViewSelectedCharactersFromChar(ch);
+                var list = GetViewSelectedCharactersFromChar(ch);
 
                 if (ch.InitiativeFollowers.Count == 0)
                 {
-                    foreach (Character chList in combatState.Characters)
+                    foreach (var chList in combatState.Characters)
                     {
                         if (!list.Contains(chList) && chList.IsMonster == ch.IsMonster && chList.InitiativeLeader == null)
                         {
-                            InitiativeItemData data = new InitiativeItemData();
+                            var data = new InitiativeItemData();
                             data.Character = ch;
                             data.Leader = chList;
 
@@ -5076,22 +5074,22 @@ namespace CombatManager
         {
 
 
-            List<AfflictionItemData> list = new List<AfflictionItemData>();
+            var list = new List<AfflictionItemData>();
 
 
-            FrameworkElement el = (FrameworkElement)mi.Parent;
+            var el = (FrameworkElement)mi.Parent;
 
             if (el.DataContext != null && el.DataContext.GetType() == typeof(Character))
             {
 
-                Character ch = (Character)el.DataContext;
+                var ch = (Character)el.DataContext;
 
                 if (ch.Monster != null)
                 {
-                    foreach (Condition c in ch.Monster.UsableConditions)
+                    foreach (var c in ch.Monster.UsableConditions)
                     {
 
-                        AfflictionItemData data = new AfflictionItemData();
+                        var data = new AfflictionItemData();
                         data.Character = ch;
                         data.Condition = c;
                         data.Targets = combatState.CombatList;
@@ -5110,15 +5108,15 @@ namespace CombatManager
             using (var undoGroup = undo.CreateUndoGroup())
             {
 
-                MenuItem mi = (MenuItem)sender;
+                var mi = (MenuItem)sender;
 
-                Character target = (Character)mi.DataContext;
+                var target = (Character)mi.DataContext;
 
                 object ob = VisualTreeHelper.GetParent(mi);
-                FrameworkElement parent = (FrameworkElement)ob;
-                AfflictionItemData data = (AfflictionItemData)parent.DataContext;
+                var parent = (FrameworkElement)ob;
+                var data = (AfflictionItemData)parent.DataContext;
 
-                ActiveCondition ac = new ActiveCondition();
+                var ac = new ActiveCondition();
                 ac.Condition = data.Condition;
                 ac.InitiativeCount = combatState.CurrentInitiativeCount;
 
@@ -5132,13 +5130,13 @@ namespace CombatManager
             using (var undoGroup = undo.CreateUndoGroup())
             {
 
-                MenuItem mi = (MenuItem)sender;
+                var mi = (MenuItem)sender;
 
-                InitiativeItemData data = (InitiativeItemData)mi.DataContext;
+                var data = (InitiativeItemData)mi.DataContext;
 
-                List<Character> list = GetViewSelectedCharactersFromChar(data.Character);
+                var list = GetViewSelectedCharactersFromChar(data.Character);
 
-                foreach (Character ch in list)
+                foreach (var ch in list)
                 {
                     combatState.LinkInitiative(ch, data.Leader);
                 }
@@ -5151,10 +5149,10 @@ namespace CombatManager
         {
             using (var undoGroup = undo.CreateUndoGroup())
             {
-                MenuItem mi = (MenuItem)sender;
-                ActiveCondition ac = (ActiveCondition)mi.DataContext;
+                var mi = (MenuItem)sender;
+                var ac = (ActiveCondition)mi.DataContext;
 
-                Character ch = GetConditionMenuItemCharacter(mi);
+                var ch = GetConditionMenuItemCharacter(mi);
 
                 if (ch != null)
                 {
@@ -5178,10 +5176,10 @@ namespace CombatManager
         {
             using (var undoGroup = undo.CreateUndoGroup())
             {
-                MenuItem mi = (MenuItem)sender;
-                ActiveCondition ac = (ActiveCondition)mi.DataContext;
+                var mi = (MenuItem)sender;
+                var ac = (ActiveCondition)mi.DataContext;
 
-                foreach (Character ch in combatState.Characters)
+                foreach (var ch in combatState.Characters)
                 {
                     ch.RemoveConditionByName(ac.Condition.Name);
                 }
@@ -5191,12 +5189,12 @@ namespace CombatManager
 
         private Character GetConditionMenuItemCharacter(MenuItem mi)
         {
-            FrameworkElement el = (FrameworkElement)mi.Parent;
-            Popup p = (Popup)el.Parent;
+            var el = (FrameworkElement)mi.Parent;
+            var p = (Popup)el.Parent;
             el = (FrameworkElement)p.PlacementTarget;
             Character ch = null;
 
-            ListBox box = FindAncestor<ListBox>(el);
+            var box = FindAncestor<ListBox>(el);
 
             if (box != null)
             {
@@ -5208,7 +5206,7 @@ namespace CombatManager
 
         private static T FindAncestor<T>(FrameworkElement element)
         {
-            FrameworkElement el = (FrameworkElement)VisualTreeHelper.GetParent(element);
+            var el = (FrameworkElement)VisualTreeHelper.GetParent(element);
 
 
             while (el != null && el.GetType() != typeof(T))
@@ -5222,11 +5220,11 @@ namespace CombatManager
         private void ConditionMenuItem_AddTurn(object sender, RoutedEventArgs e)
         {
 
-            ActiveCondition ac = (ActiveCondition)((FrameworkElement)sender).DataContext;
+            var ac = (ActiveCondition)((FrameworkElement)sender).DataContext;
 
-            MenuItem mi = (MenuItem)sender;
+            var mi = (MenuItem)sender;
 
-            Character ch = GetConditionMenuItemCharacter(mi);
+            var ch = GetConditionMenuItemCharacter(mi);
 
 
             using (var undoGroup = undo.CreateUndoGroup())
@@ -5238,11 +5236,11 @@ namespace CombatManager
         private void ConditionMenuItem_Add5Turns(object sender, RoutedEventArgs e)
         {
 
-            ActiveCondition ac = (ActiveCondition)((FrameworkElement)sender).DataContext;
+            var ac = (ActiveCondition)((FrameworkElement)sender).DataContext;
 
-            MenuItem mi = (MenuItem)sender;
+            var mi = (MenuItem)sender;
 
-            Character ch = GetConditionMenuItemCharacter(mi);
+            var ch = GetConditionMenuItemCharacter(mi);
 
 
             using (var undoGroup = undo.CreateUndoGroup())
@@ -5258,10 +5256,10 @@ namespace CombatManager
             {
 
 
-                ActiveCondition ac = (ActiveCondition)((FrameworkElement)sender).DataContext;
-                MenuItem mi = (MenuItem)sender;
+                var ac = (ActiveCondition)((FrameworkElement)sender).DataContext;
+                var mi = (MenuItem)sender;
 
-                Character ch = GetConditionMenuItemCharacter(mi);
+                var ch = GetConditionMenuItemCharacter(mi);
 
                 combatState.RemoveConditionTurns(ch, ac, 1);
 
@@ -5276,10 +5274,10 @@ namespace CombatManager
             {
 
 
-                ActiveCondition ac = (ActiveCondition)((FrameworkElement)sender).DataContext;
-                MenuItem mi = (MenuItem)sender;
+                var ac = (ActiveCondition)((FrameworkElement)sender).DataContext;
+                var mi = (MenuItem)sender;
 
-                Character ch = GetConditionMenuItemCharacter(mi);
+                var ch = GetConditionMenuItemCharacter(mi);
 
                 combatState.RemoveConditionTurns(ch, ac, 5);
 
@@ -5294,13 +5292,13 @@ namespace CombatManager
             {
                 try
                 {
-                    List<Monster> monsters = Monster.FromFile(filename);
+                    var monsters = Monster.FromFile(filename);
 
                     if (monsters != null)
                     {
 
                         Character ch = null;
-                        foreach (Monster m in monsters)
+                        foreach (var m in monsters)
                         {
 
                             ch = new Character(m, false);
@@ -5333,7 +5331,7 @@ namespace CombatManager
                 {
                     if (c.Monster != null && c.Monster.XP != null)
                     {
-                        long? monsterXP = c.Monster.XPValue;
+                        var monsterXP = c.Monster.XPValue;
                         if (monsterXP != null)
                         {
                             xp += monsterXP.Value;
@@ -5404,7 +5402,7 @@ namespace CombatManager
         {
             using (var undoGroup = undo.CreateUndoGroup())
             {
-                List<Character> list = GetViewSelectedCharacters(sender);
+                var list = GetViewSelectedCharacters(sender);
 
 
                 MoveCharacterList(list, false);
@@ -5416,7 +5414,7 @@ namespace CombatManager
         {
             using (var undoGroup = undo.CreateUndoGroup())
             {
-                List<Character> list = GetViewSelectedCharacters(sender);
+                var list = GetViewSelectedCharacters(sender);
 
                 MoveCharacterList(list, true);
 
@@ -5447,7 +5445,7 @@ namespace CombatManager
 
         private void MenuItem_Unlink(object sender, RoutedEventArgs e)
         {
-            List<Character> list = GetViewSelectedCharacters(sender);
+            var list = GetViewSelectedCharacters(sender);
             UnlinkCharacterList(list);
         }
 
@@ -5456,7 +5454,7 @@ namespace CombatManager
             using (var undoGroup = undo.CreateUndoGroup())
             {
 
-                foreach (Character ch in list)
+                foreach (var ch in list)
                 {
                     combatState.UnlinkLeader(ch);
                 }
@@ -5467,7 +5465,7 @@ namespace CombatManager
         private void MenuItem_GroupAllSelected(object sender, RoutedEventArgs e)
         {
 
-            List<Character> list = GetViewSelectedCharacters(sender);
+            var list = GetViewSelectedCharacters(sender);
             GroupCharacterList(list);
         }
 
@@ -5479,7 +5477,7 @@ namespace CombatManager
                 {
 
 
-                    Character start = list[0];
+                    var start = list[0];
 
                     List<Character> followers;
 
@@ -5487,7 +5485,7 @@ namespace CombatManager
                     if (list.Count > 1)
                     {
                         followers = list.GetRange(1, list.Count - 1);
-                        foreach (Character c in followers)
+                        foreach (var c in followers)
                         {
                             combatState.LinkInitiative(c, start);
                         }
@@ -5500,9 +5498,9 @@ namespace CombatManager
 
         private void playerListBox_GotFocus(object sender, RoutedEventArgs e)
         {
-            ListBox box = (ListBox)sender;
+            var box = (ListBox)sender;
 
-            Character ch = (Character)box.SelectedValue;
+            var ch = (Character)box.SelectedValue;
             if (ch != null)
             {
                 SetCurrentViewMonster(ch);
@@ -5511,9 +5509,9 @@ namespace CombatManager
 
         private void monsterListBox_GotFocus(object sender, RoutedEventArgs e)
         {
-            ListBox box = (ListBox)sender;
+            var box = (ListBox)sender;
 
-            Character ch = (Character)box.SelectedValue;
+            var ch = (Character)box.SelectedValue;
             if (ch != null)
             {
                 SetCurrentViewMonster(ch);
@@ -5522,7 +5520,7 @@ namespace CombatManager
 
         private void ClearDelayReadyMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            Character ch = (Character)((FrameworkElement)sender).DataContext;
+            var ch = (Character)((FrameworkElement)sender).DataContext;
             ClearCharacter(ch);
         }
 
@@ -5539,7 +5537,7 @@ namespace CombatManager
 
         private void ReadyMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            Character ch = (Character)((FrameworkElement)sender).DataContext;
+            var ch = (Character)((FrameworkElement)sender).DataContext;
             ReadyCharacter(ch);
         }
 
@@ -5555,7 +5553,7 @@ namespace CombatManager
 
         private void ActNowMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            Character ch = (Character)((FrameworkElement)sender).DataContext;
+            var ch = (Character)((FrameworkElement)sender).DataContext;
             ActNowCharacter(ch);
         }
 
@@ -5570,7 +5568,7 @@ namespace CombatManager
 
         private void DelayMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            Character ch = (Character)((FrameworkElement)sender).DataContext;
+            var ch = (Character)((FrameworkElement)sender).DataContext;
             DelayCharacter(ch);
         }
 
@@ -5655,7 +5653,7 @@ namespace CombatManager
         {
             using (var undoGroup = undo.CreateUndoGroup())
             {
-                SettingsDialog dlg = new SettingsDialog();
+                var dlg = new SettingsDialog();
                 dlg.Owner = this;
                 dlg.WindowStartupLocation = System.Windows.WindowStartupLocation.CenterOwner;
 
@@ -5677,7 +5675,7 @@ namespace CombatManager
             {
                 if (((bool)e.NewValue) == true)
                 {
-                    TextBox box = (TextBox)sender;
+                    var box = (TextBox)sender;
                     box.Text = lastHPChange.ToString();
                 }
             }
@@ -5689,15 +5687,15 @@ namespace CombatManager
             {
                 if ((bool)e.NewValue)
                 {
-                    ContextMenu menu = (ContextMenu)sender;
+                    var menu = (ContextMenu)sender;
 
-                    List<Character> list = GetViewSelectedCharacters(menu);
+                    var list = GetViewSelectedCharacters(menu);
 
-                    MenuItem item = (MenuItem)LogicalTreeHelper.FindLogicalNode(menu, "UnlinkMenuItem");
+                    var item = (MenuItem)LogicalTreeHelper.FindLogicalNode(menu, "UnlinkMenuItem");
 
-                    bool needUnlink = false;
+                    var needUnlink = false;
 
-                    foreach (Character ch in list)
+                    foreach (var ch in list)
                     {
                         if (ch.InitiativeLeader != null)
                         {
@@ -5717,7 +5715,7 @@ namespace CombatManager
             using (var undoGroup = undo.CreateUndoGroup())
             {
 
-                TreasureGenerator gen = new TreasureGenerator();
+                var gen = new TreasureGenerator();
                 gen.Level = TreasureLevelComboBox.SelectedIndex + 1;
                 gen.Coin = CoinAmountComboBox.SelectedIndex;
                 gen.Items = ItemsAmountComboBox.SelectedIndex;
@@ -5725,14 +5723,14 @@ namespace CombatManager
 
                 
 
-                Treasure t = gen.Generate();
+                var t = gen.Generate();
 
 
                 if (t != null)
                 {
                     TreasureFlowDocument.Document.Blocks.Clear();
 
-                    TreasureBlockCreator c = new TreasureBlockCreator(TreasureFlowDocument.Document, BlockLinkClicked);
+                    var c = new TreasureBlockCreator(TreasureFlowDocument.Document, BlockLinkClicked);
 
                     TreasureFlowDocument.Document.Blocks.AddRange(c.CreateBlocks(t));
 
@@ -5749,8 +5747,8 @@ namespace CombatManager
             }
 
 
-            int multiplier = 1;
-            foreach (Monster m in from c in combatState.Characters where c.IsMonster select c.Monster)
+            var multiplier = 1;
+            foreach (var m in from c in combatState.Characters where c.IsMonster select c.Monster)
             {
                 if (m.Treasure == "double")
                 {
@@ -5773,14 +5771,14 @@ namespace CombatManager
             using (var undoGroup = undo.CreateUndoGroup())
             {
 
-                ContextMenu menu = (ContextMenu)sender;
+                var menu = (ContextMenu)sender;
 
                 if (menu.DataContext is ActiveCondition)
                 {
 
-                    ActiveCondition c = (ActiveCondition)menu.DataContext;
+                    var c = (ActiveCondition)menu.DataContext;
 
-                    MenuItem item = (MenuItem)LogicalTreeHelper.FindLogicalNode(menu, "StabalizeMenuItem");
+                    var item = (MenuItem)LogicalTreeHelper.FindLogicalNode(menu, "StabalizeMenuItem");
 
 
                     if (item != null)
@@ -5805,10 +5803,10 @@ namespace CombatManager
         {
             using (var undoGroup = undo.CreateUndoGroup())
             {
-                MenuItem mi = (MenuItem)sender;
-                ActiveCondition ac = (ActiveCondition)mi.DataContext;
+                var mi = (MenuItem)sender;
+                var ac = (ActiveCondition)mi.DataContext;
 
-                Character ch = GetConditionMenuItemCharacter(mi);
+                var ch = GetConditionMenuItemCharacter(mi);
 
                 if (ch != null)
                 {
@@ -5860,8 +5858,8 @@ namespace CombatManager
         private void DamageHealMenuItem_Click(object sender, RoutedEventArgs e)
         {
 
-            Control control = (Control)sender;
-            Character ch = ((Character)control.DataContext);
+            var control = (Control)sender;
+            var ch = ((Character)control.DataContext);
             DamageHealDialogCharacter(ch);
 
 
@@ -5870,7 +5868,7 @@ namespace CombatManager
         public  void DamageHealDialogCharacter(Character ch)
         {
 
-            HPChangeDialog dlg = new HPChangeDialog();
+            var dlg = new HPChangeDialog();
             dlg.Owner = this;
             dlg.WindowStartupLocation = System.Windows.WindowStartupLocation.CenterOwner;
             
@@ -5889,13 +5887,13 @@ namespace CombatManager
         private void GenerateItemsButton_Click(object sender, System.Windows.RoutedEventArgs e)
         {
 
-            TreasureGenerator.RandomItemType types = GetSelectedRandomItemTypes();
+            var types = GetSelectedRandomItemTypes();
 
             if (CanGenerateRandomItems)
             {
-                int count = ItemGenerateCountComboBox.SelectedIndex + 1;
+                var count = ItemGenerateCountComboBox.SelectedIndex + 1;
 
-                ItemLevel level = ItemLevel.Minor;
+                var level = ItemLevel.Minor;
 
                 if (ItemGenerateLevelComboBox.SelectedIndex == 0)
                 {
@@ -5910,18 +5908,18 @@ namespace CombatManager
                     level = ItemLevel.Major;
                 }
 
-                Treasure t = new Treasure();
-                TreasureGenerator g = new TreasureGenerator();
+                var t = new Treasure();
+                var g = new TreasureGenerator();
 
 
-                for (int i = 0; i < count; i++)
+                for (var i = 0; i < count; i++)
                 {
                     t.Items.Add(g.GenerateRandomItem(level, types));
                 }
 
                 TreasureFlowDocument.Document.Blocks.Clear();
 
-                TreasureBlockCreator c = new TreasureBlockCreator(TreasureFlowDocument.Document, BlockLinkClicked);
+                var c = new TreasureBlockCreator(TreasureFlowDocument.Document, BlockLinkClicked);
 
                 TreasureFlowDocument.Document.Blocks.AddRange(c.CreateBlocks(t));
 
@@ -5936,9 +5934,9 @@ namespace CombatManager
                 if (mainWindowLoaded)
                 {
 
-                    TreasureGenerator.RandomItemType types = GetSelectedRandomItemTypes();
+                    var types = GetSelectedRandomItemTypes();
 
-                    bool generate = false;
+                    var generate = false;
 
                     if (ItemGenerateLevelComboBox.SelectedIndex == 0)
                     {
@@ -5977,7 +5975,7 @@ namespace CombatManager
 
         private TreasureGenerator.RandomItemType GetSelectedRandomItemTypes()
         {
-            TreasureGenerator.RandomItemType types = TreasureGenerator.RandomItemType.None;
+            var types = TreasureGenerator.RandomItemType.None;
             if (mainWindowLoaded)
             {
                 if (GenerateMundaneCheck.IsChecked == true)
@@ -6077,7 +6075,7 @@ namespace CombatManager
 
                 GenerateItemsButton.IsEnabled = CanGenerateRandomItems;
 
-                bool rodStaff = ItemGenerateLevelComboBox.SelectedIndex != 0;
+                var rodStaff = ItemGenerateLevelComboBox.SelectedIndex != 0;
 
                 GenerateRodCheck.IsEnabled = rodStaff;
                 GenerateStaffCheck.IsEnabled = rodStaff;
@@ -6089,7 +6087,7 @@ namespace CombatManager
             if ((bool)e.NewValue)
             {
 
-                MenuItem item = (MenuItem)sender;
+                var item = (MenuItem)sender;
 
 
                 AddConditonMenuItems(item);
@@ -6108,7 +6106,7 @@ namespace CombatManager
 
         public void ShowConditionMenu(Character ch)
         {
-            ContextMenu m = new ContextMenu();
+            var m = new ContextMenu();
             m.DataContext = ch;
 
             AddConditonMenuItems(m);
@@ -6121,17 +6119,17 @@ namespace CombatManager
         
         void AddFavoriteConditionItems(List<FavoriteCondition> list, ItemsControl item)
         {
-            foreach (FavoriteCondition fc in list)
+            foreach (var fc in list)
             {
-                Condition c = Condition.FromFavorite(fc);
+                var c = Condition.FromFavorite(fc);
 
                 if (c != null)
                 {
-                    MenuItem mi = new MenuItem();
+                    var mi = new MenuItem();
 
                     mi.Header = c.Name;
-                    Image i = new Image();
-                    BitmapImage bi = StringImageSmallIconConverter.FromName(c.Image);
+                    var i = new Image();
+                    var bi = StringImageSmallIconConverter.FromName(c.Image);
                     i.Source = bi;
                     i.Width = 16;
                     i.Height = 16;
@@ -6151,7 +6149,7 @@ namespace CombatManager
 
         void AddOtherMenuItems(ItemsControl item)
         {
-            MenuItem EditFavorites = new MenuItem();
+            var EditFavorites = new MenuItem();
             EditFavorites.Header = "Other...";
             EditFavorites.Click += new RoutedEventHandler(MenuItem_AddCondition);
             item.Items.Add(EditFavorites);
@@ -6160,16 +6158,16 @@ namespace CombatManager
 
         void FavoritesMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            MenuItem mi = (MenuItem)sender;
-            Condition c = (Condition)mi.DataContext;
+            var mi = (MenuItem)sender;
+            var c = (Condition)mi.DataContext;
 
             using (var undoGroup = undo.CreateUndoGroup())
             {
-                List<Character> chars = GetViewSelectedCharacters(mi.Parent);
+                var chars = GetViewSelectedCharacters(mi.Parent);
 
-                foreach (Character ch in chars)
+                foreach (var ch in chars)
                 {
-                    ActiveCondition a = new ActiveCondition();
+                    var a = new ActiveCondition();
                     a.Condition = c;
                     ch.Stats.AddCondition(a);
                 }
@@ -6213,7 +6211,7 @@ namespace CombatManager
 
         private void TitleBarMenuButton_Click(object sender, RoutedEventArgs e)
         {
-            ContextMenu menu = (ContextMenu)Resources["MainMenu"];
+            var menu = (ContextMenu)Resources["MainMenu"];
 
             menu.PlacementTarget = (Button)sender;
             menu.Placement = PlacementMode.Bottom;
@@ -6249,11 +6247,11 @@ namespace CombatManager
             // This is because the pagination for the printer needs to be
             // done differently than the pagination for the displayed page.
             // We print the copy, rather that the original FlowDocument.
-            System.IO.MemoryStream s = new System.IO.MemoryStream();
-            TextRange source = new TextRange(document.ContentStart, document.ContentEnd);
+            var s = new System.IO.MemoryStream();
+            var source = new TextRange(document.ContentStart, document.ContentEnd);
             source.Save(s, DataFormats.Xaml);
-            FlowDocument copy = new FlowDocument();
-            TextRange dest = new TextRange(copy.ContentStart, copy.ContentEnd);
+            var copy = new FlowDocument();
+            var dest = new TextRange(copy.ContentStart, copy.ContentEnd);
             dest.Load(s, DataFormats.Xaml);
 
             // Create a XpsDocumentWriter object, implicitly opening a Windows common print dialog,
@@ -6261,15 +6259,15 @@ namespace CombatManager
 
             // get information about the dimensions of the seleted printer+media.
             System.Printing.PrintDocumentImageableArea ia = null;
-            System.Windows.Xps.XpsDocumentWriter docWriter = System.Printing.PrintQueue.CreateXpsDocumentWriter(ref ia);
+            var docWriter = System.Printing.PrintQueue.CreateXpsDocumentWriter(ref ia);
 
             if (docWriter != null && ia != null)
             {
-                DocumentPaginator paginator = ((IDocumentPaginatorSource)copy).DocumentPaginator;
+                var paginator = ((IDocumentPaginatorSource)copy).DocumentPaginator;
 
                 // Change the PageSize and PagePadding for the document to match the CanvasSize for the printer device.
                 paginator.PageSize = new Size(ia.MediaSizeWidth, ia.MediaSizeHeight);
-                Thickness t = new Thickness(72);  // copy.PagePadding;
+                var t = new Thickness(72);  // copy.PagePadding;
                 copy.PagePadding = new Thickness(
                                  Math.Max(ia.OriginWidth, t.Left),
                                    Math.Max(ia.OriginHeight, t.Top),
@@ -6358,10 +6356,10 @@ namespace CombatManager
             }
 
 
-            List<GameMapDisplayWindow> gml = new List<GameMapDisplayWindow>(playerMapDisplayWindowMap.Values);
+            var gml = new List<GameMapDisplayWindow>(playerMapDisplayWindowMap.Values);
             gml.AddRange(mapDisplayWindowMap.Values);
 
-            foreach (GameMapDisplayWindow gm in gml)
+            foreach (var gm in gml)
             {
                 if (gm != null)
                 {
@@ -6422,7 +6420,7 @@ namespace CombatManager
 
         private void CombatState_CombatStateNotificationSent(object sender, CombatStateNotification notification)
         {
-            Paragraph p = new Paragraph();
+            var p = new Paragraph();
             p.Inlines.Add(new Bold(new Underline(new Run(notification.Title))));
             p.Inlines.Add(new System.Windows.Documents.LineBreak());
             p.Inlines.Add(new Run(notification.Body));
@@ -6450,7 +6448,7 @@ namespace CombatManager
 
         private void TreasureSelectAllButton_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            foreach (CheckBox c in treasureCheckboxesList)
+            foreach (var c in treasureCheckboxesList)
             {
                 c.IsChecked = true;
             }
@@ -6458,7 +6456,7 @@ namespace CombatManager
 
         private void TreasureUnselectAllButton_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            foreach (CheckBox c in treasureCheckboxesList)
+            foreach (var c in treasureCheckboxesList)
             {
                 c.IsChecked = false;
             }
@@ -6466,13 +6464,13 @@ namespace CombatManager
 
         private void RollInitiativeMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            MenuItem mi = (MenuItem)sender;
+            var mi = (MenuItem)sender;
 
-            FrameworkElement el = (FrameworkElement)sender;
+            var el = (FrameworkElement)sender;
 
-            Character ch = (Character)el.DataContext;
+            var ch = (Character)el.DataContext;
 
-            List<Character> list = GetViewSelectedCharactersFromChar(ch);
+            var list = GetViewSelectedCharactersFromChar(ch);
 
             RollIniiativeForCharacters(list);
         }
@@ -6481,7 +6479,7 @@ namespace CombatManager
         {
             using (var undoGroup = undo.CreateUndoGroup())
             {
-                foreach (Character c in list)
+                foreach (var c in list)
                 {
                     combatState.RollIndividualInitiative(c);
                 }
@@ -6493,11 +6491,11 @@ namespace CombatManager
         private void MenuItem_EditMonster(object sender, RoutedEventArgs e)
         {
 
-            MenuItem mi = (MenuItem)sender;
+            var mi = (MenuItem)sender;
 
-            FrameworkElement el = (FrameworkElement)sender;
+            var el = (FrameworkElement)sender;
 
-            Character ch = (Character)el.DataContext;
+            var ch = (Character)el.DataContext;
 
             EditMonster(ch);
 
@@ -6505,7 +6503,7 @@ namespace CombatManager
 
         public void EditMonster(Character ch)
         {
-            MonsterEditorWindow w = new MonsterEditorWindow();
+            var w = new MonsterEditorWindow();
 
             w.Owner = this;
             w.Monster = ch.Monster;
@@ -6565,10 +6563,10 @@ namespace CombatManager
 
         private void NotesMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            MenuItem mi = (MenuItem)sender;
-            ContextMenu cm = (ContextMenu)mi.Parent;
-            FrameworkElement el = (FrameworkElement)cm.PlacementTarget;
-            Popup popup = (Popup)el.FindName("NotesPopup");
+            var mi = (MenuItem)sender;
+            var cm = (ContextMenu)mi.Parent;
+            var el = (FrameworkElement)cm.PlacementTarget;
+            var popup = (Popup)el.FindName("NotesPopup");
             popup.IsOpen = true;
         }
         
@@ -6622,11 +6620,11 @@ namespace CombatManager
         private void MenuItem_AddToCustomMonsters(object sender, RoutedEventArgs e)
         {
 
-            MenuItem mi = (MenuItem)sender;
+            var mi = (MenuItem)sender;
 
-            FrameworkElement el = (FrameworkElement)sender;
+            var el = (FrameworkElement)sender;
 
-            Character ch = (Character)el.DataContext;
+            var ch = (Character)el.DataContext;
 
             AddNewCustomMonster(ch.Monster);
         }
@@ -6639,7 +6637,7 @@ namespace CombatManager
 
         public Monster AddNewCustomMonster(Monster oldmonster)
         {
-            Monster m = (Monster)oldmonster.Clone();
+            var m = (Monster)oldmonster.Clone();
             m.DBLoaderID = 0;
             MonsterDB.DB.AddMonster(m);
             Monster.Monsters.Add(m);
@@ -6656,9 +6654,9 @@ namespace CombatManager
         {
             if (currentDBMonster != null)
             {
-                Monster m = (Monster)(currentDBMonster).Clone();
+                var m = (Monster)(currentDBMonster).Clone();
 
-                MonsterEditorWindow w = new MonsterEditorWindow();
+                var w = new MonsterEditorWindow();
 
                 w.Owner = this;
                 w.Monster = m;
@@ -6674,12 +6672,12 @@ namespace CombatManager
 
         private void EditCustomMonsterButton_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            Monster m = ((Monster)monsterTabView.CurrentItem);
+            var m = ((Monster)monsterTabView.CurrentItem);
 
 
             if (m != null)
             {
-                MonsterEditorWindow w = new MonsterEditorWindow();
+                var w = new MonsterEditorWindow();
 
                 w.Owner = this;
                 w.Monster = m;
@@ -6693,7 +6691,7 @@ namespace CombatManager
 
         private void DeleteCustomMonsterButton_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            Monster m = ((Monster)monsterTabView.CurrentItem);
+            var m = ((Monster)monsterTabView.CurrentItem);
 
             if (m != null)
             {
@@ -6706,10 +6704,10 @@ namespace CombatManager
         private void MakeMonsterVisible(Monster m)
         {
 
-            object item = MonsterTabNPCComboBox.SelectedItem;
+            var item = MonsterTabNPCComboBox.SelectedItem;
             if (item != NPCFilterAllComboItem)
             {
-                bool showAll = false;
+                var showAll = false;
                 if (m.IsCustom && item != NPCFilterCustomComboItem)
                 {
                     showAll = true;
@@ -6785,26 +6783,26 @@ namespace CombatManager
 
         private void ObjectToolTipFlowDocument_OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            FlowDocumentScrollViewer viewer = (FlowDocumentScrollViewer)sender;
+            var viewer = (FlowDocumentScrollViewer)sender;
 
             viewer.Document.Blocks.Clear();
 
             if (viewer.DataContext is Spell)
             {
-                Spell spell = (Spell)viewer.DataContext;
+                var spell = (Spell)viewer.DataContext;
                 if (spell != null)
                 {
-                    SpellBlockCreator creator = new SpellBlockCreator(viewer.Document, null);
+                    var creator = new SpellBlockCreator(viewer.Document, null);
                     viewer.Document.Blocks.AddRange(creator.CreateBlocks(spell, false, false));
                 }
 
             }
             else if (viewer.DataContext is Feat)
             {
-                Feat feat = (Feat)viewer.DataContext;
+                var feat = (Feat)viewer.DataContext;
                 if (feat != null)
                 {
-                    FeatBlockCreator creator = new FeatBlockCreator(viewer.Document);
+                    var creator = new FeatBlockCreator(viewer.Document);
                     viewer.Document.Blocks.AddRange(creator.CreateBlocks(feat, false));
                 }
             }
@@ -6812,10 +6810,10 @@ namespace CombatManager
             else if (viewer.DataContext is Rule)
             {
 
-                Rule rule = (Rule)viewer.DataContext;
+                var rule = (Rule)viewer.DataContext;
                 if (rule != null)
                 {
-                    RuleBlockCreator creator = new RuleBlockCreator(viewer.Document);
+                    var creator = new RuleBlockCreator(viewer.Document);
                     viewer.Document.Blocks.AddRange(creator.CreateBlocks(rule, false));
                 }
             }
@@ -6823,10 +6821,10 @@ namespace CombatManager
             else if (viewer.DataContext is MagicItem)
             {
 
-                MagicItem magicItem = (MagicItem)viewer.DataContext;
+                var magicItem = (MagicItem)viewer.DataContext;
                 if (magicItem != null)
                 {
-                    MagicItemBlockCreator creator = new MagicItemBlockCreator(viewer.Document);
+                    var creator = new MagicItemBlockCreator(viewer.Document);
                     viewer.Document.Blocks.AddRange(creator.CreateBlocks(magicItem, false));
                 }
             }
@@ -6834,11 +6832,11 @@ namespace CombatManager
             else if (viewer.DataContext is Monster)
             {
 
-                Monster m = viewer.DataContext as Monster;
+                var m = viewer.DataContext as Monster;
 
                 if (m != null)
                 {
-                    MonsterBlockCreator creator = new MonsterBlockCreator(viewer.Document, null);
+                    var creator = new MonsterBlockCreator(viewer.Document, null);
                     viewer.Document.Blocks.AddRange(creator.CreateBlocks(m, true));
                 }
             }
@@ -6846,11 +6844,11 @@ namespace CombatManager
             else if (viewer.DataContext is Character)
             {
 
-                Character m = viewer.DataContext as Character;
+                var m = viewer.DataContext as Character;
 
                 if (m != null)
                 {
-                    MonsterBlockCreator creator = new MonsterBlockCreator(viewer.Document, null);
+                    var creator = new MonsterBlockCreator(viewer.Document, null);
                     viewer.Document.Blocks.AddRange(creator.CreateBlocks(m, true));
                 }
             }
@@ -6873,7 +6871,7 @@ namespace CombatManager
 
         private void RollCurrentTextDie()
         {
-            DieRoll roll = DieRoll.FromString(DieRollText.Text);
+            var roll = DieRoll.FromString(DieRollText.Text);
 
             if (roll != null)
             {
@@ -6886,9 +6884,9 @@ namespace CombatManager
         private Button MakeDieRollButton()
         {
 
-            Button b = new Button();
+            var b = new Button();
             b.ToolTip = "Reroll";
-            Image im = CMUIUtilities.GetNamedImageControl("dice");
+            var im = CMUIUtilities.GetNamedImageControl("dice");
             im.Width = 13;
             im.Height = 13;
             b.Content = im;
@@ -6909,8 +6907,8 @@ namespace CombatManager
         {
 
             p.Margin = new Thickness(0);
-            Button b = MakeDieRollButton();
-            InlineUIContainer c = new InlineUIContainer();
+            var b = MakeDieRollButton();
+            var c = new InlineUIContainer();
             c.Child = b;
             p.Inlines.Add(c);
             p.Inlines.Add(" ");
@@ -6920,7 +6918,7 @@ namespace CombatManager
 
         private void RollDie(DieRoll roll, string header, bool full, int ? target = null)
         {
-            RollResult res = roll.Roll();
+            var res = roll.Roll();
 
             ShowRollResult(roll, res, header, full, target);
            
@@ -6928,9 +6926,9 @@ namespace CombatManager
 
         private void ShowRollResult(DieRoll roll, RollResult res, String header, bool full, int ? target = null)
         {
-            Paragraph p = new Paragraph();
+            var p = new Paragraph();
 
-            Button b = AddDieRollButton(p);
+            var b = AddDieRollButton(p);
             b.Tag = new DieRollerRollInfo() { Roll = roll, Header = header, Full = full, Target = target };
             b.Click += new RoutedEventHandler(DieReroll_Click);
 
@@ -6944,10 +6942,10 @@ namespace CombatManager
             {
 
                 p.Inlines.Add(CreateRollElement(res.Total.ToString()));
-                string text = "=";
+                var text = "=";
 
-                bool first = true;
-                foreach (DieResult die in res.Rolls)
+                var first = true;
+                foreach (var die in res.Rolls)
                 {
                     if (!first)
                     {
@@ -6976,7 +6974,7 @@ namespace CombatManager
             {
                 if (res.Rolls.Count == 1 && res.Rolls[0].Die == 20 && (res.Rolls[0].Result == 20 || res.Rolls[0].Result == 1))
                 {
-                    int result = res.Rolls[0].Result;
+                    var result = res.Rolls[0].Result;
                     p.Inlines.Add(CreateRollElement(res.Total.ToString() + " (" + result + ")", DieRollDocument.Background, new SolidColorBrush((result == 1) ? Colors.Red : Colors.Green)));
 
                 }
@@ -7003,8 +7001,8 @@ namespace CombatManager
                 p.Inlines.Add(run);
             }
 
-            bool firstIl = true;
-            foreach (Inline il in p.Inlines)
+            var firstIl = true;
+            foreach (var il in p.Inlines)
             {
                 if (firstIl)
                 {
@@ -7036,16 +7034,16 @@ namespace CombatManager
 
         Inline CreateRollElement(string text, Brush foreground, Brush background, string tooltip)
         {
-            Border b = new Border();
+            var b = new Border();
             b.Background = background;
 
             Inline rt = new Bold(new Run(text));
             rt.Foreground = foreground;
             b.CornerRadius = new CornerRadius(8);
-            TextBlock tb = new TextBlock(rt);
+            var tb = new TextBlock(rt);
             tb.HorizontalAlignment = HorizontalAlignment.Center;
             b.Child = tb;
-            Thickness pad = b.Padding;
+            var pad = b.Padding;
             b.MinWidth = 15;
             pad.Left += 4;
             pad.Right += 4;
@@ -7053,7 +7051,7 @@ namespace CombatManager
             b.ToolTip = tooltip;
 
 
-            InlineUIContainer co = new InlineUIContainer(b);
+            var co = new InlineUIContainer(b);
             co.BaselineAlignment = BaselineAlignment.Center;
 
             return co;
@@ -7062,8 +7060,8 @@ namespace CombatManager
 
         void DieReroll_Click(object sender, RoutedEventArgs e)
         {
-            Button b = (Button)sender;
-            DieRollerRollInfo r = (DieRollerRollInfo)b.Tag;
+            var b = (Button)sender;
+            var r = (DieRollerRollInfo)b.Tag;
 
             RollDie(r.Roll, r.Header, r.Full, r.Target);
         }
@@ -7071,16 +7069,16 @@ namespace CombatManager
         private void DieButtonPressed(object sender, RoutedEventArgs e)
         {
 
-            int die = int.Parse((string)((Button)sender).Tag);
+            var die = int.Parse((string)((Button)sender).Tag);
 
-            DieRoll roll = DieRoll.FromString(DieRollText.Text);
+            var roll = DieRoll.FromString(DieRollText.Text);
             if (roll != null)
             {
                 roll.AddDie(die);
             }
             else
             {
-                int mod = 0;
+                var mod = 0;
 
                 int.TryParse(DieRollText.Text, out mod);
 
@@ -7104,9 +7102,9 @@ namespace CombatManager
         private void InstantDieButtonPressed(object sender, System.Windows.RoutedEventArgs e)
         {
 
-            int die = int.Parse((string)((Button)sender).Tag);
+            var die = int.Parse((string)((Button)sender).Tag);
 
-            DieRoll roll = new DieRoll(1, 1, die, 0);
+            var roll = new DieRoll(1, 1, die, 0);
 
             RollDie(roll, null, true);
         }
@@ -7114,27 +7112,27 @@ namespace CombatManager
         #region Save Roll Menu Support Code
         private void FortitudeMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            MenuItem mi = (MenuItem)sender;
+            var mi = (MenuItem)sender;
 
-            List<Character> list = GetViewSelectedCharactersFromChar((Character)mi.DataContext);
+            var list = GetViewSelectedCharactersFromChar((Character)mi.DataContext);
             RollSave(list, Monster.SaveType.Fort);
         }
 
         private void ReflexMenuItem_Click(object sender, RoutedEventArgs e)
         {
 
-            MenuItem mi = (MenuItem)sender;
+            var mi = (MenuItem)sender;
 
-            List<Character> list = GetViewSelectedCharactersFromChar((Character)mi.DataContext);
+            var list = GetViewSelectedCharactersFromChar((Character)mi.DataContext);
             RollSave(list, Monster.SaveType.Ref);
 
         }
 
         private void WillMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            MenuItem mi = (MenuItem)sender;
+            var mi = (MenuItem)sender;
 
-            List<Character> list = GetViewSelectedCharactersFromChar((Character)mi.DataContext);
+            var list = GetViewSelectedCharactersFromChar((Character)mi.DataContext);
             RollSave(list, Monster.SaveType.Will);
 
         }
@@ -7143,7 +7141,7 @@ namespace CombatManager
         {
             if (list.Count > 0)
             {
-                Paragraph p = new Paragraph();
+                var p = new Paragraph();
                 p.Margin = new Thickness(0);
 
                 p.Inlines.Add(new Underline(new Run(SaveName(type) + " save" + (list.Count > 1 ? "s" : ""))));
@@ -7152,7 +7150,7 @@ namespace CombatManager
 
 
 
-            foreach (Character ch in list)
+            foreach (var ch in list)
             {
                 RollSave(ch, type);
             }
@@ -7162,7 +7160,7 @@ namespace CombatManager
 
         private void RollSave(Character ch, Monster.SaveType type)
         {
-            int? mod = ch.Monster.GetSave(type);
+            var mod = ch.Monster.GetSave(type);
             if (mod != null)
             {
                 DieRoll roll;
@@ -7201,21 +7199,21 @@ namespace CombatManager
         {
             if (list.Count > 0)
             {
-                Paragraph p = new Paragraph { Margin = new Thickness(0) };
+                var p = new Paragraph { Margin = new Thickness(0) };
 
                 p.Inlines.Add(new Underline(new Run(manoeuvreType + (list.Count > 1 ? "s" : ""))));
                 DieRollDocument.Blocks.Add(p);
             }
-            foreach (Character ch in list)
+            foreach (var ch in list)
             {
                 RollCombatManeuver(ch, manoeuvreType);
             }
         }
         private void RollCombatManeuver(Character ch, string maneuverType)
         {
-            int? mod = ch.Monster.GetManoeuver(maneuverType);
+            var mod = ch.Monster.GetManoeuver(maneuverType);
             if (mod == null) return;
-            DieRoll roll = UserSettings.Settings.AlternateInit3d6 ? UserSettings.Settings.AlternateInitDieRoll : new DieRoll(1, 20, (int)mod);
+            var roll = UserSettings.Settings.AlternateInit3d6 ? UserSettings.Settings.AlternateInitDieRoll : new DieRoll(1, 20, (int)mod);
             RollDie(roll, ch.Name + " (" + CMStringUtilities.PlusFormatNumber(mod) + "): ", false);
         }
         private void RollManeuverMenuItem_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
@@ -7241,9 +7239,9 @@ namespace CombatManager
         void ManeuverMenuItemClick(object sender, RoutedEventArgs e)
         {
 
-            MenuItem mi = (MenuItem)sender;
+            var mi = (MenuItem)sender;
 
-            List<Character> list = GetViewSelectedCharactersFromChar((Character)mi.DataContext);
+            var list = GetViewSelectedCharactersFromChar((Character)mi.DataContext);
             var mt = (string)mi.Tag;
             RollCombatManeuvers(list, mt);
         }
@@ -7268,9 +7266,9 @@ namespace CombatManager
             }
         void AbilityCheckMenuItemClick(object sender, RoutedEventArgs e)
             {
-                MenuItem mi = (MenuItem)sender;
+                var mi = (MenuItem)sender;
 
-                List<Character> list = GetViewSelectedCharactersFromChar((Character)mi.DataContext);
+                var list = GetViewSelectedCharactersFromChar((Character)mi.DataContext);
                 var mt = (string)mi.Tag;
                 RollAbilityCheck(list, mt);
             }
@@ -7278,12 +7276,12 @@ namespace CombatManager
         {
             if (list.Count > 0)
             {
-                Paragraph p = new Paragraph { Margin = new Thickness(0) };
+                var p = new Paragraph { Margin = new Thickness(0) };
 
                 p.Inlines.Add(new Underline(new Run(Ability + (list.Count > 1 ? "s" : ""))));
                 DieRollDocument.Blocks.Add(p);
             }
-            foreach (Character ch in list)
+            foreach (var ch in list)
                 {
                     RollAbilityCheck(ch, Ability);
                 }
@@ -7291,7 +7289,7 @@ namespace CombatManager
         private void RollAbilityCheck(Character ch, string Ability)
         {   
             int? mod = Monster.AbilityBonus(ch.Monster.GetStat((Stat)Enum.Parse(typeof(Stat),Ability)));
-            DieRoll roll = UserSettings.Settings.AlternateInit3d6 ? UserSettings.Settings.AlternateInitDieRoll : new DieRoll(1, 20, (int)mod);
+            var roll = UserSettings.Settings.AlternateInit3d6 ? UserSettings.Settings.AlternateInitDieRoll : new DieRoll(1, 20, (int)mod);
             RollDie(roll, ch.Name + " (" + CMStringUtilities.PlusFormatNumber(mod) + "): ", false);
         }
         #endregion
@@ -7312,19 +7310,19 @@ namespace CombatManager
         {
             item.Items.Clear();
 
-            foreach (Monster.SkillInfo info in Monster.SkillsDetails.Values)
+            foreach (var info in Monster.SkillsDetails.Values)
             {
-                MenuItem mi = new MenuItem();
+                var mi = new MenuItem();
                 mi.Header = info.Name;
                 mi.Tag = info;
 
                 if (info.Subtypes != null && info.Subtypes.Count > 0)
                 {
-                    foreach (string subtype in info.Subtypes)
+                    foreach (var subtype in info.Subtypes)
                     {
-                        MenuItem si = new MenuItem();
+                        var si = new MenuItem();
                         si.Header = subtype;
-                        SkillValue s = new SkillValue(info.Name);
+                        var s = new SkillValue(info.Name);
                         s.Subtype = subtype;
                         si.Tag = s;
                         si.Click += new RoutedEventHandler(SkillSubtypeMenuItemClick);
@@ -7345,21 +7343,21 @@ namespace CombatManager
         void SkillMenuItemClick(object sender, RoutedEventArgs e)
         {
 
-            MenuItem mi = (MenuItem)sender;
+            var mi = (MenuItem)sender;
 
-            List<Character> list = GetViewSelectedCharactersFromChar((Character)mi.DataContext);
+            var list = GetViewSelectedCharactersFromChar((Character)mi.DataContext);
             RollSkillCheck(list, ((Monster.SkillInfo)mi.Tag).Name, null);
         }
 
         void SkillSubtypeMenuItemClick(object sender, RoutedEventArgs e)
         {
 
-            MenuItem mi = (MenuItem)sender;
+            var mi = (MenuItem)sender;
 
-            List<Character> list = GetViewSelectedCharactersFromChar((Character)mi.DataContext);
+            var list = GetViewSelectedCharactersFromChar((Character)mi.DataContext);
 
 
-            SkillValue v = (SkillValue)mi.Tag;
+            var v = (SkillValue)mi.Tag;
 
             RollSkillCheck(list, v.Name, v.Subtype);
         }
@@ -7368,10 +7366,10 @@ namespace CombatManager
         {
             if (list.Count > 0)
             {
-                Paragraph p = new Paragraph();
+                var p = new Paragraph();
                 p.Margin = new Thickness(0);
 
-                string name = skill;
+                var name = skill;
 
                 if (subtype != null)
                 {
@@ -7382,7 +7380,7 @@ namespace CombatManager
                 DieRollDocument.Blocks.Add(p);
             }
 
-            foreach (Character ch in list)
+            foreach (var ch in list)
             {
                 RollSkillCheck(ch, skill, subtype);
             }
@@ -7390,13 +7388,13 @@ namespace CombatManager
 
         private void RollSkillCheck(Character ch, string skill, string subtype)
         {
-            Monster.SkillInfo info = Monster.SkillsDetails[skill];
-            SkillValue val = new SkillValue(skill, subtype);
+            var info = Monster.SkillsDetails[skill];
+            var val = new SkillValue(skill, subtype);
 
             if (!info.TrainedOnly || ch.Monster.SkillValueDictionary.ContainsKey(val.FullName))
             {
 
-                int mod = ch.Monster.GetSkillMod(skill, subtype);
+                var mod = ch.Monster.GetSkillMod(skill, subtype);
 
 
                 DieRoll roll;
@@ -7414,7 +7412,7 @@ namespace CombatManager
             }
             else
             {
-                Paragraph p = new Paragraph();
+                var p = new Paragraph();
                 p.Margin = new Thickness(0);
 
 
@@ -7452,7 +7450,7 @@ namespace CombatManager
 
         private void Grid_ContextMenuOpening(object sender, ContextMenuEventArgs e)
         {
-            Grid grid = sender as Grid;
+            var grid = sender as Grid;
             grid.ContextMenu.Tag = true;
         }
 
@@ -7469,19 +7467,19 @@ namespace CombatManager
 
         private void UpdateRollAttacksMenuItem(MenuItem sender)
         {
-            MenuItem attacksItem = (MenuItem)sender;
+            var attacksItem = (MenuItem)sender;
             
-            ContextMenu parent = GetContextMenuParent(attacksItem);
-            bool combatList = (parent.Tag != null && parent.Tag is bool && ((bool)parent.Tag));
+            var parent = GetContextMenuParent(attacksItem);
+            var combatList = (parent.Tag != null && parent.Tag is bool && ((bool)parent.Tag));
 
 
             attacksItem.Items.Clear();
 
             if (attacksItem.DataContext is Character)
             {
-                Character ch = (Character)attacksItem.DataContext;
+                var ch = (Character)attacksItem.DataContext;
 
-                List<Character> all = GetViewSelectedCharacters(sender);
+                var all = GetViewSelectedCharacters(sender);
                             
                 if (combatList)
                 {
@@ -7490,15 +7488,15 @@ namespace CombatManager
                 }
 
 
-                Dictionary<string, List<Character>> meleesets = new Dictionary<string, List<Character>>();
-                Dictionary<string, List<Character>> rangedsets = new Dictionary<string, List<Character>>();
+                var meleesets = new Dictionary<string, List<Character>>();
+                var rangedsets = new Dictionary<string, List<Character>>();
                 
-                foreach (Character c in all)
+                foreach (var c in all)
                 {
-                    List<AttackSet> melee = c.Monster.MeleeAttacks;
-                    foreach (AttackSet set in melee)
+                    var melee = c.Monster.MeleeAttacks;
+                    foreach (var set in melee)
                     {
-                        string s = set.ToString();
+                        var s = set.ToString();
                         if (!meleesets.ContainsKey(s))
                         {
                             meleesets[s] = new List<Character>();
@@ -7507,10 +7505,10 @@ namespace CombatManager
                         meleesets[s].Add(c);
                     }
 
-                    List<Attack> ranged = c.Monster.RangedAttacks;
-                    foreach (Attack set in ranged)
+                    var ranged = c.Monster.RangedAttacks;
+                    foreach (var set in ranged)
                     {
-                        string s = set.ToString();
+                        var s = set.ToString();
                         if (!rangedsets.ContainsKey(s))
                         {
                             rangedsets[s] = new List<Character>();
@@ -7525,14 +7523,14 @@ namespace CombatManager
 
                 if (ch != null)
                 {
-                    List<AttackSet> melee = ch.Monster.MeleeAttacks;
+                    var melee = ch.Monster.MeleeAttacks;
 
-                    List<Attack> ranged = ch.Monster.RangedAttacks;
+                    var ranged = ch.Monster.RangedAttacks;
 
-                    foreach (AttackSet set in melee)
+                    foreach (var set in melee)
                     {
-                        MenuItem mi = new MenuItem();
-                        string s = set.ToString();
+                        var mi = new MenuItem();
+                        var s = set.ToString();
                         mi.Header = set.ToString();
 
                         if (meleesets[s] != null && meleesets[s].Count > 1)
@@ -7545,7 +7543,7 @@ namespace CombatManager
                             mi.SetNamedIcon("sword");
 
                         }
-                        AttackSetRollInfo ri = new AttackSetRollInfo();
+                        var ri = new AttackSetRollInfo();
                         ri.Characters = meleesets[s];
                         ri.Characters.Sort((a, b) => String.Compare(a.Name, b.Name, true));
                         ri.Attacks = set;
@@ -7555,10 +7553,10 @@ namespace CombatManager
                         attacksItem.Items.Add(mi);
                     }
 
-                    foreach (Attack attack in ranged)
+                    foreach (var attack in ranged)
                     {
-                        MenuItem mi = new MenuItem();
-                        string s = attack.ToString();
+                        var mi = new MenuItem();
+                        var s = attack.ToString();
                         mi.Header = attack.ToString();
                         if (rangedsets[s].Count > 1)
                         {
@@ -7572,7 +7570,7 @@ namespace CombatManager
 
                         }
 
-                        AttackRollInfo ri = new AttackRollInfo();
+                        var ri = new AttackRollInfo();
                         ri.Characters = rangedsets[s];
                         ri.Characters.Sort((a, b) => String.Compare(a.Name, b.Name, true));
                         ri.Attack = attack;
@@ -7588,15 +7586,15 @@ namespace CombatManager
         public Button CreateAttackCharacterHeader(Character ch)
         {
 
-            Paragraph p = new Paragraph();
-            Button b = AddDieRollButton(p);
+            var p = new Paragraph();
+            var b = AddDieRollButton(p);
 
             p.Background = new SolidColorBrush((Color)FindResource("SecondaryColorBDarker"));
 
             p.Margin = new Thickness(0, 2, 0, 0);
             b.Margin = new Thickness(3, 3, 1, 0);
 
-            Run r = new Run(ch.Name);
+            var r = new Run(ch.Name);
             r.FontWeight = FontWeights.Bold;
 
             r.Foreground = new SolidColorBrush(Colors.White);
@@ -7608,27 +7606,27 @@ namespace CombatManager
         }
         void RollMeleeAttackItem_Click(object sender, RoutedEventArgs e)
         {
-            FrameworkElement mi = (FrameworkElement)sender;
-            Character ch = (Character)mi.DataContext;
-            AttackSetRollInfo ri = (AttackSetRollInfo)mi.Tag;
-            AttackSet set = ri.Attacks;
+            var mi = (FrameworkElement)sender;
+            var ch = (Character)mi.DataContext;
+            var ri = (AttackSetRollInfo)mi.Tag;
+            var set = ri.Attacks;
 
-            List<Attack> attacks = new List<Attack>();
+            var attacks = new List<Attack>();
 
             attacks.AddRange(set.WeaponAttacks);
             attacks.AddRange(set.NaturalAttacks);
 
-            foreach (Character c in ri.Characters)
+            foreach (var c in ri.Characters)
             {
-                Button b = CreateAttackCharacterHeader(c);
-                AttackSetRollInfo cri = new AttackSetRollInfo();
+                var b = CreateAttackCharacterHeader(c);
+                var cri = new AttackSetRollInfo();
                 cri.Characters = new List<Character>() { c };
                 cri.Attacks = ri.Attacks;
                 b.Tag = cri;
 
                 b.Click += RollMeleeAttackItem_Click;
 
-                foreach (Attack atk in attacks)
+                foreach (var atk in attacks)
                 {
                     RollAttack(c, atk);
                 }
@@ -7636,19 +7634,19 @@ namespace CombatManager
         }
         void RollRangedAttackItem_Click(object sender, RoutedEventArgs e)
         {
-            FrameworkElement mi = (FrameworkElement)sender;
-            Character ch = (Character)mi.DataContext;
+            var mi = (FrameworkElement)sender;
+            var ch = (Character)mi.DataContext;
             var ri = (AttackRollInfo)mi.Tag;
 
 
 
-            Attack atk = (Attack)ri.Attack;
+            var atk = (Attack)ri.Attack;
 
-            foreach (Character c in ri.Characters)
+            foreach (var c in ri.Characters)
             {
 
-                Button b = CreateAttackCharacterHeader(c);
-                AttackRollInfo cri = new AttackRollInfo();
+                var b = CreateAttackCharacterHeader(c);
+                var cri = new AttackRollInfo();
                 cri.Characters = new List<Character>() { c };
                 cri.Attack = ri.Attack;
                 b.Tag = cri;
@@ -7659,10 +7657,10 @@ namespace CombatManager
         }
         void RollAttack(Character ch, Attack atk)
         {
-            Paragraph p = new Paragraph();
+            var p = new Paragraph();
             p.Margin = new Thickness(0);
 
-            string attackname = atk.Name;
+            var attackname = atk.Name;
 
             if (atk.Weapon != null)
             {
@@ -7672,12 +7670,12 @@ namespace CombatManager
 
             p.Inlines.Add(new Underline(new Run(StringCapitalizeConverter.Capitalize(attackname))));
 
-            int totalattacks = atk.Count * atk.Bonus.Count;
+            var totalattacks = atk.Count * atk.Bonus.Count;
 
 
-            for (int atkcount = 0; atkcount < atk.Count; atkcount++)
+            for (var atkcount = 0; atkcount < atk.Count; atkcount++)
             {
-                foreach (int mod in atk.Bonus)
+                foreach (var mod in atk.Bonus)
                 {
                     if (totalattacks > 0)
                     {
@@ -7698,17 +7696,17 @@ namespace CombatManager
                         roll = new DieRoll(1, 20, mod);
                     }
 
-                    RollResult res = roll.Roll();
+                    var res = roll.Roll();
 
-                    RollResult dmg = atk.Damage.Roll();
+                    var dmg = atk.Damage.Roll();
 
                     RollResult bonusDmg = null;
                     String bonusType = null;
                     DieRoll bonusRoll = null;
                     if (atk.Plus != null)
                     {
-                        Regex plusRegex = new Regex("(?<die>[0-9]+d[0-9]+((\\+|-)[0-9]+)?) ?((?<type>[a-zA-Z \\.]+)?)");
-                        Match dm = plusRegex.Match(atk.Plus);
+                        var plusRegex = new Regex("(?<die>[0-9]+d[0-9]+((\\+|-)[0-9]+)?) ?((?<type>[a-zA-Z \\.]+)?)");
+                        var dm = plusRegex.Match(atk.Plus);
                         if (dm.Success)
                         {
                             bonusRoll = DieRoll.FromString(dm.Groups["die"].Value);
@@ -7719,15 +7717,15 @@ namespace CombatManager
 
                     p.Inlines.Add(new Run(CMStringUtilities.PlusFormatNumber(mod) + " hit "));
 
-                    int actualDie = 0;
-                    foreach (DieResult val in res.Rolls)
+                    var actualDie = 0;
+                    foreach (var val in res.Rolls)
                     {
                         actualDie += val.Result;
                     }
                     if (actualDie >= atk.CritRange || actualDie == 1)
                     {
-                        string text = res.Total.ToString() + " (" + actualDie + ")";
-                        Inline co = CreateRollElement(text, DieRollDocument.Background,
+                        var text = res.Total.ToString() + " (" + actualDie + ")";
+                        var co = CreateRollElement(text, DieRollDocument.Background,
                             new SolidColorBrush((actualDie == 1) ? Colors.Red : Colors.Green));
                         p.Inlines.Add(co);
                         p.Inlines.Add(" ");
@@ -7735,7 +7733,7 @@ namespace CombatManager
                     }
                     else
                     {
-                        Inline co = CreateRollElement(res.Total.ToString());
+                        var co = CreateRollElement(res.Total.ToString());
                         p.Inlines.Add(co);
                         p.Inlines.Add(" ");
                         p.Inlines.Add(new Run("(" + actualDie + ") "));
@@ -7746,10 +7744,10 @@ namespace CombatManager
                     {
                         p.Inlines.Add(new Run("dmg "));
 
-                        string dmgtext = "";
+                        var dmgtext = "";
 
                         p.Inlines.Add(" ");
-                        foreach (DieResult dmgroll in dmg.Rolls)
+                        foreach (var dmgroll in dmg.Rolls)
                         {
                             if (dmgtext.Length > 0)
                             {
@@ -7787,17 +7785,17 @@ namespace CombatManager
 
                         if (res.Rolls[0].Result >= atk.CritRange)
                         {
-                            RollResult critRes = roll.Roll();
-                            int actualCrit = critRes.Rolls[0].Result;
+                            var critRes = roll.Roll();
+                            var actualCrit = critRes.Rolls[0].Result;
 
-                            int critTotal = dmg.Total;
+                            var critTotal = dmg.Total;
 
-                            for (int i = 1; i < atk.CritMultiplier; i++)
+                            for (var i = 1; i < atk.CritMultiplier; i++)
                             {
-                                RollResult crit = atk.Damage.Roll();
+                                var crit = atk.Damage.Roll();
                                 critTotal += crit.Total;
 
-                                foreach (DieResult dmgroll in crit.Rolls)
+                                foreach (var dmgroll in crit.Rolls)
                                 {
                                     dmgtext += "+";
                                     dmgtext += dmgroll.Result;
@@ -7812,7 +7810,7 @@ namespace CombatManager
 
                             }
 
-                            string text = " Crit: ";
+                            var text = " Crit: ";
                             text += critRes.Total;
                             text += " (" + actualCrit + ")";
                             if (actualCrit != 1)
@@ -7864,7 +7862,7 @@ namespace CombatManager
             {
                 if (roll != null)
                 {
-                    string text = roll.Text;
+                    var text = roll.Text;
 
                     _RecentDieRolls.RemoveAll(a => a == text);
                     _RecentDieRolls.Insert(0, text);
@@ -7882,11 +7880,11 @@ namespace CombatManager
 
             private void UpdateDieRollCombo()
             {
-                string current = DieRollText.Text;
+                var current = DieRollText.Text;
 
                 DieRollText.Items.Clear();
 
-                foreach (string text in _RecentDieRolls)
+                foreach (var text in _RecentDieRolls)
                 {
                     DieRollText.Items.Add(text);
                 }
@@ -7950,11 +7948,11 @@ namespace CombatManager
         private void MenuItem_IdleMonster(object sender, RoutedEventArgs e)
         {
 
-            Character root = (Character)((FrameworkElement)sender).DataContext;
-            List<Character> list = GetViewSelectedCharactersFromChar(root);
+            var root = (Character)((FrameworkElement)sender).DataContext;
+            var list = GetViewSelectedCharactersFromChar(root);
 
 
-            bool newState = !root.IsIdle;
+            var newState = !root.IsIdle;
             SetIdleCharacterList(list, newState);
         }
 
@@ -7964,7 +7962,7 @@ namespace CombatManager
             using (var undoGroup = undo.CreateUndoGroup())
             {
 
-                foreach (Character ch in list)
+                foreach (var ch in list)
                 {
                     ch.IsIdle = newState;
                 }
@@ -7989,11 +7987,11 @@ namespace CombatManager
         private void MenuItem_HideMonster(object sender, RoutedEventArgs e)
         {
 
-            Character root = (Character)((FrameworkElement)sender).DataContext;
+            var root = (Character)((FrameworkElement)sender).DataContext;
 
-            List<Character> list = GetViewSelectedCharactersFromChar(root);
+            var list = GetViewSelectedCharactersFromChar(root);
 
-            bool newState = !root.IsHidden;
+            var newState = !root.IsHidden;
 
             SetHideCharacterList(list, newState);
 
@@ -8004,7 +8002,7 @@ namespace CombatManager
             using (var undoGroup = undo.CreateUndoGroup())
             {
 
-                foreach (Character ch in list)
+                foreach (var ch in list)
                 {
                     ch.IsHidden = newState;
                 }
@@ -8026,18 +8024,18 @@ namespace CombatManager
 
         public void RollMeleeAttackCharacter(Character c)
         {
-            List<AttackSet> latk = c.Monster.MeleeAttacks;
+            var latk = c.Monster.MeleeAttacks;
             if (latk.Count > 0)
             {
-                AttackSet set = latk[0];
+                var set = latk[0];
 
-                List<Attack> attacks = new List<Attack>();
+                var attacks = new List<Attack>();
 
                 attacks.AddRange(set.WeaponAttacks);
                 attacks.AddRange(set.NaturalAttacks);
 
 
-                foreach (Attack atk in attacks)
+                foreach (var atk in attacks)
                 {
                     RollAttack(c, atk);
                 }
@@ -8048,11 +8046,11 @@ namespace CombatManager
 
         public void RollRangedAttackCharacter(Character c)
         {
-            List<Attack> ran = c.Monster.RangedAttacks;
+            var ran = c.Monster.RangedAttacks;
             if (ran != null && ran.Count > 0)
             {
 
-                foreach (Attack atk in ran)
+                foreach (var atk in ran)
                 {
                     RollAttack(c, atk);
                 }
@@ -8061,12 +8059,12 @@ namespace CombatManager
 
         private void CustomizeSpellButton_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            Spell s = (Spell)spellsView.CurrentItem;
+            var s = (Spell)spellsView.CurrentItem;
 
             if (s != null)
             {
 
-                SpellEditorWindow w = new SpellEditorWindow();
+                var w = new SpellEditorWindow();
                 w.Spell = (Spell)s.Clone();
                 w.Spell.DBLoaderID = 0;
                 w.Owner = this;
@@ -8087,12 +8085,12 @@ namespace CombatManager
 
         private void EditCustomSpellButton_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            Spell s = (Spell)spellsView.CurrentItem;
+            var s = (Spell)spellsView.CurrentItem;
 
             if (s != null)
             {
 
-                SpellEditorWindow w = new SpellEditorWindow();
+                var w = new SpellEditorWindow();
                 w.Spell = (Spell)s.Clone();
                 w.Owner = this;
 
@@ -8114,7 +8112,7 @@ namespace CombatManager
         {
 
 
-            Spell s = (Spell)spellsView.CurrentItem;
+            var s = (Spell)spellsView.CurrentItem;
 
             if (s != null)
             {
@@ -8125,7 +8123,7 @@ namespace CombatManager
 
         private void NewCustomSpellButton_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            SpellEditorWindow w = new SpellEditorWindow();
+            var w = new SpellEditorWindow();
             w.Spell = new Spell();
             w.Spell.school = "abjuration";
             w.Spell.saving_throw = "none";
@@ -8142,9 +8140,9 @@ namespace CombatManager
 
         private void NewCustomMonsterButton_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            Monster m = new Monster();
+            var m = new Monster();
 
-            MonsterEditorWindow w = new MonsterEditorWindow();
+            var w = new MonsterEditorWindow();
 
             w.Owner = this;
             w.Monster = Monster.BlankMonster();
@@ -8158,8 +8156,8 @@ namespace CombatManager
 
         private void TestButton_Click(object sender, RoutedEventArgs e)
         {
-            Window w = new Window();
-            Grid g = new Grid();
+            var w = new Window();
+            var g = new Grid();
             ((Panel)DiceRollerGrid.Parent).Children.Remove(DiceRollerGrid);
             g.Children.Add(DiceRollerGrid);
             w.Content = g;
@@ -8170,7 +8168,7 @@ namespace CombatManager
 
         private void ImportDataMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog fd = new OpenFileDialog();
+            var fd = new OpenFileDialog();
             fd.Filter = exportFileFilter;
             if (fd.ShowDialog() == true)
             {
@@ -8181,15 +8179,15 @@ namespace CombatManager
 
         private void ImportDataFromFile(string filename)
         {
-            ExportData x = XmlLoader<ExportData>.Load(filename);
-            ExportDialog dlg = new ExportDialog(x);
+            var x = XmlLoader<ExportData>.Load(filename);
+            var dlg = new ExportDialog(x);
             dlg.WindowStartupLocation = WindowStartupLocation.CenterOwner;
             dlg.ShowDialog();
         }
 
         private void ExportDataMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            ExportDialog d = new ExportDialog();
+            var d = new ExportDialog();
             d.Owner = this;
             d.WindowStartupLocation = WindowStartupLocation.CenterOwner;
             d.ShowDialog();
@@ -8197,11 +8195,11 @@ namespace CombatManager
 
         private void CustomizeFeatButton_Click(object sender, RoutedEventArgs e)
         {
-            Feat f = (Feat)featsView.CurrentItem;
+            var f = (Feat)featsView.CurrentItem;
 
             if (f != null)
             {
-                FeatEditorWindow win = new FeatEditorWindow();
+                var win = new FeatEditorWindow();
                 win.Feat = new Feat(f);
                 win.Owner = this;
                 win.WindowStartupLocation = WindowStartupLocation.CenterOwner;
@@ -8216,7 +8214,7 @@ namespace CombatManager
 
         private void DeleteCustomFeatButton_Click(object sender, RoutedEventArgs e)
         {
-            Feat f = (Feat)featsView.CurrentItem;
+            var f = (Feat)featsView.CurrentItem;
 
             if (f != null)
             {
@@ -8227,12 +8225,12 @@ namespace CombatManager
 
         private void EditCustomFeatButton_Click(object sender, RoutedEventArgs e)
         {
-            Feat f = (Feat)featsView.CurrentItem;
+            var f = (Feat)featsView.CurrentItem;
 
             if (f != null)
             {
 
-                FeatEditorWindow w = new FeatEditorWindow();
+                var w = new FeatEditorWindow();
                 w.Feat = (Feat)f.Clone();
                 w.Owner = this;
 
@@ -8249,11 +8247,11 @@ namespace CombatManager
 
         private void NewCustomFeatButton_Click(object sender, RoutedEventArgs e)
         {
-            Feat f = new Feat();
+            var f = new Feat();
             f.Type = "General";
             
 
-            FeatEditorWindow win = new FeatEditorWindow();
+            var win = new FeatEditorWindow();
             win.Feat = new Feat(f);
             win.Owner = this;
             win.WindowStartupLocation = WindowStartupLocation.CenterOwner;
@@ -8320,11 +8318,11 @@ namespace CombatManager
 
         private void AmountComboBox_Loaded(object sender, RoutedEventArgs e)
         {
-            ComboBox box = (ComboBox)sender;
+            var box = (ComboBox)sender;
 
             while (box.Items.Count < 101)
             {
-                ComboBoxItem item = new ComboBoxItem();
+                var item = new ComboBoxItem();
                 item.Content = "x" + (box.Items.Count);
                 box.Items.Add(item);
             }
@@ -8332,11 +8330,11 @@ namespace CombatManager
 
         private void ItemGenerateCountComboBox_Loaded(object sender, RoutedEventArgs e)
         {
-            ComboBox box = (ComboBox)sender;
+            var box = (ComboBox)sender;
 
             while (box.Items.Count < 100)
             {
-                ComboBoxItem item = new ComboBoxItem();
+                var item = new ComboBoxItem();
                 item.Content = (box.Items.Count +1).ToString();
                 box.Items.Add(item);
             }
@@ -8361,11 +8359,11 @@ namespace CombatManager
         private void NameTextBox_Initialized(object sender, EventArgs e)
         {
 
-            Character character = (Character)((FrameworkElement)sender).DataContext;
-            TextBox box = sender as TextBox;
+            var character = (Character)((FrameworkElement)sender).DataContext;
+            var box = sender as TextBox;
             Action func = () =>
             {
-                DrawingBrush brush = CreateBoxBrush(box, character);
+                var brush = CreateBoxBrush(box, character);
                 box.Background = brush;
             };
 
@@ -8388,12 +8386,12 @@ namespace CombatManager
         {
             
 
-            Character character = (Character)((FrameworkElement)sender).DataContext;
+            var character = (Character)((FrameworkElement)sender).DataContext;
 
-            TextBox box = sender as TextBox;
+            var box = sender as TextBox;
 
             
-            DrawingBrush brush = CreateBoxBrush(box, character);
+            var brush = CreateBoxBrush(box, character);
 
             box.Background = brush;
             
@@ -8401,32 +8399,32 @@ namespace CombatManager
 
         private DrawingBrush CreateBoxBrush(TextBox box, Character character)
         {
-            DrawingBrush brush = new DrawingBrush();
+            var brush = new DrawingBrush();
 
-            Color backColor = App.Current.GetColor(CMUIUtilities.HealthBackground);
-            Color barColor = CMUIUtilities.FindColor(box, CMUIUtilities.ThemeTextBackground);
+            var backColor = App.Current.GetColor(CMUIUtilities.HealthBackground);
+            var barColor = CMUIUtilities.FindColor(box, CMUIUtilities.ThemeTextBackground);
 
 
-            RectangleGeometry backGeo = new RectangleGeometry(new Rect(0, 0, 1, 1));
-            GeometryDrawing backDrawing = new GeometryDrawing(new SolidColorBrush(backColor), null, backGeo);
+            var backGeo = new RectangleGeometry(new Rect(0, 0, 1, 1));
+            var backDrawing = new GeometryDrawing(new SolidColorBrush(backColor), null, backGeo);
 
-            double percent = 0.0;
+            var percent = 0.0;
 
             if (character.MaxHP > 0)
             {
                 percent = (((double)character.HP) / (double)character.MaxHP).Clamp(0, 1);
             }
-            Size barSize = new Size( 1, 1);
+            var barSize = new Size( 1, 1);
             barSize.Width = barSize.Width * percent;
 
 
-            RectangleGeometry barGeo = new RectangleGeometry(new Rect(barSize));
-            GeometryDrawing barDrawing = new GeometryDrawing(
+            var barGeo = new RectangleGeometry(new Rect(barSize));
+            var barDrawing = new GeometryDrawing(
                 new SolidColorBrush(
                     barColor), 
                     null, barGeo);
 
-            DrawingGroup dg = new DrawingGroup();
+            var dg = new DrawingGroup();
             dg.Children.Add(backDrawing);
             dg.Children.Add(barDrawing);
 
@@ -8445,21 +8443,21 @@ namespace CombatManager
         {
             if (UserSettings.Settings.CheckForUpdates)
             {
-                Thread t = new Thread(() =>
+                var t = new Thread(() =>
                 {
                     try
                     {
-                        HttpWebRequest rq1 = (HttpWebRequest)WebRequest.Create("http://CombatManager.com/version.xml");
-                        HttpWebResponse rsp1 = (HttpWebResponse)rq1.GetResponse();
+                        var rq1 = (HttpWebRequest)WebRequest.Create("http://CombatManager.com/version.xml");
+                        var rsp1 = (HttpWebResponse)rq1.GetResponse();
 
-                        XDocument doc = XDocument.Load(rsp1.GetResponseStream());
+                        var doc = XDocument.Load(rsp1.GetResponseStream());
 
-                        String val = doc.Root.Value;
+                        var val = doc.Root.Value;
 
                         rsp1.Close();
 
-                        Version remotev = Version.Parse(val);
-                        Version localv = Assembly.GetExecutingAssembly().GetName().Version;
+                        var remotev = Version.Parse(val);
+                        var localv = Assembly.GetExecutingAssembly().GetName().Version;
 
                         if (remotev.CompareTo(localv) > 0)
                         {
@@ -8540,14 +8538,14 @@ namespace CombatManager
         {
             if (_CombatHotKeys != null)
             {
-                foreach (InputBinding key in _HotKeys)
+                foreach (var key in _HotKeys)
                 {
                     InputBindings.Remove(key);
                 }
                 _HotKeys.Clear();
-                foreach (CombatHotKey hk in _CombatHotKeys)
+                foreach (var hk in _CombatHotKeys)
                 {
-                    CombatHotKey chk = hk;
+                    var chk = hk;
                     try
                     {
                         InputBinding ib = new KeyBinding(new RelayCommand((object x) =>
@@ -8572,7 +8570,7 @@ namespace CombatManager
         private void HandleHotKey(CombatHotKey chk)
         {
             //get targets
-            Character ch = lastClickedChar;
+            var ch = lastClickedChar;
 
             if (ch != null)
             {
@@ -8618,29 +8616,29 @@ namespace CombatManager
 
         private void DescreaseResourceButton_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            ActiveResource r = (ActiveResource)((FrameworkElement)sender).DataContext;
+            var r = (ActiveResource)((FrameworkElement)sender).DataContext;
             r.Current = Math.Max(0, r.Current - 1);
         }
 
         private void IncreaseResourceButton_Click(object sender, System.Windows.RoutedEventArgs e)
         {
 
-            ActiveResource r = (ActiveResource)((FrameworkElement)sender).DataContext;
+            var r = (ActiveResource)((FrameworkElement)sender).DataContext;
             r.Current++;
         }
 
         private void DeleteResourceButton_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            FrameworkElement el = ((FrameworkElement)sender);
+            var el = ((FrameworkElement)sender);
 
-            ListBox box = el.FindVisualParent<ListBox>();
-            Character c = (Character)box.DataContext;
+            var box = el.FindVisualParent<ListBox>();
+            var c = (Character)box.DataContext;
             c.Resources.Remove((ActiveResource)el.DataContext);
         }
 
         private void AddResourceButton_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            Character c = (Character)((FrameworkElement)sender).DataContext;
+            var c = (Character)((FrameworkElement)sender).DataContext;
             c.Resources.Add(new ActiveResource() { Name = "Resource", Current = 0 });
         }
         
@@ -8649,7 +8647,7 @@ namespace CombatManager
         private void BookmarkFeatButton_Click(object sender, RoutedEventArgs e)
         {
 
-            Feat f = (Feat)featsView.CurrentItem;
+            var f = (Feat)featsView.CurrentItem;
             if (f != null)
             {
                 BookmarkList.List.AddFeat(f);
@@ -8666,22 +8664,22 @@ namespace CombatManager
 
         private void OgrekinRandomButton_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            int beneficial = rand.Next(6);
-            int disadventageous = rand.Next(6);
+            var beneficial = rand.Next(6);
+            var disadventageous = rand.Next(6);
             OgrekinBeneficialCombo.SelectedIndex = beneficial;
             OgrekinDisadvantageousCommbo.SelectedIndex = disadventageous;
         }
 
         private void ColorMenu_Loaded(object sender, RoutedEventArgs e)
         {
-            MenuItem cm = (MenuItem)sender;
+            var cm = (MenuItem)sender;
 
-            List<MenuItem> remove = new List<MenuItem>();
-            foreach (object item in cm.Items)
+            var remove = new List<MenuItem>();
+            foreach (var item in cm.Items)
             {
                 if (item is MenuItem)
                 {
-                    MenuItem mi = (MenuItem)item;
+                    var mi = (MenuItem)item;
                     if (mi.Tag is uint)
                     {
                         remove.Add(mi);
@@ -8689,14 +8687,14 @@ namespace CombatManager
                 }
                    
             }
-            foreach (MenuItem item in remove)
+            foreach (var item in remove)
             {
                 cm.Items.Remove(item);
             }
 
-            foreach (uint c in FavoritePlayerColorList)
+            foreach (var c in FavoritePlayerColorList)
             {
-                MenuItem mi = new MenuItem();
+                var mi = new MenuItem();
                 mi.DataContext = c;
                 mi.Tag = c;
                 mi.Header = FavoriteColorItemText((uint)mi.DataContext);
@@ -8708,7 +8706,7 @@ namespace CombatManager
 
         private string FavoriteColorItemText(uint color)
         {
-            String text = "#";
+            var text = "#";
             if ((color & 0xff000000) == 0xff000000)
             {
                 text += (color & 0x00ffffff).ToString("X6");
@@ -8722,7 +8720,7 @@ namespace CombatManager
 
         private void SetColorMenuItemColor(MenuItem mi)
         {
-            Rectangle rectangle = new Rectangle();
+            var rectangle = new Rectangle();
             rectangle.Height = 16;
             rectangle.Width = 16;
             rectangle.Stretch = Stretch.Fill;
@@ -8733,14 +8731,14 @@ namespace CombatManager
 
         private void ColorMenuItem_Loaded(object sender, RoutedEventArgs e)
         {
-            MenuItem mi = sender as MenuItem;
+            var mi = sender as MenuItem;
             SetColorMenuItemColor(mi);
 
         }
        
         private Color ColorMenuItemColor(MenuItem mi)
         {
-            Color color = Colors.White;
+            var color = Colors.White;
 
             if (mi.DataContext is uint)
             {
@@ -8813,11 +8811,11 @@ namespace CombatManager
             {
                 
 
-                List<uint> fc = FavoriteColors.GetList("customcolors");
+                var fc = FavoriteColors.GetList("customcolors");
 
-                int[] ca = new int[fc.Count];
+                var ca = new int[fc.Count];
 
-                for (int i=0; i<fc.Count; i++)
+                for (var i=0; i<fc.Count; i++)
                 {
 
                     ca[i] = fc[i].ToOLEColor();
@@ -8828,10 +8826,10 @@ namespace CombatManager
             }
             set
             {
-                List<uint> fc = new List<uint>();
-                for (int i = 0; i<value.Length; i++)
+                var fc = new List<uint>();
+                for (var i = 0; i<value.Length; i++)
                 {
-                    uint val = value[i].FromOLEColor();
+                    var val = value[i].FromOLEColor();
                     fc.Add(val);
                 }
                 FavoriteColors.SetList("customcolors", fc);
@@ -8844,7 +8842,7 @@ namespace CombatManager
 
         private void ColorMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            MenuItem mi = (MenuItem)sender;
+            var mi = (MenuItem)sender;
 
             Character root = null;
 
@@ -8857,11 +8855,11 @@ namespace CombatManager
                 root = (Character)mi.DataContext;
             }
 
-            List<Character> list = GetViewSelectedCharactersFromChar(root);
+            var list = GetViewSelectedCharactersFromChar(root);
 
             uint? color = ColorMenuItemColor(mi).ToUInt32();
 
-            foreach (Character ch in list)
+            foreach (var ch in list)
             {
                 ch.Color = color;
             }
@@ -8871,22 +8869,22 @@ namespace CombatManager
         private void OtherColorMenuItem_Click(object sender, RoutedEventArgs e)
         {
 
-            Character root = (Character)((FrameworkElement)sender).DataContext;
+            var root = (Character)((FrameworkElement)sender).DataContext;
 
-            List<Character> list = GetViewSelectedCharactersFromChar(root);
+            var list = GetViewSelectedCharactersFromChar(root);
 
-            System.Windows.Forms.ColorDialog cd = new System.Windows.Forms.ColorDialog();
+            var cd = new System.Windows.Forms.ColorDialog();
 
             cd.CustomColors = CustomColorList;
 
             if (cd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                System.Drawing.Color sdc = cd.Color;
-                UInt32 val = sdc.ToColor().ToUInt32();
+                var sdc = cd.Color;
+                var val = sdc.ToColor().ToUInt32();
 
                 AddFavoritePlayerColor(val);
 
-                foreach (Character ch in list)
+                foreach (var ch in list)
                 {
                     ch.Color = val;   
                 }
@@ -8909,7 +8907,7 @@ namespace CombatManager
         private OpenFileDialog GetMapFileDialog()
         {
 
-            OpenFileDialog dialog = new OpenFileDialog();
+            var dialog = new OpenFileDialog();
             dialog.Filter = "Image Files(*.bmp;*.gif;*.jpg;*.png)|*.bmp;*.gif;*.jpg;*.png";
             dialog.Multiselect = false;
             return dialog;
@@ -8918,15 +8916,15 @@ namespace CombatManager
         private void LoadMap(String filename)
         {
             Exception e = null;
-            bool succeeded = false;
+            var succeeded = false;
             if (File.Exists(filename))
             {
                 try
                 {
 
-                    BitmapImage image = new BitmapImage(new Uri(filename));
+                    var image = new BitmapImage(new Uri(filename));
 
-                    GameMap gameMap = gameMapList.CreateMap(filename);
+                    var gameMap = gameMapList.CreateMap(filename);
 
                     ShowMap(gameMap);
                     succeeded = true;
@@ -9060,7 +9058,7 @@ namespace CombatManager
 
         private void GameMapListBox_Loaded(object sender, RoutedEventArgs e)
         {
-            GameMapList list = GameMapList;
+            var list = GameMapList;
 
             list.MapChanged += GameMapList_MapChanged;
             list.Maps.CollectionChanged += GameMapList_CollectionChanged;
@@ -9097,7 +9095,7 @@ namespace CombatManager
             if (openMapOnUp)
             {
                 openMapOnUp = false;
-                GameMapList.MapStub stub = (GameMapList.MapStub)((Grid)sender).DataContext;
+                var stub = (GameMapList.MapStub)((Grid)sender).DataContext;
 
                 OpenMapStub(stub);
 
@@ -9118,7 +9116,7 @@ namespace CombatManager
         private void MapDeleteButton_Click(object sender, RoutedEventArgs e)
         {
 
-            GameMapList.MapStub stub = (GameMapList.MapStub)((Button)sender).DataContext;
+            var stub = (GameMapList.MapStub)((Button)sender).DataContext;
             if (MessageBoxResult.Yes == MessageBox.Show("Are you sure you want to delete " + stub.Name + "?", "Delete Map", MessageBoxButton.YesNo, MessageBoxImage.Question))
             {
 
@@ -9141,7 +9139,7 @@ namespace CombatManager
 
         private void MapViewButton_Click(object sender, RoutedEventArgs e)
         {
-            GameMapList.MapStub stub = (GameMapList.MapStub)((Button)sender).DataContext;
+            var stub = (GameMapList.MapStub)((Button)sender).DataContext;
 
             OpenMapStub(stub);
 
@@ -9153,7 +9151,7 @@ namespace CombatManager
             if (dialog.ShowDialog() == true)
             {
 
-                GameMapList.MapStub stub = (GameMapList.MapStub)((Button)sender).DataContext;
+                var stub = (GameMapList.MapStub)((Button)sender).DataContext;
               
                 UpdateMap(dialog.FileName, stub);
             }
@@ -9167,11 +9165,11 @@ namespace CombatManager
 
         private void ReloadMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            bool succeeded = false;
+            var succeeded = false;
             try
             {
-                Character ch = (Character)((MenuItem)sender).DataContext;
-                FileInfo info = new FileInfo(ch.OriginalFilename);
+                var ch = (Character)((MenuItem)sender).DataContext;
+                var info = new FileInfo(ch.OriginalFilename);
                 if (info.Exists)
                 {
                     var monsters = Monster.FromFile(ch.OriginalFilename);
@@ -9206,7 +9204,7 @@ namespace CombatManager
         {
             if (!GameMapList.IsRoot)
             {
-                ObservableCollection<int> newCurrent = new ObservableCollection<int>(GameMapList.CurrentFolderPath);
+                var newCurrent = new ObservableCollection<int>(GameMapList.CurrentFolderPath);
                 newCurrent.PopEnd();
                 GameMapList.CurrentFolderPath = newCurrent;
 
@@ -9215,15 +9213,15 @@ namespace CombatManager
 
         private void MapFolderItemOpen_Click(object sender, RoutedEventArgs e)
         {
-            GameMapList.MapFolder folder = (GameMapList.MapFolder)((FrameworkElement)sender).DataContext;
-            ObservableCollection<int> newCurrent = new ObservableCollection<int>(GameMapList.CurrentFolderPath);
+            var folder = (GameMapList.MapFolder)((FrameworkElement)sender).DataContext;
+            var newCurrent = new ObservableCollection<int>(GameMapList.CurrentFolderPath);
             newCurrent.PushEnd(folder.Id);
             GameMapList.CurrentFolderPath = newCurrent;
         }
 
         private void MapFolderItemDelete_Click(object sender, RoutedEventArgs e)
         {
-            GameMapList.MapFolder folder = (GameMapList.MapFolder)((FrameworkElement)sender).DataContext;
+            var folder = (GameMapList.MapFolder)((FrameworkElement)sender).DataContext;
             if (MessageBoxResult.Yes == MessageBox.Show("Are you sure you want to delete " + folder.Name + " and all of its maps?", "Delete Folder and Maps", MessageBoxButton.YesNo, MessageBoxImage.Question))
             {
                 GameMapList.DeleteFolder(folder);
@@ -9233,8 +9231,8 @@ namespace CombatManager
 
         private void MapFolderItemNameText_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            GameMapList.MapFolder folder = (GameMapList.MapFolder)((FrameworkElement)sender).DataContext;
-            ObservableCollection<int> newCurrent = new ObservableCollection<int>(GameMapList.CurrentFolderPath);
+            var folder = (GameMapList.MapFolder)((FrameworkElement)sender).DataContext;
+            var newCurrent = new ObservableCollection<int>(GameMapList.CurrentFolderPath);
             newCurrent.PushEnd(folder.Id);
             GameMapList.CurrentFolderPath = newCurrent;
         }
@@ -9249,20 +9247,20 @@ namespace CombatManager
         {
             if (!GameMapList.IsRoot || GameMapList.CurrentFolder.Folders.Count > 0)
             {
-                ContextMenu menu = new ContextMenu();
+                var menu = new ContextMenu();
                
                 menu.DataContext = ((FrameworkElement)sender).DataContext;
-                GameMapList.MapStub stub = (GameMapList.MapStub)menu.DataContext;
-                GameMapList.MapFolder current = GameMapList.CurrentFolder;
+                var stub = (GameMapList.MapStub)menu.DataContext;
+                var current = GameMapList.CurrentFolder;
 
                 if (!GameMapList.IsRoot)
                 {
-                    MenuItem moveup = new MenuItem();
+                    var moveup = new MenuItem();
 
                     moveup.Header = "Move Up";
 
                     menu.Items.Add(moveup);
-                    GameMapList.MapFolder parent = GameMapList.GetParent(current);
+                    var parent = GameMapList.GetParent(current);
 
                     moveup.Click += (men, ev) =>
                     {
@@ -9277,14 +9275,14 @@ namespace CombatManager
                 {
                     menu.AddSeparatorIfNotEmpty();
 
-                    foreach (GameMapList.MapFolder f in GameMapList.CurrentFolder.Folders)
+                    foreach (var f in GameMapList.CurrentFolder.Folders)
                     {
-                        MenuItem fi = new MenuItem();
+                        var fi = new MenuItem();
                         fi.Header = "Move to " + f.Name;
                         fi.DataContext = f;
                         fi.Click += (men, ev) =>
                         {
-                            GameMapList.MapFolder fol = (GameMapList.MapFolder)((FrameworkElement)men).DataContext;
+                            var fol = (GameMapList.MapFolder)((FrameworkElement)men).DataContext;
                             GameMapList.MoveMapToFolder(stub, f);
                             SaveGameMaps();
                         };
@@ -9357,9 +9355,9 @@ namespace CombatManager
         {
             if (ghostSpecials.Count == 0)
             {
-                for (int i = 0; i < 5; i++)
+                for (var i = 0; i < 5; i++)
                 {
-                    Monster.GhostTemplateAbilities ability = (Monster.GhostTemplateAbilities)i;
+                    var ability = (Monster.GhostTemplateAbilities)i;
                     ghostSpecials.Add(new GhostSpecial() { Ability = ability, Name = Monster.GetGhostTemplateAbilityName(ability) });
                 }
                 SetGhostSpecialsCRText();
@@ -9370,8 +9368,8 @@ namespace CombatManager
 
         private void SetGhostSpecialsCRText()
         {
-            int x = 6;
-            foreach (GhostSpecial special in ghostSpecials)
+            var x = 6;
+            foreach (var special in ghostSpecials)
             {
                 special.CRText = "CR " + x;
                 x += 3;
@@ -9386,7 +9384,7 @@ namespace CombatManager
 
         private void MoveUpGhostSpecial(GhostSpecial special)
         {
-            int index = ghostSpecials.IndexOf(special);
+            var index = ghostSpecials.IndexOf(special);
             if (index > 0)
             {
                 ghostSpecials.Move(index, index - 1);
@@ -9395,7 +9393,7 @@ namespace CombatManager
 
         private void MoveDownGhostSpecial(GhostSpecial special)
         {
-            int index = ghostSpecials.IndexOf(special);
+            var index = ghostSpecials.IndexOf(special);
             if (index < ghostSpecials.Count - 1)
             {
                 ghostSpecials.Move(index, index + 1);
@@ -9404,14 +9402,14 @@ namespace CombatManager
 
         private void GhostSpecialUpButton_Click(object sender, RoutedEventArgs e)
         {
-            GhostSpecial sp = (GhostSpecial)((FrameworkElement)sender).DataContext;
+            var sp = (GhostSpecial)((FrameworkElement)sender).DataContext;
             MoveUpGhostSpecial(sp);
         }
 
         private void GhostSpecialDownButton_Click(object sender, RoutedEventArgs e)
         {
 
-            GhostSpecial sp = (GhostSpecial)((FrameworkElement)sender).DataContext;
+            var sp = (GhostSpecial)((FrameworkElement)sender).DataContext;
             MoveDownGhostSpecial(sp);
         }
 
@@ -9422,8 +9420,8 @@ namespace CombatManager
         private void CombatListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             lastSelectedCombatListChar = null;
-            ListBox lb = (ListBox)sender;
-            object si = lb.SelectedItem;
+            var lb = (ListBox)sender;
+            var si = lb.SelectedItem;
                 if (si is Character)
                 {
                     lastSelectedCombatListChar = (Character)si;
@@ -9440,13 +9438,13 @@ namespace CombatManager
 
         private void TitleBarSystemButton_Click(object sender, RoutedEventArgs e)
         {
-            ContextMenu m = new ContextMenu();
+            var m = new ContextMenu();
 
 
             foreach (var system in new RulesSystem[] { RulesSystem.PF1, RulesSystem.DD5})
             {
 
-                MenuItem item = new MenuItem();
+                var item = new MenuItem();
                 item.Header = RulesSystemHelper.SystemName(system);
                 item.DataContext = system;
                 item.Click += SystemItem_Click;
@@ -9462,8 +9460,8 @@ namespace CombatManager
 
         private void SystemItem_Click(object sender, RoutedEventArgs e)
         {
-            MenuItem item = (MenuItem)sender;
-            RulesSystem system = (RulesSystem)item.DataContext;
+            var item = (MenuItem)sender;
+            var system = (RulesSystem)item.DataContext;
             SetRulesSystem(system);
 
         }
@@ -9534,7 +9532,7 @@ namespace CombatManager
                                this.WindowState = WindowState.Minimized;
                                break;
                            case LocalCombatManagerService.UIAction.Goto:
-                               string target = e.Data as string;
+                               var target = e.Data as string;
                                UIGoto(target);
                                break;
 
@@ -9606,7 +9604,7 @@ namespace CombatManager
 
         private void LocalServiceMenuItem_Loaded(object sender, RoutedEventArgs e)
         {
-            MenuItem item = (MenuItem)sender;
+            var item = (MenuItem)sender;
 
             item.IsChecked = UserSettings.Settings.RunLocalService;
 
@@ -9616,7 +9614,7 @@ namespace CombatManager
         {
             using (var undoGroup = undo.CreateUndoGroup())
             {
-                SettingsDialog dlg = new SettingsDialog();
+                var dlg = new SettingsDialog();
                 dlg.Owner = this;
                 dlg.WindowStartupLocation = System.Windows.WindowStartupLocation.CenterOwner;
 
@@ -9666,7 +9664,7 @@ namespace CombatManager
 
         void UpdateTurnClockUI()
         {
-            Visibility vis = UserSettings.Settings.UseTurnClock ? Visibility.Visible : Visibility.Collapsed;
+            var vis = UserSettings.Settings.UseTurnClock ? Visibility.Visible : Visibility.Collapsed;
             
             TurnClockText.Visibility = vis;
             TurnClockResetButton.Visibility = vis;
@@ -9802,16 +9800,16 @@ namespace CombatManager
 
         string TimerTimeText(TimeSpan span)
         {
-            StringBuilder builder = new StringBuilder();
+            var builder = new StringBuilder();
 
-            TimeSpan checkSpan = span;
+            var checkSpan = span;
             if (checkSpan.Ticks < 0)
             {
                 checkSpan = checkSpan.Negate();
                 builder.Append("-");
             }
-            bool hasDays = false;
-            bool hasHours = false;
+            var hasDays = false;
+            var hasHours = false;
             if (checkSpan.Days >= 1)
             {
                 builder.Append(checkSpan.Days + ":");
@@ -9820,7 +9818,7 @@ namespace CombatManager
             }
             if (checkSpan.TotalHours >= 1)
             {
-                string hours = checkSpan.Hours.ToString();
+                var hours = checkSpan.Hours.ToString();
                 if (checkSpan.Hours < 10 && hasDays)
                 {
                     hours = "0" + hours;
@@ -9829,14 +9827,14 @@ namespace CombatManager
                 hasHours = true;
 
             }
-            string minutes = checkSpan.Minutes.ToString();
+            var minutes = checkSpan.Minutes.ToString();
             if (checkSpan.Minutes < 10 && hasHours)
             {
                 minutes = "0" + minutes;
 
             }
             builder.Append(minutes + ":");
-            string seconds = checkSpan.Seconds.ToString("D2");
+            var seconds = checkSpan.Seconds.ToString("D2");
             builder.Append(seconds);
             return builder.ToString();
 

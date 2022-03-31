@@ -20,8 +20,6 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Media;
@@ -58,7 +56,7 @@ namespace WPF.JoshSmith.Controls.Utilities
 		/// <param name="relativeTo">The Visual to which the mouse coordinates will be relative.</param>
 		public static Point GetMousePosition( Visual relativeTo )
 		{
-			Win32Point mouse = new Win32Point();
+			var mouse = new Win32Point();
 			GetCursorPos( ref mouse );
 
 			// Using PointFromScreen instead of Dan Crevier's code (commented out below)

@@ -259,7 +259,7 @@ namespace CombatManager.Html
 
 		public static StringBuilder CreateHtmlHeader(this StringBuilder builder, string css = null, string cl = null)
 		{
-			String cssText;
+			string cssText;
 			if (css == null)
 			{
 				cssText = GetDefaultStyleTag();
@@ -346,7 +346,7 @@ namespace CombatManager.Html
 			return builder;
 		}
 		
-		public static String HtmlEncode(this string text)
+		public static string HtmlEncode(this string text)
 		{
 			int startSpace = 0;
 			for (int i=0; i<text.Length; i++)
@@ -394,7 +394,7 @@ namespace CombatManager.Html
 		
 		public static StringBuilder CreateItemIfNotNull(this StringBuilder builder, string title, bool boldTitle, string value, string end, bool linebreak)
 		{
-			if (!String.IsNullOrEmpty(value))
+			if (!string.IsNullOrEmpty(value))
 			{
 				if (title != null)
 				{

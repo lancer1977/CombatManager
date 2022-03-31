@@ -1,4 +1,4 @@
-/*
+﻿/*
  *  Affliction.cs
  *
  *  Copyright (C) 2010-2012 Kyle Olson, kyle@kyleolson.com
@@ -19,7 +19,7 @@
  *
  */
 
-﻿using System;
+ using System;
 using System.ComponentModel;
 using System.Collections.Generic;
 using System.IO;
@@ -34,33 +34,33 @@ namespace CombatManager
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private String _Name;
-        private String _Type;
-        private String _Cause;
-        private String _SaveType;
+        private string _Name;
+        private string _Type;
+        private string _Cause;
+        private string _SaveType;
         private int _Save;
         private DieRoll _Onset;
-        private String _OnsetUnit;
+        private string _OnsetUnit;
         private bool _Immediate;
         private int _Frequency;
-        private String _FrequencyUnit;
+        private string _FrequencyUnit;
         private int _Limit;
-        private String _LimitUnit;
-        private String _SpecialEffectName;
+        private string _LimitUnit;
+        private string _SpecialEffectName;
         private DieRoll _SpecialEffectTime;
-        private String _SpecialEffectUnit;
-        private String _OtherEffect;
+        private string _SpecialEffectUnit;
+        private string _OtherEffect;
         private bool _Once;
         private DieRoll _DamageDie;
-        private String _DamageType;
+        private string _DamageType;
         private bool _IsDamageDrain;
         private DieRoll _SecondaryDamageDie;
-        private String _SecondaryDamageType;
+        private string _SecondaryDamageType;
         private bool _IsSecondaryDamageDrain;
-        private String _DamageExtra;
-        private String _Cure;
-        private String _Details;
-        private String _Cost;
+        private string _DamageExtra;
+        private string _Cure;
+        private string _Details;
+        private string _Cost;
 
         public Affliction()
         {
@@ -361,7 +361,7 @@ namespace CombatManager
 
 
 
-        public String Name
+        public string Name
         {
             get { return _Name; }
             set
@@ -373,7 +373,7 @@ namespace CombatManager
                 }
             }
         }
-        public String Type
+        public string Type
         {
             get { return _Type; }
             set
@@ -386,7 +386,7 @@ namespace CombatManager
             }
         }
 
-        public String Cause
+        public string Cause
         {
             get { return _Cause; }
             set
@@ -398,7 +398,7 @@ namespace CombatManager
                 }
             }
         }
-        public String SaveType
+        public string SaveType
         {
             get { return _SaveType; }
             set
@@ -434,7 +434,7 @@ namespace CombatManager
                 }
             }
         }
-        public String OnsetUnit
+        public string OnsetUnit
         {
             get { return _OnsetUnit; }
             set
@@ -470,7 +470,7 @@ namespace CombatManager
                 }
             }
         }
-        public String FrequencyUnit
+        public string FrequencyUnit
         {
             get { return _FrequencyUnit; }
             set
@@ -495,7 +495,7 @@ namespace CombatManager
                 }
             }
         }
-        public String LimitUnit
+        public string LimitUnit
         {
             get { return _LimitUnit; }
             set
@@ -508,7 +508,7 @@ namespace CombatManager
             }
         }
 
-        public String SpecialEffectName
+        public string SpecialEffectName
         {
             get { return _SpecialEffectName; }
             set
@@ -533,7 +533,7 @@ namespace CombatManager
                 }
             }
         }
-        public String SpecialEffectUnit
+        public string SpecialEffectUnit
         {
             get { return _SpecialEffectUnit; }
             set
@@ -546,7 +546,7 @@ namespace CombatManager
             }
         }
 
-        public String OtherEffect
+        public string OtherEffect
         {
             get { return _OtherEffect; }
             set
@@ -583,7 +583,7 @@ namespace CombatManager
                 }
             }
         }
-        public String DamageType
+        public string DamageType
         {
             get { return _DamageType; }
             set
@@ -619,7 +619,7 @@ namespace CombatManager
                 }
             }
         }
-        public String SecondaryDamageType
+        public string SecondaryDamageType
         {
             get { return _SecondaryDamageType; }
             set
@@ -643,7 +643,7 @@ namespace CombatManager
                 }
             }
         }
-        public String DamageExtra
+        public string DamageExtra
         {
             get { return _DamageExtra; }
             set
@@ -655,7 +655,7 @@ namespace CombatManager
                 }
             }
         }
-        public String Cure
+        public string Cure
         {
             get { return _Cure; }
             set
@@ -667,7 +667,7 @@ namespace CombatManager
                 }
             }
         }
-        public String Details
+        public string Details
         {
             get { return _Details; }
             set
@@ -679,7 +679,7 @@ namespace CombatManager
                 }
             }
         }
-        public String Cost
+        public string Cost
         {
             get { return _Cost; }
             set

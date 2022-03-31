@@ -1,4 +1,4 @@
-/*
+﻿/*
  *  TreasureBlockCreator.cs
  *
  *  Copyright (C) 2010-2012 Kyle Olson, kyle@kyleolson.com
@@ -19,26 +19,10 @@
  *
  */
 
-﻿using System;
-using System.Data;
-using System.ComponentModel;
-using System.Collections.ObjectModel;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Xml.Serialization;
 
 namespace CombatManager
 {
@@ -62,7 +46,7 @@ namespace CombatManager
         {
 
 
-            List<Block> blocks = new List<Block>();
+            var blocks = new List<Block>();
 
 
             if (treasure.Coin != null && treasure.Coin.GPValue != 0)
@@ -70,7 +54,7 @@ namespace CombatManager
 
                 blocks.AddRange(CreateSectionHeader("Coin", true));
 
-                Paragraph coin = new Paragraph();
+                var coin = new Paragraph();
                 coin.Inlines.Add(treasure.Coin.ToString());
                 coin.Margin = new Thickness(0, 3, 0, 16);
 
@@ -80,9 +64,9 @@ namespace CombatManager
             if (treasure.Goods.Count > 0)
             {
 
-                SortedDictionary<string, List<Good>> groupedItems = new SortedDictionary<string, List<Good>>();
+                var groupedItems = new SortedDictionary<string, List<Good>>();
 
-                foreach (Good t in treasure.Goods)
+                foreach (var t in treasure.Goods)
                 {
                     if (!groupedItems.ContainsKey(t.Name))
                     {
@@ -92,11 +76,11 @@ namespace CombatManager
                 }
 
 
-                Paragraph goods = new Paragraph();
+                var goods = new Paragraph();
                 goods.Margin = new Thickness(0, 3, 0, 16);
-                bool first = true;
+                var first = true;
                 decimal goodsVal = 0;
-                foreach (List<Good> list in groupedItems.Values)
+                foreach (var list in groupedItems.Values)
                 {
                     if (!first)
                     {
@@ -110,16 +94,16 @@ namespace CombatManager
                     }
                     
 
-                    Good good = list[0];
+                    var good = list[0];
 
                     goods.Inlines.Add(good.Name);
 
-                    bool firstTreasure = true;
+                    var firstTreasure = true;
                     goods.Inlines.Add(" (");
                     decimal tv = 0;
-                    bool allSame = true;
+                    var allSame = true;
 
-                    foreach (Good ti in list)
+                    foreach (var ti in list)
                     {
                         goodsVal += ti.Value;
 
@@ -145,7 +129,7 @@ namespace CombatManager
                     {
 
                         firstTreasure = true;
-                        foreach (Good ti in list)
+                        foreach (var ti in list)
                         {
                             if (!firstTreasure)
                             {
@@ -169,9 +153,9 @@ namespace CombatManager
             if (treasure.Items.Count > 0)
             {
 
-                SortedDictionary<string, List<TreasureItem>> groupedItems = new SortedDictionary<string, List<TreasureItem>>();
+                var groupedItems = new SortedDictionary<string, List<TreasureItem>>();
 
-                foreach (TreasureItem t in treasure.Items)
+                foreach (var t in treasure.Items)
                 {
                     if (!groupedItems.ContainsKey(t.Name))
                     {
@@ -182,14 +166,14 @@ namespace CombatManager
 
 
 
-                Paragraph items = new Paragraph();
+                var items = new Paragraph();
                 items.Margin = new Thickness(0, 3, 0, 16);
-                bool first = true;
-                string type = "";
+                var first = true;
+                var type = "";
                 decimal itemsVal = 0;
-                foreach (List<TreasureItem> list in groupedItems.Values)
+                foreach (var list in groupedItems.Values)
                 {
-                    TreasureItem item = list[0];
+                    var item = list[0];
 
                     if (item.Type != type)
                     {
@@ -217,11 +201,11 @@ namespace CombatManager
                     if (item.MagicItem != null)
                     {
 
-                        Hyperlink link = new Hyperlink(new Run(item.Name));
+                        var link = new Hyperlink(new Run(item.Name));
                         link.Tag = item.Name;
                         link.Click += new RoutedEventHandler(MagicItemLinkClicked);
                         link.DataContext = item.MagicItem;
-                        ToolTip t = (ToolTip)App.Current.MainWindow.FindResource("ObjectToolTip");
+                        var t = (ToolTip)App.Current.MainWindow.FindResource("ObjectToolTip");
 
                         if (t != null)
                         {
@@ -248,11 +232,11 @@ namespace CombatManager
                             items.Inlines.Add("Wand of ");
                         }
 
-                        Hyperlink link = new Hyperlink(new Run(item.Spell.name));
+                        var link = new Hyperlink(new Run(item.Spell.name));
                         link.Tag = item.Spell.name;
                         link.Click += new RoutedEventHandler(MagicItemLinkClicked);
                         link.DataContext = item.Spell;
-                        ToolTip t = (ToolTip)App.Current.MainWindow.FindResource("ObjectToolTip");
+                        var t = (ToolTip)App.Current.MainWindow.FindResource("ObjectToolTip");
 
                         if (t != null)
                         {
@@ -269,12 +253,12 @@ namespace CombatManager
                         items.Inlines.Add(item.Name);
                     }
 
-                    bool firstTreasure = true;
+                    var firstTreasure = true;
                     items.Inlines.Add(" (");
                     decimal tv = 0;
-                    bool allSame = true;
+                    var allSame = true;
                     
-                    foreach (TreasureItem ti in list)
+                    foreach (var ti in list)
                     {
                         itemsVal += ti.Value;
 
@@ -300,7 +284,7 @@ namespace CombatManager
                     {
 
                         firstTreasure = true;
-                        foreach (TreasureItem ti in list)
+                        foreach (var ti in list)
                         {
                             if (!firstTreasure)
                             {
@@ -331,7 +315,7 @@ namespace CombatManager
 
         void TreasureBlockLink_ToolTipOpening(object sender, ToolTipEventArgs e)
         {
-            Hyperlink l = (Hyperlink)sender;
+            var l = (Hyperlink)sender;
             ((ToolTip)l.ToolTip).DataContext = l.DataContext;
         }
 
@@ -340,10 +324,10 @@ namespace CombatManager
 
             if (_LinkHandler != null)
             {
-                Hyperlink link = (Hyperlink)sender;
+                var link = (Hyperlink)sender;
 
-                string feat = (string)link.Tag;
-                string type = link.DataContext.GetType().Name;
+                var feat = (string)link.Tag;
+                var type = link.DataContext.GetType().Name;
 
                 _LinkHandler(this, new DocumentLinkEventArgs(feat, type));
 

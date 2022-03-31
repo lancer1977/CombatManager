@@ -1,4 +1,4 @@
-/*
+﻿/*
  *  SkillValue.cs
  *
  *  Copyright (C) 2010-2012 Kyle Olson, kyle@kyleolson.com
@@ -19,7 +19,7 @@
  *
  */
 
-﻿using System;
+ using System;
 using System.ComponentModel;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -38,8 +38,8 @@ namespace CombatManager
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private String _Name;
-        private String _Subtype;
+        private string _Name;
+        private string _Subtype;
         private int _Mod;
 
 
@@ -95,7 +95,7 @@ namespace CombatManager
         }
 
 
-        public String Name
+        public string Name
         {
             get { return _Name; }
             set
@@ -107,7 +107,7 @@ namespace CombatManager
                 }
             }
         }
-        public String Subtype
+        public string Subtype
         {
             get { return _Subtype; }
             set

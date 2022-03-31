@@ -1,4 +1,4 @@
-/*
+﻿/*
  *  CreatureTypeInfo.cs
  *
  *  Copyright (C) 2010-2012 Kyle Olson, kyle@kyleolson.com
@@ -19,7 +19,7 @@
  *
  */
 
-﻿using System;
+ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -180,7 +180,7 @@ namespace CombatManager
             }
         }
 
-        public static IEnumerable<String> GetTypes()
+        public static IEnumerable<string> GetTypes()
         {
             return infoMap.Keys;
         }

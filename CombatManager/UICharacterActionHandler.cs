@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CombatManager
 {
@@ -61,39 +58,27 @@ namespace CombatManager
             public String Subtype { get; set; }
             public MainWindow Parent { get; set; }
 
-            public bool HasPrimary
-            {
-                get
-                {
-                    return Primary != null;
-                }
-            }
+            public bool HasPrimary => Primary != null;
 
-            public bool HasCharacters
-            {
-                get
-                {
-                    return Characters != null && Characters.Count > 0;
-                }
-            }
+            public bool HasCharacters => Characters != null && Characters.Count > 0;
 
             public void ActForEach(Action<Character, ActionData> action)
             {
                 if (HasCharacters)
                 {
-                    foreach (Character c in Characters)
+                    foreach (var c in Characters)
                     {
                         action(c, this);
                     }
                 }
             }
 
-            public  void ActForEach(Action<Character> action)
+            public void ActForEach(Action<Character> action)
             {
 
                 if (HasCharacters)
                 {
-                    foreach (Character c in Characters)
+                    foreach (var c in Characters)
                     {
                         action(c);
                     }
@@ -117,16 +102,16 @@ namespace CombatManager
                 {
                     action(Primary);
                 }
-                
+
 
             }
 
 
         }
 
-        public static void HandleAction(Character primary, List<Character> characters, CharacterAction action, String subtype, MainWindow parent)
+        public static void HandleAction(Character primary, List<Character> characters, CharacterAction action, string subtype, MainWindow parent)
         {
-            ActionData data = new ActionData(primary, characters, action, subtype, parent);
+            var data = new ActionData(primary, characters, action, subtype, parent);
 
             switch (action)
             {
@@ -163,43 +148,43 @@ namespace CombatManager
                     break;
                 case CharacterAction.ConditionMenu:
                     HandleConditionMenu(data);
-                break;
+                    break;
                 case CharacterAction.DamageHeal:
                     HandleDamageHeal(data);
-                break;
+                    break;
                 case CharacterAction.RollInitiative:
                     HandleRollInitiative(data);
-                break;
+                    break;
                 case CharacterAction.UnlinkFromGroup:
                     HandleUnlinkFromGroup(data);
-                break;
+                    break;
                 case CharacterAction.GroupAll:
                     HandleGroupAll(data);
-                break;
+                    break;
                 case CharacterAction.Clone:
                     HandleClone(data);
-                break;
+                    break;
                 case CharacterAction.Delay:
                     HandleDelay(data);
-                break;
+                    break;
                 case CharacterAction.Ready:
                     HandleReady(data);
-                break;
+                    break;
                 case CharacterAction.Clear:
                     HandleClear(data);
-                break;
+                    break;
                 case CharacterAction.ActNow:
                     HandleActNow(data);
-                break; 
+                    break;
                 case CharacterAction.Idle:
                     HandleIdle(data);
-                break;
+                    break;
                 case CharacterAction.WakeUp:
                     HandleWakeUp(data);
                     break;
                 case CharacterAction.Delete:
-                HandleDelete(data);
-                break;
+                    HandleDelete(data);
+                    break;
                 case CharacterAction.NextTurn:
                     HandleNextTurn(data);
                     break;
@@ -215,7 +200,7 @@ namespace CombatManager
                     break;
             }
 
-        }   
+        }
 
         private static void HandleMeleeAttack(ActionData data)
         {
@@ -248,7 +233,7 @@ namespace CombatManager
                         break;
                 }
                 data.Parent.RollSave(data.Characters, st);
-                
+
             }
         }
 
@@ -264,7 +249,7 @@ namespace CombatManager
         {
             if (data.HasCharacters)
             {
-                foreach (Character c in data.Characters)
+                foreach (var c in data.Characters)
                 {
                     c.AddConditionByName(data.Subtype);
                 }

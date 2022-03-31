@@ -1,4 +1,4 @@
-/*
+﻿/*
  *  Attack.cs
  *
  *  Copyright (C) 2010-2012 Kyle Olson, kyle@kyleolson.com
@@ -19,7 +19,7 @@
  *
  */
 
-﻿using System;
+ using System;
 using System.ComponentModel;
 using System.Collections.Generic;
 using System.Linq;
@@ -148,7 +148,7 @@ namespace CombatManager
                 }
             }
         }
-        public String Name
+        public string Name
         {
             get { return _Name; }
             set
@@ -196,7 +196,7 @@ namespace CombatManager
                 }
             }
         }
-        public String Plus
+        public string Plus
         {
             get { return _Plus; }
             set
@@ -282,7 +282,7 @@ namespace CombatManager
                 }
             }
         }
-        public String SpecialAbilities
+        public string SpecialAbilities
         {
             get { return _SpecialAbilities; }
             set
@@ -470,7 +470,7 @@ namespace CombatManager
             {
                 info.AltDamage = true;
                 info.AltDamageStat = Monster.StatFromName(m.Groups["altdamagestat"].Value);
-                info.AltDamageDrain = (String.Compare(m.Groups["altdamagetype"].Value, "drain", true) == 0);
+                info.AltDamageDrain = (string.Compare(m.Groups["altdamagetype"].Value, "drain", true) == 0);
             }
 
             info.Plus = null;

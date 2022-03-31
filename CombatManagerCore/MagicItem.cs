@@ -1,4 +1,4 @@
-/*
+﻿/*
  *  MagicItem.cs
  *
  *  Copyright (C) 2010-2012 Kyle Olson, kyle@kyleolson.com
@@ -19,7 +19,7 @@
  *
  */
 
-﻿using System;
+ using System;
 using System.ComponentModel;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -47,44 +47,44 @@ namespace CombatManager
     public class MagicItem : BaseDBClass
     {
 
-        private String _Name;
-        private String _Aura;
+        private string _Name;
+        private string _Aura;
         private int _CL;
-        private String _Slot;
-        private String _Price;
-        private String _Weight;
-        private String _Description;
-        private String _Requirements;
-        private String _Cost;
-        private String _Group;
-        private String _Source;
-        private String _FullText;
-        private String _Destruction;
-        private String _MinorArtifactFlag;
-        private String _MajorArtifactFlag;
-        private String _Abjuration;
-        private String _Conjuration;
-        private String _Divination;
-        private String _Enchantment;
-        private String _Evocation;
-        private String _Necromancy;
-        private String _Transmutation;
-        private String _AuraStrength;
-        private String _WeightValue;
-        private String _PriceValue;
-        private String _CostValue; 
-        private String _AL;
-        private String _Int;
-        private String _Wis;
-        private String _Cha;
-        private String _Ego;
-        private String _Communication;
-        private String _Senses;
-        private String _Powers;
-        private String _MagicItems;
-        private String _DescHTML;
-        private String _Mythic;
-        private String _LegendaryWeapon;
+        private string _Slot;
+        private string _Price;
+        private string _Weight;
+        private string _Description;
+        private string _Requirements;
+        private string _Cost;
+        private string _Group;
+        private string _Source;
+        private string _FullText;
+        private string _Destruction;
+        private string _MinorArtifactFlag;
+        private string _MajorArtifactFlag;
+        private string _Abjuration;
+        private string _Conjuration;
+        private string _Divination;
+        private string _Enchantment;
+        private string _Evocation;
+        private string _Necromancy;
+        private string _Transmutation;
+        private string _AuraStrength;
+        private string _WeightValue;
+        private string _PriceValue;
+        private string _CostValue; 
+        private string _AL;
+        private string _Int;
+        private string _Wis;
+        private string _Cha;
+        private string _Ego;
+        private string _Communication;
+        private string _Senses;
+        private string _Powers;
+        private string _MagicItems;
+        private string _DescHTML;
+        private string _Mythic;
+        private string _LegendaryWeapon;
 
 
 
@@ -404,7 +404,7 @@ namespace CombatManager
         }
 
 
-        public String Name
+        public string Name
         {
             get { return _Name; }
             set
@@ -415,7 +415,7 @@ namespace CombatManager
                     Notify("Name");                }
             }
         }
-        public String Aura
+        public string Aura
         {
             get { UpdateFromDetailsDB(); 
                 return _Aura; }
@@ -438,7 +438,7 @@ namespace CombatManager
                     Notify("CL");                }
             }
         }
-        public String Slot
+        public string Slot
         {
             get
             {
@@ -453,7 +453,7 @@ namespace CombatManager
                     Notify("Slot");                }
             }
         }
-        public String Price
+        public string Price
         {
             get
             {
@@ -468,7 +468,7 @@ namespace CombatManager
                     Notify("Price");                }
             }
         }
-        public String Weight
+        public string Weight
         {
             get
             {
@@ -483,7 +483,7 @@ namespace CombatManager
                     Notify("Weight");                }
             }
         }
-        public String Description
+        public string Description
         {
             get {
                 UpdateFromDetailsDB();
@@ -498,7 +498,7 @@ namespace CombatManager
                     Notify("Description");                }
             }
         }
-        public String Requirements
+        public string Requirements
         {
             get
             {
@@ -514,7 +514,7 @@ namespace CombatManager
                     Notify("Requirements");                }
             }
         }
-        public String Cost
+        public string Cost
         {
             get
             {
@@ -529,7 +529,7 @@ namespace CombatManager
                     Notify("Cost");                }
             }
         }
-        public String Group
+        public string Group
         {
             get { return _Group; }
             set
@@ -540,7 +540,7 @@ namespace CombatManager
                     Notify("Group");                }
             }
         }
-        public String Source
+        public string Source
         {
             get { return _Source; }
             set
@@ -551,7 +551,7 @@ namespace CombatManager
                     Notify("Source");                }
             }
         }
-        public String FullText
+        public string FullText
         {
             get
             {
@@ -567,7 +567,7 @@ namespace CombatManager
                     Notify("FullText");                }
             }
         }
-        public String Destruction
+        public string Destruction
         {
             get
             {
@@ -583,7 +583,7 @@ namespace CombatManager
                     Notify("Destruction");                }
             }
         }
-        public String MinorArtifactFlag
+        public string MinorArtifactFlag
         {
             get
             {
@@ -598,7 +598,7 @@ namespace CombatManager
                     Notify("MinorArtifactFlag");                }
             }
         }
-        public String MajorArtifactFlag
+        public string MajorArtifactFlag
         {
             get
             {
@@ -613,7 +613,7 @@ namespace CombatManager
                     Notify("MajorArtifactFlag");                }
             }
         }
-        public String Abjuration
+        public string Abjuration
         {
             get
             {
@@ -628,7 +628,7 @@ namespace CombatManager
                     Notify("Abjuration");                }
             }
         }
-        public String Conjuration
+        public string Conjuration
         {
             get
             {
@@ -643,7 +643,7 @@ namespace CombatManager
                     Notify("Conjuration");                }
             }
         }
-        public String Divination
+        public string Divination
         {
             get
             {
@@ -658,7 +658,7 @@ namespace CombatManager
                     Notify("Divination");                }
             }
         }
-        public String Enchantment
+        public string Enchantment
         {
             get
             {
@@ -673,7 +673,7 @@ namespace CombatManager
                     Notify("Enchantment");                }
             }
         }
-        public String Evocation
+        public string Evocation
         {
             get
             {
@@ -688,7 +688,7 @@ namespace CombatManager
                     Notify("Evocation");                }
             }
         }
-        public String Necromancy
+        public string Necromancy
         {
             get
             {
@@ -703,7 +703,7 @@ namespace CombatManager
                     Notify("Necromancy");                }
             }
         }
-        public String Transmutation
+        public string Transmutation
         {
             get
             {
@@ -718,7 +718,7 @@ namespace CombatManager
                     Notify("Transmutation");                }
             }
         }
-        public String AuraStrength
+        public string AuraStrength
         {
             get
             {
@@ -733,7 +733,7 @@ namespace CombatManager
                     Notify("AuraStrength");                }
             }
         }
-        public String WeightValue
+        public string WeightValue
         {
             get
             {
@@ -748,7 +748,7 @@ namespace CombatManager
                     Notify("WeightValue");                }
             }
         }
-        public String PriceValue
+        public string PriceValue
         {
             get
             {
@@ -763,7 +763,7 @@ namespace CombatManager
                     Notify("PriceValue");                }
             }
         }
-        public String CostValue
+        public string CostValue
         {
             get
             {
@@ -778,7 +778,7 @@ namespace CombatManager
                     Notify("CostValue");                }
             }
         }
-        public String AL
+        public string AL
         {
             get
             {
@@ -793,7 +793,7 @@ namespace CombatManager
                     Notify("AL");                }
             }
         }
-        public String Int
+        public string Int
         {
             get
             {
@@ -808,7 +808,7 @@ namespace CombatManager
                     Notify("Int");                }
             }
         }
-        public String Wis
+        public string Wis
         {
             get
             {
@@ -823,7 +823,7 @@ namespace CombatManager
                     Notify("Wis");                }
             }
         }
-        public String Cha
+        public string Cha
         {
             get
             {
@@ -838,7 +838,7 @@ namespace CombatManager
                     Notify("Cha");                }
             }
         }
-        public String Ego
+        public string Ego
         {
             get
             {
@@ -853,7 +853,7 @@ namespace CombatManager
                     Notify("Ego");                }
             }
         }
-        public String Communication
+        public string Communication
         {
             get
             {
@@ -868,7 +868,7 @@ namespace CombatManager
                     Notify("Communication");                }
             }
         }
-        public String Senses
+        public string Senses
         {
             get
             {
@@ -883,7 +883,7 @@ namespace CombatManager
                     Notify("Senses");                }
             }
         }
-        public String Powers
+        public string Powers
         {
             get
             {
@@ -899,7 +899,7 @@ namespace CombatManager
             }
         }
 
-        public String MagicItems
+        public string MagicItems
         {
             get { return _MagicItems; }
             set
@@ -912,7 +912,7 @@ namespace CombatManager
             }
         }
 
-        public String DescHTML
+        public string DescHTML
         {
             get
             {
@@ -928,7 +928,7 @@ namespace CombatManager
             }
         }
 
-        public String Mythic
+        public string Mythic
         {
             get
             {
@@ -943,7 +943,7 @@ namespace CombatManager
                     Notify("Mythic");                }
             }
         }
-        public String LegendaryWeapon
+        public string LegendaryWeapon
         {
             get
             {

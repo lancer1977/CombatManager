@@ -34,7 +34,7 @@ namespace ScottsUtils
     {
         public int Compare(string a, string b)
         {
-            return String.Compare(a, b, true);
+            return string.Compare(a, b, true);
         }
 
         public bool Equals(string a, string b)
@@ -60,7 +60,7 @@ namespace ScottsUtils
 
         public List<string> Cols = new List<string>();
 
-        public String this[String name]
+        public string this[string name]
         {
             get
             {
@@ -141,22 +141,22 @@ namespace ScottsUtils
             return SQL_Lite.StringToBool(value.Data);
         }
 
-        public static implicit operator Int32(SQLVariant value)
+        public static implicit operator int(SQLVariant value)
         {
             return SQL_Lite.StringToInt32(value.Data);
         }
 
-        public static implicit operator Int64(SQLVariant value)
+        public static implicit operator long(SQLVariant value)
         {
             return SQL_Lite.StringToInt64(value.Data);
         }
 
-        public static implicit operator Single(SQLVariant value)
+        public static implicit operator float(SQLVariant value)
         {
             return SQL_Lite.StringToSingle(value.Data);
         }
 
-        public static implicit operator Double(SQLVariant value)
+        public static implicit operator double(SQLVariant value)
         {
             return SQL_Lite.StringToDouble(value.Data);
         }
@@ -181,22 +181,22 @@ namespace ScottsUtils
             return new SQLVariant(SQL_Lite.ToString(value));
         }
 
-        public static implicit operator SQLVariant(Int32 value)
+        public static implicit operator SQLVariant(int value)
         {
             return new SQLVariant(SQL_Lite.ToString(value));
         }
 
-        public static implicit operator SQLVariant(Int64 value)
+        public static implicit operator SQLVariant(long value)
         {
             return new SQLVariant(SQL_Lite.ToString(value));
         }
 
-        public static implicit operator SQLVariant(Single value)
+        public static implicit operator SQLVariant(float value)
         {
             return new SQLVariant(SQL_Lite.ToString(value));
         }
 
-        public static implicit operator SQLVariant(Double value)
+        public static implicit operator SQLVariant(double value)
         {
             return new SQLVariant(SQL_Lite.ToString(value));
         }
@@ -250,7 +250,7 @@ namespace ScottsUtils
         public List<Row> Rows = new List<Row>();
 
         public Row _Headers;
-        public Dictionary<String, int> _ColumnIndexes;
+        public Dictionary<string, int> _ColumnIndexes;
 
         public Row Headers
         {
@@ -268,7 +268,7 @@ namespace ScottsUtils
             }
         }
 
-        public int ColumnIndex(String name)
+        public int ColumnIndex(string name)
         {
             if (_ColumnIndexes == null)
             {
@@ -617,7 +617,7 @@ namespace ScottsUtils
                 return true;
             }
         }
-        public static Int32 StringToInt32(string value)
+        public static int StringToInt32(string value)
         {
             if (value == null || value == "")
             {
@@ -625,10 +625,10 @@ namespace ScottsUtils
             }
             else
             {
-                return Int32.Parse(value);
+                return int.Parse(value);
             }
         }
-        public static Int64 StringToInt64(string value)
+        public static long StringToInt64(string value)
         {
             if (value == null || value == "")
             {
@@ -636,10 +636,10 @@ namespace ScottsUtils
             }
             else
             {
-                return Int64.Parse(value);
+                return long.Parse(value);
             }
         }
-        public static Single StringToSingle(string value)
+        public static float StringToSingle(string value)
         {
             if (value == null || value == "")
             {
@@ -647,12 +647,12 @@ namespace ScottsUtils
             }
             else
             {
-                Int32 temp = Int32.Parse(value);
+                int temp = int.Parse(value);
                 byte[] bits = BitConverter.GetBytes(temp);
                 return BitConverter.ToSingle(bits, 0);
             }
         }
-        public static Double StringToDouble(string value)
+        public static double StringToDouble(string value)
         {
             if (value == null || value == "")
             {
@@ -660,7 +660,7 @@ namespace ScottsUtils
             }
             else
             {
-                Int64 temp = Int64.Parse(value);
+                long temp = long.Parse(value);
                 byte[] bits = BitConverter.GetBytes(temp);
                 return BitConverter.ToDouble(bits, 0);
             }
@@ -749,19 +749,19 @@ namespace ScottsUtils
         {
             return value ? "1" : "0";
         }
-        public static string ToString(Int32 value)
+        public static string ToString(int value)
         {
             return value.ToString();
         }
-        public static string ToString(Int64 value)
+        public static string ToString(long value)
         {
             return value.ToString();
         }
-        public static string ToString(Single value)
+        public static string ToString(float value)
         {
             return value.ToString();
         }
-        public static string ToString(Double value)
+        public static string ToString(double value)
         {
             return value.ToString();
         }
@@ -877,7 +877,7 @@ namespace ScottsUtils
         delegate IntPtr ExecuteCommandDelegate(IntPtr hDB, IntPtr szCommand, IntPtr hBind);
         delegate int GetChangesDelegate(IntPtr hDB);
         delegate IntPtr GetDBLastErrorDelegate(IntPtr hDB);
-        delegate Int64 GetLastRowIDDelegate(IntPtr hDB);
+        delegate long GetLastRowIDDelegate(IntPtr hDB);
         delegate IntPtr GetSQLiteVersionDelegate();
         delegate IntPtr GetStringDelegate(IntPtr hDB, IntPtr hRet, int nRow, int nCol);
         delegate void GetTableSize(IntPtr hDB, IntPtr hRet, ref int pRows, ref int pCols);
@@ -1125,7 +1125,7 @@ namespace ScottsUtils
             }
         }
 
-        public Int64 GetLastRowID()
+        public long GetLastRowID()
         {
             return m_imports.delegates.GetLastRowID(m_hDB);
         }
@@ -1184,15 +1184,15 @@ namespace ScottsUtils
             foreach (object arg in args)
             {
                 StringMarshal sm;
-                if (arg is Int64)
+                if (arg is long)
                 {
-                    sm = new StringMarshal(ToString((Int64)arg));
+                    sm = new StringMarshal(ToString((long)arg));
                     m_imports.delegates.AddStringToBind(
                         m_hDB, hBind, sm.OwnNative);
                 }
-                else if (arg is Boolean)
+                else if (arg is bool)
                 {
-                    sm = new StringMarshal(ToString((Boolean)arg));
+                    sm = new StringMarshal(ToString((bool)arg));
                     m_imports.delegates.AddStringToBind(
                         m_hDB, hBind, sm.OwnNative);
                 }
@@ -1202,21 +1202,21 @@ namespace ScottsUtils
                     m_imports.delegates.AddStringToBind(
                         m_hDB, hBind, sm.OwnNative);
                 }
-                else if (arg is Int32)
+                else if (arg is int)
                 {
-                    sm = new StringMarshal((ToString((Int32)arg)));
+                    sm = new StringMarshal((ToString((int)arg)));
                     m_imports.delegates.AddStringToBind(
                         m_hDB, hBind, sm.OwnNative);
                 }
-                else if (arg is Single)
+                else if (arg is float)
                 {
-                    sm = new StringMarshal((ToString((Single)arg)));
+                    sm = new StringMarshal((ToString((float)arg)));
                     m_imports.delegates.AddStringToBind(
                         m_hDB, hBind, sm.OwnNative);
                 }
-                else if (arg is Double)
+                else if (arg is double)
                 {
-                    sm = new StringMarshal((ToString((Double)arg)));
+                    sm = new StringMarshal((ToString((double)arg)));
                     m_imports.delegates.AddStringToBind(
                         m_hDB, hBind, sm.OwnNative);
                 }

@@ -1,4 +1,4 @@
-/*
+﻿/*
  *  RuleBlockCreator.cs
  *
  *  Copyright (C) 2010-2012 Kyle Olson, kyle@kyleolson.com
@@ -19,26 +19,10 @@
  *
  */
 
-﻿using System;
-using System.Data;
-using System.ComponentModel;
-using System.Collections.ObjectModel;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Xml.Serialization;
 
 namespace CombatManager
 {
@@ -57,12 +41,12 @@ namespace CombatManager
         public List<Block> CreateBlocks(Rule rule, bool showTitle)
         {
 
-            List<Block> blocks = new List<Block>();
+            var blocks = new List<Block>();
 
 
-            string name = rule.Name;
+            var name = rule.Name;
 
-            string extraText = "";
+            var extraText = "";
             if (rule.AbilityType != null && rule.AbilityType.Length > 0)
             {
                 extraText += "(" + rule.AbilityType + ")";
@@ -92,7 +76,7 @@ namespace CombatManager
  
 
 
-            string detailsText = rule.Details;
+            var detailsText = rule.Details;
 
             if (detailsText == null)
             {
@@ -118,7 +102,7 @@ namespace CombatManager
             blocks.AddRange(CreateFlowFromDescription(detailsText));
 
 
-            Paragraph details = new Paragraph();
+            var details = new Paragraph();
             if (showTitle)
             {
                 details.Margin = new Thickness(0, 2, 0, 0);

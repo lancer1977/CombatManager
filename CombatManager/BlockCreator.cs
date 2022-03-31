@@ -1,4 +1,4 @@
-/*
+﻿/*
  *  BlockCreator.cs
  *
  *  Copyright (C) 2010-2012 Kyle Olson, kyle@kyleolson.com
@@ -19,26 +19,15 @@
  *
  */
 
-﻿using System;
-using System.Data;
-using System.ComponentModel;
-using System.Collections.ObjectModel;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Text;
+ using System;
+ using System.Collections.Generic;
+ using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Xml.Serialization;
+ using System.Windows.Documents;
+ using System.Windows.Media;
+ using System.Windows.Shapes;
 
 namespace CombatManager
 {
@@ -239,11 +228,11 @@ namespace CombatManager
 
         protected List<Inline> CreateMultiValueLine(List<TitleValuePair> values, string seperator)
         {
-            List<Inline> inlines = new List<Inline>();
+            var inlines = new List<Inline>();
 
-            bool itemAdded = false;
+            var itemAdded = false;
 
-            foreach (TitleValuePair pair in values)
+            foreach (var pair in values)
             {
                 if (pair.Value != null && pair.Value.Length > 0)
                 {
@@ -274,7 +263,7 @@ namespace CombatManager
 
         protected List<Block> CreateSectionHeader(String title, bool bold)
         {
-            List<Block> blocks = new List<Block>();
+            var blocks = new List<Block>();
 
 
 
@@ -282,7 +271,7 @@ namespace CombatManager
 
 
 
-            Paragraph header = new Paragraph();
+            var header = new Paragraph();
 
             if (bold)
             {
@@ -303,9 +292,9 @@ namespace CombatManager
 
         protected Block CreateHeaderLine()
         {
-            Grid grid = new Grid();
+            var grid = new Grid();
 
-            Line line = new Line();
+            var line = new Line();
             line.Name = "Line";
             line.HorizontalAlignment = HorizontalAlignment.Stretch;
             line.VerticalAlignment = VerticalAlignment.Bottom;
@@ -320,7 +309,7 @@ namespace CombatManager
             line.Stroke = ForegroundBrush;
 
             grid.Children.Add(line);
-            BlockUIContainer cont = new BlockUIContainer(grid);
+            var cont = new BlockUIContainer(grid);
             cont.Margin = new Thickness(0, 2, 0, 2);
 
             return cont;
@@ -328,7 +317,7 @@ namespace CombatManager
 
         protected void CreateItemIfNotNull(InlineCollection inlines, String title, String value)
         {
-            List<Inline> list = CreateItemIfNotNull(title, value);
+            var list = CreateItemIfNotNull(title, value);
 
             if (list != null && list.Count > 0)
             {
@@ -338,7 +327,7 @@ namespace CombatManager
 
         protected void CreateItemIfNotNull(InlineCollection inlines, String title, bool boldTitle, String value, String end, bool linebreak)
         {
-            List<Inline> list = CreateItemIfNotNull(title, boldTitle, value, end, linebreak);
+            var list = CreateItemIfNotNull(title, boldTitle, value, end, linebreak);
 
             if (list != null && list.Count > 0)
             {
@@ -355,11 +344,11 @@ namespace CombatManager
         protected List<Inline> CreateLinkIfNotNull(String value, String end = null, RoutedEventHandler handler = null, 
             object datacontext = null, System.Windows.Controls.ToolTip tip = null)
         {
-            List<Inline> inlines = new List<Inline>();
+            var inlines = new List<Inline>();
 
             if (value != null)
             {
-                Hyperlink link = new Hyperlink(new Run(value));
+                var link = new Hyperlink(new Run(value));
 
                 link.Tag = value ;
                 if (handler != null)
@@ -395,7 +384,7 @@ namespace CombatManager
 
         protected List<Inline> CreateItemIfNotNull(String title, bool boldTitle, String value, String end, bool linebreak)
         {
-            List<Inline> inlines = new List<Inline>();
+            var inlines = new List<Inline>();
 
             if (NotNullString(value))
             {
@@ -475,7 +464,7 @@ namespace CombatManager
         {
             
 
-            Paragraph header = new Paragraph();
+            var header = new Paragraph();
             header.Background = UserSettings.Settings.DarkScheme?LighterBrush:DarkerBrush;
             header.Foreground = (Brush)App.Current.Resources["ThemeTextBackgroundBrush"];
             header.FontSize = document.FontSize * 1.3;
@@ -483,10 +472,10 @@ namespace CombatManager
 
             if (secondaryText != null)
             {
-                Paragraph floaterParagraph = new Paragraph(new Run(secondaryText));
+                var floaterParagraph = new Paragraph(new Run(secondaryText));
                 floaterParagraph.Padding = new Thickness(0);
                 floaterParagraph.Padding = new Thickness(0);
-                Floater floater = new Floater(floaterParagraph);
+                var floater = new Floater(floaterParagraph);
                 floater.Padding = new Thickness(4, 0, 4, 0);
                 floater.Margin = new Thickness(0);
 
@@ -495,7 +484,7 @@ namespace CombatManager
                 header.Inlines.Add(floater);
             }
 
-            Run titleRun = new Run(text);
+            var titleRun = new Run(text);
             titleRun.FontWeight = FontWeights.Bold;
             //titleRun.FontSize = titleRun.FontSize * 1.8;
             titleRun.Background = new SolidColorBrush();
@@ -517,31 +506,31 @@ namespace CombatManager
 
         protected List<Block> CreateFlowFromDescription(String description, bool startBold, bool startItalic)
         {
-            List<Block> blocks = new List<Block>();
+            var blocks = new List<Block>();
 
             
 
-            Regex regex = new Regex("<(?<tag>/?[\\p{L}0-9]+)[^<>]*?>", RegexOptions.IgnoreCase);
-            Match match = (regex.Match(description));
+            var regex = new Regex("<(?<tag>/?[\\p{L}0-9]+)[^<>]*?>", RegexOptions.IgnoreCase);
+            var match = (regex.Match(description));
 
-            bool bold = startBold;
-            bool italic = startItalic;
+            var bold = startBold;
+            var italic = startItalic;
             Paragraph paragraph = null;
 
             
-            int start = 0;
+            var start = 0;
 
 
             while (match.Success)
             {
-                bool noAdvanceStart = false;
-                string lastText = description.Substring(start, match.Index - start);
+                var noAdvanceStart = false;
+                var lastText = description.Substring(start, match.Index - start);
 
 
 
                 if (paragraph != null && lastText.Length > 0)
                 {
-                    Run run = new Run(lastText);
+                    var run = new Run(lastText);
                     run.FontStyle = italic ? System.Windows.FontStyles.Italic : System.Windows.FontStyles.Normal;
                     run.FontWeight = bold ? System.Windows.FontWeights.Bold : System.Windows.FontWeights.Normal;
 
@@ -550,7 +539,7 @@ namespace CombatManager
                     paragraph.Inlines.Add(new Bold(run));
                 }
 
-                string tag = match.Groups["tag"].Value.ToLower();
+                var tag = match.Groups["tag"].Value.ToLower();
 
                 if (tag == "p")
                 {
@@ -593,7 +582,7 @@ namespace CombatManager
                 if (tag == "h1" || tag == "h2" || tag == "h3" || tag == "h4")
                 {
                     int textEnd;
-                    string bodytext = FindEndTag(description, tag, match.Index + match.Length, out textEnd);
+                    var bodytext = FindEndTag(description, tag, match.Index + match.Length, out textEnd);
 
                     if (bodytext == null)
                     {
@@ -611,7 +600,7 @@ namespace CombatManager
                 if (tag == "table" )
                 {
                     int textEnd;
-                    string bodytext = FindEndTag(description, "table", match.Index + match.Length, out textEnd);
+                    var bodytext = FindEndTag(description, "table", match.Index + match.Length, out textEnd);
 
                     if (bodytext == null)
                     {
@@ -620,7 +609,7 @@ namespace CombatManager
                     else
                     {
 
-                        Block table = CreateTableBlock(bodytext);
+                        var table = CreateTableBlock(bodytext);
                         blocks.Add(table);
                     }
                     start = textEnd;
@@ -632,7 +621,7 @@ namespace CombatManager
                 {
 
                     int textEnd;
-                    string bodytext = FindEndTag(description, "ul", match.Index + match.Length, out textEnd);
+                    var bodytext = FindEndTag(description, "ul", match.Index + match.Length, out textEnd);
 
                     if (bodytext == null)
                     {
@@ -641,7 +630,7 @@ namespace CombatManager
                     else
                     {
 
-                        Block table = CreateUnorderedListBlock(bodytext);
+                        var table = CreateUnorderedListBlock(bodytext);
                         blocks.Add(table);
                     }
                     start = textEnd;
@@ -653,7 +642,7 @@ namespace CombatManager
                 {
 
                     int textEnd;
-                    string bodytext = FindEndTag(description, tag, match.Index + match.Length, out textEnd);
+                    var bodytext = FindEndTag(description, tag, match.Index + match.Length, out textEnd);
 
                     if (bodytext == null)
                     {
@@ -664,7 +653,7 @@ namespace CombatManager
 
                         if (paragraph != null)
                         {
-                            Run run = new Run(bodytext );
+                            var run = new Run(bodytext );
                             //temp minor fix for script problem
                             run.FontSize = document.FontSize - 3;
                             if (tag == "sup")
@@ -705,17 +694,17 @@ namespace CombatManager
 
         protected Block CreateTableBlock(String tableText)
         {
-            Table table = new Table();
-            TableRowGroup group = new TableRowGroup();
+            var table = new Table();
+            var group = new TableRowGroup();
 
 
-            Regex regRow = new Regex("<tr.*?>(?<text>(.|\n|\r)+?)</tr>", RegexOptions.IgnoreCase);
+            var regRow = new Regex("<tr.*?>(?<text>(.|\n|\r)+?)</tr>", RegexOptions.IgnoreCase);
 
 
             
             foreach (Match m in regRow.Matches(tableText))
             {
-                TableRow row = CreateTableRow(m.Groups["text"].Value);
+                var row = CreateTableRow(m.Groups["text"].Value);
                 group.Rows.Add(row);
             }
 
@@ -726,10 +715,10 @@ namespace CombatManager
 
         protected TableRow CreateTableRow(String tableText)
         {
-            TableRow row = new TableRow();
+            var row = new TableRow();
 
 
-            Regex regItem = new Regex("<th(?<headerparams>.*?)>(?<header>(.|/n)+?)</th>|<td(?<cellparams>.*?)>(?<cell>(.|/n)+?)</td>", RegexOptions.IgnoreCase);
+            var regItem = new Regex("<th(?<headerparams>.*?)>(?<header>(.|/n)+?)</th>|<td(?<cellparams>.*?)>(?<cell>(.|/n)+?)</td>", RegexOptions.IgnoreCase);
 
 
 
@@ -741,7 +730,7 @@ namespace CombatManager
                 {
 
                     text = m.Groups["header"].Value;
-                    TableCell c = new TableCell();
+                    var c = new TableCell();
 
                     if (m.Groups["headerparams"].Success)
                     {
@@ -755,9 +744,9 @@ namespace CombatManager
                 }
                 else
                 {
-                    Paragraph p = new Paragraph();
+                    var p = new Paragraph();
                     p.Foreground = ForegroundBrush;
-                    TableCell c = new TableCell();
+                    var c = new TableCell();
 
                     
                     if (m.Groups["cellparams"].Success)
@@ -780,14 +769,14 @@ namespace CombatManager
 
         private void SetCellParams(TableCell c, string paramText)
         {
-            int colspan = GetColumnSpan(paramText);
+            var colspan = GetColumnSpan(paramText);
 
             if (colspan > 0)
             {
                 c.ColumnSpan = colspan;
             }
 
-            int rowspan = GetRowSpan(paramText);
+            var rowspan = GetRowSpan(paramText);
 
             if (rowspan > 0)
             {
@@ -798,9 +787,9 @@ namespace CombatManager
 
         private static int GetColumnSpan(string paramText)
         {
-            int value = 0;      
+            var value = 0;      
 
-            Match mp = Regex.Match(paramText, "colspan=\"(?<val>[0-9]+)\"");
+            var mp = Regex.Match(paramText, "colspan=\"(?<val>[0-9]+)\"");
 
             if (mp.Success)
             {
@@ -814,9 +803,9 @@ namespace CombatManager
 
         private static int GetRowSpan(string paramText)
         {
-            int value = 0;
+            var value = 0;
 
-            Match mp = Regex.Match(paramText, "rowspan=\"(?<val>[0-9]+)\"");
+            var mp = Regex.Match(paramText, "rowspan=\"(?<val>[0-9]+)\"");
 
             if (mp.Success)
             {
@@ -831,23 +820,23 @@ namespace CombatManager
         protected Block CreateUnorderedListBlock(String text)
         {
 
-            List list = new List();
+            var list = new List();
 
 
 
 
-            Regex regItem = new Regex("<li.*?>", RegexOptions.IgnoreCase);
+            var regItem = new Regex("<li.*?>", RegexOptions.IgnoreCase);
 
-            int start = 0;
-            Match m = regItem.Match(text, start);
+            var start = 0;
+            var m = regItem.Match(text, start);
 
 
 
             while (m.Success)
             {
                 int end;
-                int searchStart = m.Index + m.Length;
-                string body = FindEndTag(text, "li", searchStart, out end);
+                var searchStart = m.Index + m.Length;
+                var body = FindEndTag(text, "li", searchStart, out end);
 
                 if (body == null)
                 {
@@ -861,7 +850,7 @@ namespace CombatManager
                         body = "<p>" + body + "</p>";
                     }
 
-                    ListItem item = new ListItem();
+                    var item = new ListItem();
                     item.Blocks.AddRange(CreateFlowFromDescription(body));
                     list.ListItems.Add(item);
 
@@ -876,7 +865,7 @@ namespace CombatManager
 
         protected void link_ToolTipOpening(object sender, ToolTipEventArgs e)
         {
-            Hyperlink l = (Hyperlink)sender;
+            var l = (Hyperlink)sender;
             ((ToolTip)l.ToolTip).DataContext = l.DataContext;
         }
 
@@ -898,14 +887,14 @@ namespace CombatManager
 
         public static string ReplaceSingle(string source, string oldValue, string newValue)
         {
-            int index = source.IndexOf(oldValue);
+            var index = source.IndexOf(oldValue);
 
             if (index < 0)
             {
                 return source;
             }
 
-            StringBuilder ret = new StringBuilder();
+            var ret = new StringBuilder();
 
             ret.Append(source.Substring(0, index));
             ret.Append(newValue);
@@ -917,7 +906,7 @@ namespace CombatManager
 
         public static string PastTenseNumber(string number)
         {
-            string res = number;
+            var res = number;
 
             if (res != null && res.Length > 0)
             {
@@ -939,10 +928,10 @@ namespace CombatManager
         {
 
 
-            string res = num.ToString();
+            var res = num.ToString();
 
 
-            int last = num % 10;
+            var last = num % 10;
 
             switch (last)
             {
@@ -966,18 +955,18 @@ namespace CombatManager
 
         static string FindEndTag(string text, string tag, int start, out int tagEnd)
         {
-            int tagCount = 0;
-            int searchStart = start;
-            bool found = false;
-            bool failed = false;
-            Regex regItem = new Regex("(?<text>(.|\n|\r)+?)((?<open><" + tag + ".*?>)|(?<close></" + tag +  ">))", RegexOptions.IgnoreCase);
+            var tagCount = 0;
+            var searchStart = start;
+            var found = false;
+            var failed = false;
+            var regItem = new Regex("(?<text>(.|\n|\r)+?)((?<open><" + tag + ".*?>)|(?<close></" + tag +  ">))", RegexOptions.IgnoreCase);
 
             string returnText = null;
             tagEnd = -1;
 
             while (!found && !failed)
             {
-                Match m = regItem.Match(text, searchStart);
+                var m = regItem.Match(text, searchStart);
 
                 if (!m.Success)
                 {

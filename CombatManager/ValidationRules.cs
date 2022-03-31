@@ -1,4 +1,4 @@
-/*
+﻿/*
  *  ValidationRules.cs
  *
  *  Copyright (C) 2010-2012 Kyle Olson, kyle@kyleolson.com
@@ -19,11 +19,8 @@
  *
  */
 
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows.Controls;
+ using System;
+ using System.Windows.Controls;
 using System.Globalization;
 using System.Text.RegularExpressions;
 
@@ -52,7 +49,7 @@ namespace CombatManager
 
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
-            int age = 0;
+            var age = 0;
 
             try
             {
@@ -83,7 +80,7 @@ namespace CombatManager
         {
             try
             {
-                string text = (string)value;
+                var text = (string)value;
 
                 if (Regex.Match(text, "([\r\n])|(or)", RegexOptions.IgnoreCase).Success)
                 {

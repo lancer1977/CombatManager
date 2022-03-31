@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using CombatManager.Api; 
+using CombatManager.Api;
+using CombatManager.Api.Core;
+using CombatManager.Api.Core.Request;
 using NUnit.Framework;
 
 namespace TestProject1

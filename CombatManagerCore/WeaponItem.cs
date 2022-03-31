@@ -1,4 +1,4 @@
-/*
+﻿/*
  *  WeaponItem.cs
  *
  *  Copyright (C) 2010-2012 Kyle Olson, kyle@kyleolson.com
@@ -19,7 +19,7 @@
  *
  */
 
-﻿using System;
+ using System;
 using System.ComponentModel;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,7 +37,7 @@ namespace CombatManager
         private string _Name;
         private DieRoll _Roll;
 
-        public String Name
+        public string Name
         {
             get { return _Name; }
             set
@@ -76,7 +76,7 @@ namespace CombatManager
         private bool _Masterwork;
         private bool _Broken;
         private int _MagicBonus;
-        private String _SpecialAbilities;
+        private string _SpecialAbilities;
         private bool _MainHand;
 		private bool _TwoHanded;
         private string _Plus;
@@ -249,7 +249,7 @@ namespace CombatManager
 				PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 		}
 
-        public String SpecialAbilities
+        public string SpecialAbilities
         {
             get { return _SpecialAbilities; }
             set

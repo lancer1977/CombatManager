@@ -1,4 +1,4 @@
-/*
+﻿/*
  *  Treasure.cs
  *
  *  Copyright (C) 2010-2012 Kyle Olson, kyle@kyleolson.com
@@ -19,7 +19,7 @@
  *
  */
 
-﻿using System;
+ using System;
 using System.ComponentModel;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,10 +38,10 @@ namespace CombatManager
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private String _Name;
+        private string _Name;
         private int _Value;
 
-        public String Name
+        public string Name
         {
             get { return _Name; }
             set

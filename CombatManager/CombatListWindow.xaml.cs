@@ -20,16 +20,9 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using System.Windows.Media.Animation;
 using System.Globalization;
 using Timer = System.Windows.Forms.Timer;
@@ -42,19 +35,18 @@ namespace CombatManager
 	public partial class CombatListWindow : Window
 	{
 		
-	    private CombatState _CombatState;
-		IInitiativeController _Controller;
-        private double _Scale;
-        private bool _SetupComplete;
-
-        Timer timer;
+	    private CombatState _combatState;
+		IInitiativeController _controller;
+        private double _scale;
+        private bool _setupComplete;
+        Timer _timer;
 		
 		public CombatListWindow()
 		{
-            _Scale = 1.0;
+            _scale = 1.0;
 			this.InitializeComponent();
 
-            _Scale = UserSettings.Settings.InitiativeScale;
+            _scale = UserSettings.Settings.InitiativeScale;
             PlayersComboBox.SelectedIndex = ComboIndex(UserSettings.Settings.InitiativeShowPlayers,
                                         UserSettings.Settings.InitiativeHidePlayerNames) ;
 
@@ -69,7 +61,7 @@ namespace CombatManager
             UserSettings.Settings.PropertyChanged += new System.ComponentModel.PropertyChangedEventHandler(Settings_PropertyChanged);
 
 			UpdateCombatListState();
-            _SetupComplete = true;
+            _setupComplete = true;
 		}
 
         void SetupClock()
@@ -107,23 +99,23 @@ namespace CombatManager
 
         public CombatState CombatState
         {
-            get { return _CombatState; }
+            get { return _combatState; }
             set
             {
-                if (_CombatState != value)
+                if (_combatState != value)
                 {
-                    _CombatState = value;
-					this.DataContext = _CombatState;
-                    CombatList.CombatState = _CombatState;
+                    _combatState = value;
+					this.DataContext = _combatState;
+                    CombatList.CombatState = _combatState;
 
-                    _CombatState.CombatList.CollectionChanged += new System.Collections.Specialized.NotifyCollectionChangedEventHandler(CombatList_CollectionChanged);
-                    _CombatState.CharacterAdded += new CombatStateCharacterEvent(CombatState_CharacterAdded);
-                    foreach (Character ch in _CombatState.CombatList)
+                    _combatState.CombatList.CollectionChanged += new System.Collections.Specialized.NotifyCollectionChangedEventHandler(CombatList_CollectionChanged);
+                    _combatState.CharacterAdded += new CombatStateCharacterEvent(CombatState_CharacterAdded);
+                    foreach (var ch in _combatState.CombatList)
                     {
                         ch.PropertyChanged += new System.ComponentModel.PropertyChangedEventHandler(Character_PropertyChanged);
                     }
 
-                    _CombatState.PropertyChanged += new System.ComponentModel.PropertyChangedEventHandler(CombatState_PropertyChanged);
+                    _combatState.PropertyChanged += new System.ComponentModel.PropertyChangedEventHandler(CombatState_PropertyChanged);
 
                     UpdateCharacterName();
                 
@@ -166,7 +158,7 @@ namespace CombatManager
 
         void Character_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            if (((Character)sender) == _CombatState.CurrentCharacter && e.PropertyName == "HiddenName")
+            if (((Character)sender) == _combatState.CurrentCharacter && e.PropertyName == "HiddenName")
             {
                 UpdateCharacterName();
             }
@@ -180,13 +172,13 @@ namespace CombatManager
 		{
 			get
 			{
-				return _Controller;
+				return _controller;
 			}
 			set
 			{
-				if (_Controller != value)
+				if (_controller != value)
 				{
-					_Controller = value;
+					_controller = value;
 				}
 			}
 		}
@@ -214,10 +206,10 @@ namespace CombatManager
 
 		private void IncreaseSizeButton_Click(object sender, System.Windows.RoutedEventArgs e)
 		{
-            _Scale += .1;
-            if (_Scale > 2.0)
+            _scale += .1;
+            if (_scale > 2.0)
             {
-                _Scale = 2.0;
+                _scale = 2.0;
             }
             UpdateSettings();
             AnimateToScale();
@@ -226,10 +218,10 @@ namespace CombatManager
 
         private void DecreaseSizeButton_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            _Scale -= .1;
-            if (_Scale < .5)
+            _scale -= .1;
+            if (_scale < .5)
             {
-                _Scale = .5;
+                _scale = .5;
             }
             UpdateSettings();
             AnimateToScale();
@@ -240,11 +232,11 @@ namespace CombatManager
         {
 
 
-            DoubleAnimation animatex = new DoubleAnimation();
-            DoubleAnimation animatey = new DoubleAnimation();
-            animatex.To = _Scale;
+            var animatex = new DoubleAnimation();
+            var animatey = new DoubleAnimation();
+            animatex.To = _scale;
             animatex.Duration = new Duration(TimeSpan.FromMilliseconds(100.0));
-            animatey.To = _Scale;
+            animatey.To = _scale;
             animatey.Duration = new Duration(TimeSpan.FromMilliseconds(100.0));
 
 
@@ -254,7 +246,7 @@ namespace CombatManager
 
         private void toggleButton_Checked(object sender, RoutedEventArgs e)
         {
-            DoubleAnimation animate = new DoubleAnimation();
+            var animate = new DoubleAnimation();
             animate.To = 180.0;
             animate.Duration = new Duration(TimeSpan.FromMilliseconds(100.0));
 
@@ -266,7 +258,7 @@ namespace CombatManager
         private void toggleButton_Unchecked(object sender, RoutedEventArgs e)
         {
 
-            DoubleAnimation animate = new DoubleAnimation();
+            var animate = new DoubleAnimation();
             animate.To = 0;
             animate.Duration = new Duration(TimeSpan.FromMilliseconds(100.0));
 
@@ -276,10 +268,10 @@ namespace CombatManager
 
         private void UpdateSettings()
         {
-            if (_SetupComplete)
+            if (_setupComplete)
             {
 
-                UserSettings.Settings.InitiativeScale = _Scale;
+                UserSettings.Settings.InitiativeScale = _scale;
 
                 UserSettings.Settings.InitiativeFlip = FlipButton.IsChecked == true;
                 UserSettings.Settings.InitiativeShowPlayers = PlayersComboBox.SelectedIndex != 2;
@@ -360,7 +352,7 @@ namespace CombatManager
             Character c = null;
             CombatListWindow list = null;
 
-            foreach (object ob in values)
+            foreach (var ob in values)
             {
                 if (ob != null)
                 {

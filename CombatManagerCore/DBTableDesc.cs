@@ -1,4 +1,4 @@
-/*
+﻿/*
  *  DBTableDesc.cs
  *
  *  Copyright (C) 2010-2012 Kyle Olson, kyle@kyleolson.com
@@ -19,7 +19,7 @@
  *
  */
 
-﻿using System;
+ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -29,7 +29,7 @@ namespace CombatManager
 {
     public class DBTableDesc
     {
-        private String _Name;
+        private string _Name;
         private List<DBFieldDesc> _Fields;
         private bool _Primary;
         private Type _Type;
@@ -43,14 +43,14 @@ namespace CombatManager
             _Fields = new List<DBFieldDesc>();
         }
 
-        public DBTableDesc(String name, Type type)
+        public DBTableDesc(string name, Type type)
         {
             _Name = name;
             _Fields = new List<DBFieldDesc>();
             _Type = type;
         }
 
-        public String Name
+        public string Name
         {
             get { return _Name; }
             set
@@ -143,7 +143,7 @@ namespace CombatManager
         {
         }
 
-        public DBFieldDesc(String name, String type, bool nullable, PropertyInfo info)
+        public DBFieldDesc(string name, string type, bool nullable, PropertyInfo info)
         {
             _Name = GetUsableName(name);
             _OriginalName = name;
@@ -152,14 +152,14 @@ namespace CombatManager
             _Info = info;
         }
 
-        private String _Name;
-        private String _OriginalName;
-        private String _Type;
+        private string _Name;
+        private string _OriginalName;
+        private string _Type;
         private DBTableDesc _Subtable;
         private bool _Nullable;
         private PropertyInfo _Info;
 
-        public String Name
+        public string Name
         {
             get { return _Name; }
             set
@@ -170,11 +170,11 @@ namespace CombatManager
                 }
             }
         }
-        public String OriginalName
+        public string OriginalName
         {
             get { return _OriginalName; }
         }
-        public String Type
+        public string Type
         {
             get { return _Type; }
             set

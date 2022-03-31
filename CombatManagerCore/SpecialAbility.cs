@@ -1,4 +1,4 @@
-/*
+﻿/*
  *  SpecialAbility.cs
  *
  *  Copyright (C) 2010-2012 Kyle Olson, kyle@kyleolson.com
@@ -19,7 +19,7 @@
  *
  */
 
-﻿using System;
+ using System;
 using System.ComponentModel;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,14 +33,14 @@ namespace CombatManager
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private String _Name;
-        private String _Type;
-        private String _Text;
+        private string _Name;
+        private string _Type;
+        private string _Text;
         private int? _ConstructionPoints;
 
 
 
-        public String Name
+        public string Name
         {
             get { return _Name; }
             set
@@ -52,7 +52,7 @@ namespace CombatManager
                 }
             }
         }
-        public String Type
+        public string Type
         {
             get { return _Type; }
             set
@@ -68,7 +68,7 @@ namespace CombatManager
                 }
             }
         }
-        public String Text
+        public string Text
         {
             get { return _Text; }
             set
@@ -99,15 +99,15 @@ namespace CombatManager
         {
             get
             {
-                if (String.Compare(_Type, "Ex") == 0)
+                if (string.Compare(_Type, "Ex") == 0)
                 {
                     return 0;
                 }
-                else if (String.Compare(_Type, "Sp") == 0)
+                else if (string.Compare(_Type, "Sp") == 0)
                 {
                     return 1;
                 }
-                else if (String.Compare(_Type, "Su") == 0)
+                else if (string.Compare(_Type, "Su") == 0)
                 {
                     return 2;
                 }

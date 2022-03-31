@@ -1,4 +1,4 @@
-/*
+﻿/*
  *  DieRollEditWindow.xaml.cs
  *
  *  Copyright (C) 2010-2012 Kyle Olson, kyle@kyleolson.com
@@ -19,17 +19,8 @@
  *
  */
 
-﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 
@@ -73,13 +64,13 @@ namespace CombatManager
 
                     if (_Roll.extraRolls != null)
                     {
-                        foreach (DieStep s in _Roll.extraRolls)
+                        foreach (var s in _Roll.extraRolls)
                         {
                             _Steps.Add(s);
                         }
                     }
 
-                    foreach (DieStep s in _Steps)
+                    foreach (var s in _Steps)
                     {
                         s.PropertyChanged += new PropertyChangedEventHandler(DieStep_PropertyChanged);
                     }
@@ -102,7 +93,7 @@ namespace CombatManager
 
         private DieRoll MakeRoll()
         {
-            DieRoll roll = new DieRoll();
+            var roll = new DieRoll();
 
             if (_Steps.Count > 0)
             {
@@ -113,7 +104,7 @@ namespace CombatManager
                 if (_Steps.Count > 1)
                 {
                     roll.extraRolls = new List<DieStep>();
-                    for (int i = 1; i < _Steps.Count; i++)
+                    for (var i = 1; i < _Steps.Count; i++)
                     {
                         roll.extraRolls.Add(_Steps[i]);
                     }
@@ -165,7 +156,7 @@ namespace CombatManager
 
         private void DeleteButton_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            DieStep d = (DieStep)((FrameworkElement)sender).DataContext;
+            var d = (DieStep)((FrameworkElement)sender).DataContext;
 
             _Steps.Remove(d);
 
@@ -177,7 +168,7 @@ namespace CombatManager
 
         private void AddDieButton_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-        	DieStep d = new DieStep();
+        	var d = new DieStep();
 			d.PropertyChanged += new PropertyChangedEventHandler(DieStep_PropertyChanged);
 			_Steps.Add(d);
 			

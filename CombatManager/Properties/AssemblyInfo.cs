@@ -1,4 +1,4 @@
-/*
+﻿/*
  *  AssemblyInfo.cs
  *
  *  Copyright (C) 2010-2012 Kyle Olson, kyle@kyleolson.com
@@ -19,10 +19,8 @@
  *
  */
 
-﻿using System.Reflection;
-using System.Resources;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
+ using System.Reflection;
+ using System.Runtime.InteropServices;
 using System.Windows;
 
 // General Information about an assembly is controlled through the following 

@@ -1,4 +1,4 @@
-/*
+﻿/*
  *  TreasureItem.cs
  *
  *  Copyright (C) 2010-2012 Kyle Olson, kyle@kyleolson.com
@@ -19,7 +19,7 @@
  *
  */
 
-﻿using System;
+ using System;
 using System.ComponentModel;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,11 +36,11 @@ namespace CombatManager
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private String _Name;
+        private string _Name;
         private decimal _Value;
         private Spell _Spell;
         private MagicItem _MagicItem;
-        private String _Type;
+        private string _Type;
         private Equipment _Equipment;
  
 
@@ -69,7 +69,7 @@ namespace CombatManager
             return new TreasureItem(this);
         }
 
-        public String Name
+        public string Name
         {
             get { return _Name; }
             set
@@ -131,7 +131,7 @@ namespace CombatManager
             }
         }
 
-        public String Type
+        public string Type
         {
             get { return _Type; }
             set

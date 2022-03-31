@@ -1,4 +1,4 @@
-/*
+﻿/*
  *  XMLLoader.cs
  *
  *  Copyright (C) 2010-2012 Kyle Olson, kyle@kyleolson.com
@@ -19,7 +19,7 @@
  *
  */
 
-﻿using System;
+ using System;
 using System.ComponentModel;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -177,7 +177,7 @@ namespace CombatManager
                     
 #else
 
-                String file = SaveFileName(filename, appData);
+                string file = SaveFileName(filename, appData);
 
                 if (new FileInfo(file).Exists)
                 {
@@ -225,7 +225,7 @@ namespace CombatManager
         public static void Save(T list, string filename, bool appData)
         {
 
-            String file = SaveFileName(filename, appData);
+            string file = SaveFileName(filename, appData);
             Save(list, file);
         }
 
@@ -259,9 +259,9 @@ namespace CombatManager
 
         }
 
-        public static void Delete(String filename, bool appData)
+        public static void Delete(string filename, bool appData)
         {
-            String file = SaveFileName(filename, appData);
+            string file = SaveFileName(filename, appData);
 
             FileInfo info = new FileInfo(file);
             if (info.Exists)
@@ -270,7 +270,7 @@ namespace CombatManager
             }
         }
 
-        public static String SaveFileName(String filename, bool appData)
+        public static string SaveFileName(string filename, bool appData)
         {
             string path;
             if (!appData)

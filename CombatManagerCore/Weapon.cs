@@ -1,4 +1,4 @@
-/*
+﻿/*
  *  Weapon.cs
  *
  *  Copyright (C) 2010-2012 Kyle Olson, kyle@kyleolson.com
@@ -19,7 +19,7 @@
  *
  */
 
-﻿using System;
+ using System;
 using System.ComponentModel;
 using System.Collections.Generic;
 using System.IO;
@@ -34,22 +34,22 @@ namespace CombatManager
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private String _Name;
-        private String _AltName;
-        private String _OriginalName;
-        private String _Cost;
-        private String _DmgS;
-        private String _DmgM;
-        private String _Critical;
-        private String _Range;
-        private String _Weight;
-        private String _DmgType;
-        private String _Special;
-        private String _Source;
-        private String _Hands;
-        private String _Class;
-		private String _Plural;
-        private List<String> _Groups;
+        private string _Name;
+        private string _AltName;
+        private string _OriginalName;
+        private string _Cost;
+        private string _DmgS;
+        private string _DmgM;
+        private string _Critical;
+        private string _Range;
+        private string _Weight;
+        private string _DmgType;
+        private string _Special;
+        private string _Source;
+        private string _Hands;
+        private string _Class;
+		private string _Plural;
+        private List<string> _Groups;
         private bool _IsHand;
         private bool _Throw;
         private int _CritRange;
@@ -60,8 +60,8 @@ namespace CombatManager
         private bool _AltDamageDrain;
         private string _URL;
         private string _Desc;
-        private String _Misfire;
-        private String _Capacity;
+        private string _Misfire;
+        private string _Capacity;
 
         
         static Dictionary<string, Weapon> weapons;
@@ -151,7 +151,7 @@ namespace CombatManager
 
             return weapon;
         }
-        public String Name
+        public string Name
         {
             get { return _Name; }
             set
@@ -163,7 +163,7 @@ namespace CombatManager
                 }
             }
         }
-        public String AltName
+        public string AltName
         {
             get { return _AltName; }
             set
@@ -176,7 +176,7 @@ namespace CombatManager
             }
         }
         [XmlIgnore]
-        public String OriginalName
+        public string OriginalName
         {
             get { return _OriginalName; }
             set
@@ -188,7 +188,7 @@ namespace CombatManager
                 }
             }
         }
-        public String Cost
+        public string Cost
         {
             get { return _Cost; }
             set
@@ -200,7 +200,7 @@ namespace CombatManager
                 }
             }
         }
-        public String DmgS
+        public string DmgS
         {
             get { return _DmgS; }
             set
@@ -212,7 +212,7 @@ namespace CombatManager
                 }
             }
         }
-        public String DmgM
+        public string DmgM
         {
             get { return _DmgM; }
             set
@@ -296,7 +296,7 @@ namespace CombatManager
             return roll.Text + critText;
         }	
         private const string RegCritString = "((?<critrange>[0-9]+)-[0-9]+)?(/?x(?<critmultiplier>[0-9]+))?";
-        public String Critical
+        public string Critical
         {
             get { return _Critical; }
             set
@@ -325,7 +325,7 @@ namespace CombatManager
                 }
             }
         }
-        public String Range
+        public string Range
         {
             get { return _Range; }
             set
@@ -337,7 +337,7 @@ namespace CombatManager
                 }
             }
         }
-        public String Weight
+        public string Weight
         {
             get { return _Weight; }
             set
@@ -349,7 +349,7 @@ namespace CombatManager
                 }
             }
         }
-        public String DmgType
+        public string DmgType
         {
             get { return _DmgType; }
             set
@@ -361,7 +361,7 @@ namespace CombatManager
                 }
             }
         }
-        public String Special
+        public string Special
         {
             get { return _Special; }
             set
@@ -373,7 +373,7 @@ namespace CombatManager
                 }
             }
         }
-        public String Source
+        public string Source
         {
             get { return _Source; }
             set
@@ -385,7 +385,7 @@ namespace CombatManager
                 }
             }
         }
-        public String Hands
+        public string Hands
         {
             get { return _Hands; }
             set
@@ -397,7 +397,7 @@ namespace CombatManager
                 }
             }
         }
-        public String Class
+        public string Class
         {
             get { return _Class; }
             set
@@ -409,7 +409,7 @@ namespace CombatManager
                 }
             }
         }
-        public String Plural
+        public string Plural
         {
             get { return _Plural; }
             set
@@ -517,7 +517,7 @@ namespace CombatManager
                 }
             }
         }        
-        public String Misfire
+        public string Misfire
         {
             get { return _Misfire; }
             set
@@ -529,7 +529,7 @@ namespace CombatManager
                 }
             }
         }
-        public String Capacity
+        public string Capacity
         {
             get { return _Capacity; }
             set
@@ -542,7 +542,7 @@ namespace CombatManager
             }
         }
         [XmlArrayItem("Group")]
-        public List<String> Groups
+        public List<string> Groups
         {
             get
             {
@@ -660,28 +660,28 @@ namespace CombatManager
                 }
             }
         }
-        public static Dictionary<String, Weapon> Weapons
+        public static Dictionary<string, Weapon> Weapons
         {
             get
             {
                 return weapons;
             }
         }
-        public static Dictionary<String, Weapon> WeaponsPlural
+        public static Dictionary<string, Weapon> WeaponsPlural
         {
             get
             {
                 return weaponsPlural;
             }
         }
-        public static Dictionary<String, Weapon> WeaponsOriginalName
+        public static Dictionary<string, Weapon> WeaponsOriginalName
         {
             get
             {
                 return weaponsPlural;
             }
         }
-        public static Dictionary<String, Weapon> WeaponsAltName
+        public static Dictionary<string, Weapon> WeaponsAltName
         {
             get
             {

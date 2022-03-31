@@ -21,9 +21,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -217,7 +214,7 @@ namespace WPF.JoshSmith.ServiceProviders.UI
 				return;
 			}
 
-			int index = this.IndexUnderDragCursor;
+			var index = this.IndexUnderDragCursor;
 			this.canInitiateDrag = index > -1;
 
 			if( this.canInitiateDrag )
@@ -249,11 +246,11 @@ namespace WPF.JoshSmith.ServiceProviders.UI
 			if( this.listView.SelectedItem == null )
 				return;
 
-			ListBoxItem itemToDrag = this.GetListBoxItem( this.listView.SelectedIndex );
+			var itemToDrag = this.GetListBoxItem( this.listView.SelectedIndex );
 			if( itemToDrag == null )
 				return;
 
-			AdornerLayer adornerLayer = this.ShowDragAdornerResolved ? this.InitializeAdornerLayer( itemToDrag ) : null;
+			var adornerLayer = this.ShowDragAdornerResolved ? this.InitializeAdornerLayer( itemToDrag ) : null;
 
 			this.InitializeDragOperation( itemToDrag );
             try
@@ -276,7 +273,7 @@ namespace WPF.JoshSmith.ServiceProviders.UI
 				this.UpdateDragAdornerLocation();
 
 			// Update the item which is known to be currently under the drag cursor.
-			int index = this.IndexUnderDragCursor;
+			var index = this.IndexUnderDragCursor;
 			this.ItemUnderDragCursor = index < 0 ? null : this.ListView.Items[index] as ItemType;
 
             if (ManagerDragOver != null)
@@ -321,7 +318,7 @@ namespace WPF.JoshSmith.ServiceProviders.UI
 				return;
 
 			// Get the data object which was dropped.
-			ItemType data = e.Data.GetData( typeof( ItemType ) ) as ItemType;
+			var data = e.Data.GetData( typeof( ItemType ) ) as ItemType;
 			if( data == null )
 				return;
 
@@ -340,8 +337,8 @@ namespace WPF.JoshSmith.ServiceProviders.UI
 				throw new Exception(
 					"A ListView managed by ListViewDragManager must have its ItemsSource set to an ObservableCollection<ItemType>." );
 
-			int oldIndex = itemsSource.IndexOf( data );
-			int newIndex = this.IndexUnderDragCursor;
+			var oldIndex = itemsSource.IndexOf( data );
+			var newIndex = this.IndexUnderDragCursor;
 
 			if( newIndex < 0 )
 			{
@@ -367,7 +364,7 @@ namespace WPF.JoshSmith.ServiceProviders.UI
 			if( this.ProcessDrop != null )
 			{
 				// Let the client code process the drop.
-				ProcessDropEventArgs<ItemType> args = new ProcessDropEventArgs<ItemType>( itemsSource, data, oldIndex, newIndex, e.AllowedEffects );
+				var args = new ProcessDropEventArgs<ItemType>( itemsSource, data, oldIndex, newIndex, e.AllowedEffects );
 				this.ProcessDrop( this, args );
 				e.Effects = args.Effects;
 			}
@@ -459,30 +456,30 @@ namespace WPF.JoshSmith.ServiceProviders.UI
                     return false;
                 }
 
-				ListBoxItem item = this.GetListBoxItem( this.indexToSelect );
+				var item = this.GetListBoxItem( this.indexToSelect );
 
                 if (item == null)
                 {
                     return false;
                 }
 
-				Rect bounds = VisualTreeHelper.GetDescendantBounds( item );
-				Point ptInItem = this.listView.TranslatePoint( this.ptMouseDown, item );
+				var bounds = VisualTreeHelper.GetDescendantBounds( item );
+				var ptInItem = this.listView.TranslatePoint( this.ptMouseDown, item );
 
 				// In case the cursor is at the very top or bottom of the ListBoxItem
 				// we want to make the vertical threshold very small so that dragging
 				// over an adjacent item does not select it.
-				double topOffset = Math.Abs( ptInItem.Y );
-				double btmOffset = Math.Abs( bounds.Height - ptInItem.Y );
-				double vertOffset = Math.Min( topOffset, btmOffset );
+				var topOffset = Math.Abs( ptInItem.Y );
+				var btmOffset = Math.Abs( bounds.Height - ptInItem.Y );
+				var vertOffset = Math.Min( topOffset, btmOffset );
 
-				double width = SystemParameters.MinimumHorizontalDragDistance * 2;
-				double height = Math.Min( SystemParameters.MinimumVerticalDragDistance, vertOffset ) * 2;
-				Size szThreshold = new Size( width, height );
+				var width = SystemParameters.MinimumHorizontalDragDistance * 2;
+				var height = Math.Min( SystemParameters.MinimumVerticalDragDistance, vertOffset ) * 2;
+				var szThreshold = new Size( width, height );
 
-				Rect rect = new Rect( this.ptMouseDown, szThreshold );
+				var rect = new Rect( this.ptMouseDown, szThreshold );
 				rect.Offset( szThreshold.Width / -2, szThreshold.Height / -2 );
-				Point ptInListView = MouseUtilities.GetMousePosition( this.listView );
+				var ptInListView = MouseUtilities.GetMousePosition( this.listView );
 				return !rect.Contains( ptInListView );
 			}
 		}
@@ -496,10 +493,10 @@ namespace WPF.JoshSmith.ServiceProviders.UI
 		{
 			get
 			{
-				int index = -1;
-				for( int i = 0; i < this.listView.Items.Count; ++i )
+				var index = -1;
+				for( var i = 0; i < this.listView.Items.Count; ++i )
 				{
-					ListBoxItem item = this.GetListBoxItem( i );
+					var item = this.GetListBoxItem( i );
 					if( this.IsMouseOver( item ) )
 					{
 						index = i;
@@ -515,7 +512,7 @@ namespace WPF.JoshSmith.ServiceProviders.UI
 		{
 			// Create a brush which will paint the ListBoxItem onto
 			// a visual in the adorner layer.
-			VisualBrush brush = new VisualBrush( itemToDrag );
+			var brush = new VisualBrush( itemToDrag );
 
 			// Create an element which displays the source item while it is dragged.
 			this.dragAdorner = new DragAdorner( this.listView, itemToDrag.RenderSize, brush );
@@ -523,7 +520,7 @@ namespace WPF.JoshSmith.ServiceProviders.UI
 			// Set the drag adorner's opacity.		
 			this.dragAdorner.Opacity = this.DragAdornerOpacity;
 
-			AdornerLayer layer = AdornerLayer.GetAdornerLayer( this.listView );
+			var layer = AdornerLayer.GetAdornerLayer( this.listView );
 			layer.Add( dragAdorner );
 
 			// Save the location of the cursor when the left mouse button was pressed.
@@ -553,8 +550,8 @@ namespace WPF.JoshSmith.ServiceProviders.UI
             {
                 return false;
             }
-			Rect bounds = VisualTreeHelper.GetDescendantBounds( target );
-			Point mousePos = MouseUtilities.GetMousePosition( target );
+			var bounds = VisualTreeHelper.GetDescendantBounds( target );
+			var mousePos = MouseUtilities.GetMousePosition( target );
 			return bounds.Contains( mousePos );
 		}
 
@@ -566,12 +563,12 @@ namespace WPF.JoshSmith.ServiceProviders.UI
 		{
 			get
 			{
-				Point ptMouse = MouseUtilities.GetMousePosition( this.listView );
-				HitTestResult res = VisualTreeHelper.HitTest( this.listView, ptMouse );
+				var ptMouse = MouseUtilities.GetMousePosition( this.listView );
+				var res = VisualTreeHelper.HitTest( this.listView, ptMouse );
 				if( res == null )
 					return false;
 
-				DependencyObject depObj = res.VisualHit;
+				var depObj = res.VisualHit;
 				while( depObj != null )
 				{
 					if( depObj is ScrollBar  || depObj is TextBox)
@@ -601,14 +598,14 @@ namespace WPF.JoshSmith.ServiceProviders.UI
 
 				// The first pass handles the previous item under the cursor.
 				// The second pass handles the new one.
-				for( int i = 0; i < 2; ++i )
+				for( var i = 0; i < 2; ++i )
 				{
 					if( i == 1 )
 						this.itemUnderDragCursor = value;
 
 					if( this.itemUnderDragCursor != null )
 					{
-						ListBoxItem ListBoxItem = this.GetListBoxItem( this.itemUnderDragCursor );
+						var ListBoxItem = this.GetListBoxItem( this.itemUnderDragCursor );
 						if( ListBoxItem != null )
 							ListBoxItemDragState.SetIsUnderDragCursor( ListBoxItem, i == 1 );
 					}
@@ -618,8 +615,8 @@ namespace WPF.JoshSmith.ServiceProviders.UI
 
 		void PerformDragOperation()
 		{
-			ItemType selectedItem = this.listView.SelectedItem as ItemType;
-			DragDropEffects allowedEffects = DragDropEffects.Move | DragDropEffects.Move | DragDropEffects.Link;
+			var selectedItem = this.listView.SelectedItem as ItemType;
+			var allowedEffects = DragDropEffects.Move | DragDropEffects.Move | DragDropEffects.Link;
 			if( DragDrop.DoDragDrop( this.listView, selectedItem, allowedEffects ) != DragDropEffects.None )
 			{
 				// The item was dropped into a new location,
@@ -638,14 +635,14 @@ namespace WPF.JoshSmith.ServiceProviders.UI
 		{
 			if( this.dragAdorner != null )
 			{
-				Point ptCursor = MouseUtilities.GetMousePosition( this.ListView );
+				var ptCursor = MouseUtilities.GetMousePosition( this.ListView );
 
-				double left = ptCursor.X - this.ptMouseDown.X;
+				var left = ptCursor.X - this.ptMouseDown.X;
 
 				// 4/13/2007 - Made the top offset relative to the item being dragged.
-				ListBoxItem itemBeingDragged = this.GetListBoxItem( this.indexToSelect );
-				Point itemLoc = itemBeingDragged.TranslatePoint( new Point( 0, 0 ), this.ListView );
-				double top = itemLoc.Y + ptCursor.Y - this.ptMouseDown.Y;
+				var itemBeingDragged = this.GetListBoxItem( this.indexToSelect );
+				var itemLoc = itemBeingDragged.TranslatePoint( new Point( 0, 0 ), this.ListView );
+				var top = itemLoc.Y + ptCursor.Y - this.ptMouseDown.Y;
 
 				this.dragAdorner.SetOffsets( left, top );
 			}

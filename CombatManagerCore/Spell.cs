@@ -1,4 +1,4 @@
-/*
+﻿/*
  *  Spell.cs
  *
  *  Copyright (C) 2010-2012 Kyle Olson, kyle@kyleolson.com
@@ -19,7 +19,7 @@
  *
  */
 
-﻿using System;
+ using System;
 using System.ComponentModel;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -36,78 +36,78 @@ namespace CombatManager
 
     public class Spell : BaseDBClass
     {
-        private String _name;
-        private String _school;
-        private String _subschool;
-        private String _descriptor;
-        private String _spell_level;
-        private String _casting_time;
-        private String _components;
-        private String _costly_components;
-        private String _range;
-        private String _targets;
-        private String _effect;
-        private String _dismissible;
-        private String _area;
-        private String _duration;
-        private String _shapeable;
-        private String _saving_throw;
-        private String _spell_resistence;
-        private String _description;
-        private String _description_formated;
-        private String _source;
-        private String _full_text;
-        private String _verbal;
-        private String _somatic;
-        private String _material;
-        private String _focus;
-        private String _divine_focus;
-        private String _sor;
-        private String _wiz;
-        private String _cleric;
-        private String _druid;
-        private String _ranger;
-        private String _bard;
-        private String _paladin;
-        private String _alchemist;
-        private String _summoner;
-        private String _witch;
-        private String _inquisitor;
-        private String _oracle;
-        private String _antipaladin;
-        private String _assassin;
-        private String _adept;
-        private String _red_mantis_assassin;
-        private String _magus;
-        private String _URL;
-        private String _SLA_Level;
-        private String _preparation_time;
+        private string _name;
+        private string _school;
+        private string _subschool;
+        private string _descriptor;
+        private string _spell_level;
+        private string _casting_time;
+        private string _components;
+        private string _costly_components;
+        private string _range;
+        private string _targets;
+        private string _effect;
+        private string _dismissible;
+        private string _area;
+        private string _duration;
+        private string _shapeable;
+        private string _saving_throw;
+        private string _spell_resistence;
+        private string _description;
+        private string _description_formated;
+        private string _source;
+        private string _full_text;
+        private string _verbal;
+        private string _somatic;
+        private string _material;
+        private string _focus;
+        private string _divine_focus;
+        private string _sor;
+        private string _wiz;
+        private string _cleric;
+        private string _druid;
+        private string _ranger;
+        private string _bard;
+        private string _paladin;
+        private string _alchemist;
+        private string _summoner;
+        private string _witch;
+        private string _inquisitor;
+        private string _oracle;
+        private string _antipaladin;
+        private string _assassin;
+        private string _adept;
+        private string _red_mantis_assassin;
+        private string _magus;
+        private string _URL;
+        private string _SLA_Level;
+        private string _preparation_time;
         private bool _duplicated;
-        private String _acid;
-        private String _air;
-        private String _chaotic;
-        private String _cold;
-        private String _curse;
-        private String _darkness;
-        private String _death;
-        private String _disease;
-        private String _earth;
-        private String _electricity;
-        private String _emotion;
-        private String _evil;
-        private String _fear;
-        private String _fire;
-        private String _force;
-        private String _good;
-        private String _language;
-        private String _lawful;
-        private String _light;
-        private String _mind_affecting;
-        private String _pain;
-        private String _poison;
-        private String _shadow;
-        private String _sonic;
-        private String _water;
+        private string _acid;
+        private string _air;
+        private string _chaotic;
+        private string _cold;
+        private string _curse;
+        private string _darkness;
+        private string _death;
+        private string _disease;
+        private string _earth;
+        private string _electricity;
+        private string _emotion;
+        private string _evil;
+        private string _fear;
+        private string _fire;
+        private string _force;
+        private string _good;
+        private string _language;
+        private string _lawful;
+        private string _light;
+        private string _mind_affecting;
+        private string _pain;
+        private string _poison;
+        private string _shadow;
+        private string _sonic;
+        private string _water;
 
         //annotation fields
 
@@ -118,14 +118,14 @@ namespace CombatManager
         private string _DivineScrollWeight;
         private string _ArcaneScrollWeight;
         private string _WandWeight;
-        private String _PotionLevel;
-        private String _PotionCost;
-        private String _ArcaneScrollLevel;
-        private String _ArcaneScrollCost;
-        private String _DivineScrollLevel;
-        private String _DivineScrollCost;
-        private String _WandLevel;
-        private String _WandCost;
+        private string _PotionLevel;
+        private string _PotionCost;
+        private string _ArcaneScrollLevel;
+        private string _ArcaneScrollCost;
+        private string _DivineScrollLevel;
+        private string _DivineScrollCost;
+        private string _WandLevel;
+        private string _WandCost;
 
 
 
@@ -241,7 +241,7 @@ namespace CombatManager
                 //add subschool
                 if (s.subschool.NotNullString())
                 {
-                    foreach (String subschool in s.subschool.Split(new char[] { ',', ';' }))
+                    foreach (string subschool in s.subschool.Split(new char[] { ',', ';' }))
                     {
                         _Subschools.Add(subschool.Trim());
                     }
@@ -250,7 +250,7 @@ namespace CombatManager
                 if (s.descriptor.NotNullString())
                 {
                     //add descriptions
-                    foreach (String desc in s.descriptor.Split(new char[] {',',';'}))
+                    foreach (string desc in s.descriptor.Split(new char[] {',',';'}))
                     {
                         _Descriptors.Add(desc.Trim().TrimEnd(new char[] { 'U', 'M' }));
                     }
@@ -260,21 +260,21 @@ namespace CombatManager
                 
             }
 
-            List<String> doubles = new List<String>(_Subschools.Where(a => Regex.Match(a, "[a-zA-Z] or [a-zA-Z]").Success));
-            foreach (String dub in doubles)
+            List<string> doubles = new List<string>(_Subschools.Where(a => Regex.Match(a, "[a-zA-Z] or [a-zA-Z]").Success));
+            foreach (string dub in doubles)
             {
                 _Subschools.Remove(dub);
             }
 
             _Descriptors.RemoveWhere(a => a.StartsWith("see text"));
-            List<String> ors = new List<String>(_Descriptors.Where(a => a.StartsWith("or ")));
-            foreach (String orstring in ors)
+            List<string> ors = new List<string>(_Descriptors.Where(a => a.StartsWith("or ")));
+            foreach (string orstring in ors)
             {
                 _Descriptors.Remove(orstring);
                 _Descriptors.Add(orstring.Substring(3));
             }
-            doubles = new List<String>(_Descriptors.Where(a => Regex.Match(a, "[a-zA-Z] or [a-zA-Z]").Success));
-            foreach (String dub in doubles)
+            doubles = new List<string>(_Descriptors.Where(a => Regex.Match(a, "[a-zA-Z] or [a-zA-Z]").Success));
+            foreach (string dub in doubles)
             {
                 _Descriptors.Remove(dub);
             }
@@ -1046,7 +1046,7 @@ namespace CombatManager
 			return false;
 		}
         
-        public String name
+        public string name
         {
             get { return _name; }
             set
@@ -1066,12 +1066,12 @@ namespace CombatManager
 
 
         [XmlIgnore]
-        public String Name
+        public string Name
         {
             get { return name; }
             set { name = value; }
         }
-        public String school
+        public string school
         {
             get { return _school; }
             set
@@ -1082,7 +1082,7 @@ namespace CombatManager
                     Notify("school");                }
             }
         }
-        public String subschool
+        public string subschool
         {
             get { return _subschool; }
             set
@@ -1093,7 +1093,7 @@ namespace CombatManager
                     Notify("subschool");                }
             }
         }
-        public String descriptor
+        public string descriptor
         {
             get { return _descriptor; }
             set
@@ -1104,7 +1104,7 @@ namespace CombatManager
                     Notify("descriptor");                }
             }
         }
-        public String spell_level
+        public string spell_level
         {
             get { return _spell_level; }
             set
@@ -1115,7 +1115,7 @@ namespace CombatManager
                     Notify("spell_level");                }
             }
         }
-        public String casting_time
+        public string casting_time
         {
             get
             {
@@ -1130,7 +1130,7 @@ namespace CombatManager
                     Notify("casting_time");                }
             }
         }
-        public String components
+        public string components
         {
             get
             {
@@ -1150,7 +1150,7 @@ namespace CombatManager
                 }
             }
         }
-        public String costly_components
+        public string costly_components
         {
             get
             {
@@ -1165,7 +1165,7 @@ namespace CombatManager
                     Notify("costly_components");                }
             }
         }
-        public String range
+        public string range
         {
             get
             {
@@ -1180,7 +1180,7 @@ namespace CombatManager
                     Notify("range");                }
             }
         }
-        public String targets
+        public string targets
         {
             get
             {
@@ -1195,7 +1195,7 @@ namespace CombatManager
                     Notify("targets");                }
             }
         }
-        public String duration
+        public string duration
         {
             get
             {
@@ -1210,7 +1210,7 @@ namespace CombatManager
                     Notify("duration");                }
             }
         }
-        public String dismissible
+        public string dismissible
         {
             get
             {
@@ -1225,7 +1225,7 @@ namespace CombatManager
                     Notify("dismissible");                }
             }
         }
-        public String shapeable
+        public string shapeable
         {
             get
             {
@@ -1240,7 +1240,7 @@ namespace CombatManager
                     Notify("shapeable");                }
             }
         }
-        public String saving_throw
+        public string saving_throw
         {
             get
             {
@@ -1255,7 +1255,7 @@ namespace CombatManager
                     Notify("saving_throw");                }
             }
         }
-        public String spell_resistence
+        public string spell_resistence
         {
             get
             {
@@ -1270,7 +1270,7 @@ namespace CombatManager
                     Notify("spell_resistence");                }
             }
         }
-        public String description
+        public string description
         {
             get 
             {
@@ -1285,7 +1285,7 @@ namespace CombatManager
                     Notify("description");                }
             }
         }
-        public String description_formated
+        public string description_formated
         {
             get
             {
@@ -1300,7 +1300,7 @@ namespace CombatManager
                     Notify("description_formated");                }
             }
         }
-        public String source
+        public string source
         {
             get { return _source; }
             set
@@ -1311,7 +1311,7 @@ namespace CombatManager
                     Notify("source");                }
             }
         }
-        public String full_text
+        public string full_text
         {
             get { return _full_text; }
             set
@@ -1322,7 +1322,7 @@ namespace CombatManager
                     Notify("full_text");                }
             }
         }
-        public String verbal
+        public string verbal
         {
             get { return _verbal; }
             set
@@ -1333,7 +1333,7 @@ namespace CombatManager
                     Notify("verbal");                }
             }
         }
-        public String somatic
+        public string somatic
         {
             get { return _somatic; }
             set
@@ -1344,7 +1344,7 @@ namespace CombatManager
                     Notify("somatic");                }
             }
         }
-        public String material
+        public string material
         {
             get { return _material; }
             set
@@ -1355,7 +1355,7 @@ namespace CombatManager
                     Notify("material");                }
             }
         }
-        public String focus
+        public string focus
         {
             get { return _focus; }
             set
@@ -1366,7 +1366,7 @@ namespace CombatManager
                     Notify("focus");                }
             }
         }
-        public String divine_focus
+        public string divine_focus
         {
             get { return _divine_focus; }
             set
@@ -1377,7 +1377,7 @@ namespace CombatManager
                     Notify("divine_focus");                }
             }
         }
-        public String sor
+        public string sor
         {
             get { return _sor; }
             set
@@ -1392,7 +1392,7 @@ namespace CombatManager
                     Notify("sor");                }
             }
         }
-        public String wiz
+        public string wiz
         {
             get { return _wiz; }
             set
@@ -1407,7 +1407,7 @@ namespace CombatManager
                     Notify("wiz");                }
             }
         }
-        public String cleric
+        public string cleric
         {
             get { return _cleric; }
             set
@@ -1422,7 +1422,7 @@ namespace CombatManager
                     Notify("cleric");                }
             }
         }
-        public String druid
+        public string druid
         {
             get { return _druid; }
             set
@@ -1437,7 +1437,7 @@ namespace CombatManager
                     Notify("druid");                }
             }
         }
-        public String ranger
+        public string ranger
         {
             get { return _ranger; }
             set
@@ -1452,7 +1452,7 @@ namespace CombatManager
                     Notify("ranger");                }
             }
         }
-        public String bard
+        public string bard
         {
             get { return _bard; }
             set
@@ -1467,7 +1467,7 @@ namespace CombatManager
                     Notify("bard");                }
             }
         }
-        public String paladin
+        public string paladin
         {
             get { return _paladin; }
             set
@@ -1482,7 +1482,7 @@ namespace CombatManager
                     Notify("paladin");                }
             }
         }
-        public String effect
+        public string effect
         {
             get { return _effect; }
             set
@@ -1494,7 +1494,7 @@ namespace CombatManager
             }
         }
 
-        public String area
+        public string area
         {
             get
             {
@@ -1511,7 +1511,7 @@ namespace CombatManager
         }
 
 
-        public String alchemist
+        public string alchemist
         {
             get { return _alchemist; }
             set
@@ -1526,7 +1526,7 @@ namespace CombatManager
                     Notify("alchemist");                }
             }
         }
-        public String summoner
+        public string summoner
         {
             get { return _summoner; }
             set
@@ -1541,7 +1541,7 @@ namespace CombatManager
                     Notify("summoner");                }
             }
         }
-        public String witch
+        public string witch
         {
             get { return _witch; }
             set
@@ -1556,7 +1556,7 @@ namespace CombatManager
                     Notify("witch");                }
             }
         }
-        public String inquisitor
+        public string inquisitor
         {
             get { return _inquisitor; }
             set
@@ -1571,7 +1571,7 @@ namespace CombatManager
                     Notify("inquisitor");                }
             }
         }
-        public String oracle
+        public string oracle
         {
             get { return _oracle; }
             set
@@ -1586,7 +1586,7 @@ namespace CombatManager
                     Notify("oracle");                }
             }
         }
-        public String antipaladin
+        public string antipaladin
         {
             get { return _antipaladin; }
             set
@@ -1602,7 +1602,7 @@ namespace CombatManager
             }
         }
 
-        public String assassin
+        public string assassin
         {
             get { return _assassin; }
             set
@@ -1614,7 +1614,7 @@ namespace CombatManager
             }
         }
 
-        public String red_mantis_assassin
+        public string red_mantis_assassin
         {
             get { return _red_mantis_assassin; }
             set
@@ -1626,7 +1626,7 @@ namespace CombatManager
             }
         }
 
-        public String adept
+        public string adept
         {
             get { return _adept; }
             set
@@ -1637,7 +1637,7 @@ namespace CombatManager
                     Notify("adept");                }
             }
         }
-        public String URL
+        public string URL
         {
             get { return _URL; }
             set
@@ -1649,7 +1649,7 @@ namespace CombatManager
             }
         }
 
-        public String magus
+        public string magus
         {
             get { return _magus; }
             set
@@ -1660,7 +1660,7 @@ namespace CombatManager
                     Notify("magus");                }
             }
         }
-        public String SLA_Level
+        public string SLA_Level
         {
             get { return _SLA_Level; }
             set
@@ -1671,7 +1671,7 @@ namespace CombatManager
                     Notify("SLA_Level");                }
             }
         }
-        public String preparation_time
+        public string preparation_time
         {
             get { return _preparation_time; }
             set
@@ -1693,7 +1693,7 @@ namespace CombatManager
                     Notify("duplicated");                }
             }
         }
-        public String acid
+        public string acid
         {
             get { return _acid; }
             set
@@ -1704,7 +1704,7 @@ namespace CombatManager
                     Notify("acid");                }
             }
         }
-        public String air
+        public string air
         {
             get 
             { 
@@ -1719,7 +1719,7 @@ namespace CombatManager
                     Notify("air");                }
             }
         }
-        public String chaotic
+        public string chaotic
         {
             get
             {
@@ -1734,7 +1734,7 @@ namespace CombatManager
                     Notify("chaotic");                }
             }
         }
-        public String cold
+        public string cold
         {
             get
             {
@@ -1749,7 +1749,7 @@ namespace CombatManager
                     Notify("cold");                }
             }
         }
-        public String curse
+        public string curse
         {
             get
             {
@@ -1764,7 +1764,7 @@ namespace CombatManager
                     Notify("curse");                }
             }
         }
-        public String darkness
+        public string darkness
         {
             get
             {
@@ -1779,7 +1779,7 @@ namespace CombatManager
                     Notify("darkness");                }
             }
         }
-        public String death
+        public string death
         {
             get
             {
@@ -1794,7 +1794,7 @@ namespace CombatManager
                     Notify("death");                }
             }
         }
-        public String disease
+        public string disease
         {
             get
             {
@@ -1809,7 +1809,7 @@ namespace CombatManager
                     Notify("disease");                }
             }
         }
-        public String earth
+        public string earth
         {
             get
             {
@@ -1824,7 +1824,7 @@ namespace CombatManager
                     Notify("earth");                }
             }
         }
-        public String electricity
+        public string electricity
         {
             get
             {
@@ -1839,7 +1839,7 @@ namespace CombatManager
                     Notify("electricity");                }
             }
         }
-        public String emotion
+        public string emotion
         {
             get
             {
@@ -1854,7 +1854,7 @@ namespace CombatManager
                     Notify("emotion");                }
             }
         }
-        public String evil
+        public string evil
         {
             get
             {
@@ -1869,7 +1869,7 @@ namespace CombatManager
                     Notify("evil");                }
             }
         }
-        public String fear
+        public string fear
         {
             get
             {
@@ -1884,7 +1884,7 @@ namespace CombatManager
                     Notify("fear");                }
             }
         }
-        public String fire
+        public string fire
         {
             get
             {
@@ -1899,7 +1899,7 @@ namespace CombatManager
                     Notify("fire");                }
             }
         }
-        public String force
+        public string force
         {
             get
             {
@@ -1914,7 +1914,7 @@ namespace CombatManager
                     Notify("force");                }
             }
         }
-        public String good
+        public string good
         {
             get
             {
@@ -1929,7 +1929,7 @@ namespace CombatManager
                     Notify("good");                }
             }
         }
-        public String language
+        public string language
         {
             get
             {
@@ -1944,7 +1944,7 @@ namespace CombatManager
                     Notify("language");                }
             }
         }
-        public String lawful
+        public string lawful
         {
             get
             {
@@ -1959,7 +1959,7 @@ namespace CombatManager
                     Notify("lawful");                }
             }
         }
-        public String light
+        public string light
         {
             get
             {
@@ -1974,7 +1974,7 @@ namespace CombatManager
                     Notify("light");                }
             }
         }
-        public String mind_affecting
+        public string mind_affecting
         {
             get
             {
@@ -1989,7 +1989,7 @@ namespace CombatManager
                     Notify("mind_affecting");                }
             }
         }
-        public String pain
+        public string pain
         {
             get
             {
@@ -2004,7 +2004,7 @@ namespace CombatManager
                     Notify("pain");                }
             }
         }
-        public String poison
+        public string poison
         {
             get
             {
@@ -2019,7 +2019,7 @@ namespace CombatManager
                     Notify("poison");                }
             }
         }
-        public String shadow
+        public string shadow
         {
             get
             {
@@ -2034,7 +2034,7 @@ namespace CombatManager
                     Notify("shadow");                }
             }
         }
-        public String sonic
+        public string sonic
         {
             get
             {
@@ -2049,7 +2049,7 @@ namespace CombatManager
                     Notify("sonic");                }
             }
         }
-        public String water
+        public string water
         {
             get
             {
@@ -2126,7 +2126,7 @@ namespace CombatManager
         }
 
 
-        public String PotionLevel
+        public string PotionLevel
         {
             get { return _PotionLevel; }
             set
@@ -2137,7 +2137,7 @@ namespace CombatManager
                     Notify("PotionLevel");                }
             }
         }
-        public String PotionCost
+        public string PotionCost
         {
             get { return _PotionCost; }
             set
@@ -2148,7 +2148,7 @@ namespace CombatManager
                     Notify("PotionCost");                }
             }
         }
-        public String ArcaneScrollLevel
+        public string ArcaneScrollLevel
         {
             get { return _ArcaneScrollLevel; }
             set
@@ -2159,7 +2159,7 @@ namespace CombatManager
                     Notify("ArcaneScrollLevel");                }
             }
         }
-        public String ArcaneScrollCost
+        public string ArcaneScrollCost
         {
             get { return _ArcaneScrollCost; }
             set
@@ -2170,7 +2170,7 @@ namespace CombatManager
                     Notify("ArcaneScrollCost");                }
             }
         }
-        public String DivineScrollLevel
+        public string DivineScrollLevel
         {
             get { return _DivineScrollLevel; }
             set
@@ -2181,7 +2181,7 @@ namespace CombatManager
                     Notify("DivineScrollLevel");                }
             }
         }
-        public String DivineScrollCost
+        public string DivineScrollCost
         {
             get { return _DivineScrollCost; }
             set
@@ -2192,7 +2192,7 @@ namespace CombatManager
                     Notify("DivineScrollCost");                }
             }
         }
-        public String WandLevel
+        public string WandLevel
         {
             get { return _WandLevel; }
             set
@@ -2203,7 +2203,7 @@ namespace CombatManager
                     Notify("WandLevel");                }
             }
         }
-        public String WandCost
+        public string WandCost
         {
             get { return _WandCost; }
             set
@@ -2231,7 +2231,7 @@ namespace CombatManager
         {
             get
             {
-                return new List<String>() 
+                return new List<string>() 
                 {
                     "casting_time",
                     "components",
@@ -2330,7 +2330,7 @@ namespace CombatManager
         }
         
         [XmlIgnore]
-        public String nameforsort
+        public string nameforsort
         {
             get
             {
@@ -2372,9 +2372,9 @@ namespace CombatManager
             private bool _Material;
             private bool _Focus;
             private bool _DivineFocus;
-            private String _MaterialText;
-            private String _FocusText;
-            private String _Duration;
+            private string _MaterialText;
+            private string _FocusText;
+            private string _Duration;
             private bool _Dismissible;
 
 
@@ -2601,7 +2601,7 @@ namespace CombatManager
                         Notify("DivineFocus");                    }
                 }
             }
-            public String MaterialText
+            public string MaterialText
             {
                 get { return _MaterialText; }
                 set
@@ -2613,7 +2613,7 @@ namespace CombatManager
                         Notify("MaterialText");                    }
                 }
             }
-            public String FocusText
+            public string FocusText
             {
                 get { return _FocusText; }
                 set
@@ -2627,7 +2627,7 @@ namespace CombatManager
             }
 
 
-            public String Duration
+            public string Duration
             {
                 get 
                 { 
@@ -2935,7 +2935,7 @@ namespace CombatManager
                 }             
             }
 
-            public bool ContainsClass(String className)
+            public bool ContainsClass(string className)
             {
                 foreach (LevelAdjusterInfo li in _Levels)
                 {

@@ -1,4 +1,4 @@
-/*
+﻿/*
  *  App.xaml.cs
  *
  *  Copyright (C) 2010-2012 Kyle Olson, kyle@kyleolson.com
@@ -19,14 +19,7 @@
  *
  */
 
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
 using System.Windows;
-using System.Windows.Shapes;
-using System.Windows.Media;
 
 namespace CombatManager
 {
@@ -37,8 +30,8 @@ namespace CombatManager
     {
         private void MainRectangle_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            FrameworkElement fe = (FrameworkElement)sender;
-            Window w = CMUIUtilities.FindVisualParent<Window>(fe);
+            var fe = (FrameworkElement)sender;
+            var w = CMUIUtilities.FindVisualParent<Window>(fe);
             
             w.DragMove();
 

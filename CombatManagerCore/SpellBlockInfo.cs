@@ -1,4 +1,4 @@
-/*
+﻿/*
  *  SpellBlockInfo.cs
  *
  *  Copyright (C) 2010-2012 Kyle Olson, kyle@kyleolson.com
@@ -19,7 +19,7 @@
  *
  */
 
-﻿using System;
+ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -35,13 +35,13 @@ namespace CombatManager
         public event PropertyChangedEventHandler PropertyChanged;
 
 
-        private String _Class;
+        private string _Class;
         private int? _MeleeTouch;
         private int? _RangedTouch;
         private int? _Concentration;
         private int? _CasterLevel;
         private bool _SpellLikeAbilities;
-        private String _BlockType;
+        private string _BlockType;
         private int? _SpellFailure;
 
         private ObservableCollection<SpellLevelInfo> _Levels = new ObservableCollection<SpellLevelInfo>();
@@ -146,7 +146,7 @@ namespace CombatManager
 
             }
 
-            foreach (String spells in list)
+            foreach (string spells in list)
             {
 
 
@@ -175,11 +175,11 @@ namespace CombatManager
 
                         if (levelMatch.Groups["daily"].Success)
                             {
-                                if (String.Compare(levelMatch.Groups["daily"].Value.Trim(), "At Will", true) == 0)
+                                if (string.Compare(levelMatch.Groups["daily"].Value.Trim(), "At Will", true) == 0)
                                 {
                                     levelInfo.AtWill = true;
                                 }
-                                else if (String.Compare(levelMatch.Groups["daily"].Value.Trim(), "Constant", true) == 0)
+                                else if (string.Compare(levelMatch.Groups["daily"].Value.Trim(), "Constant", true) == 0)
                                 {
                                     levelInfo.Constant = true;
                                 }
@@ -220,7 +220,7 @@ namespace CombatManager
                 }
             }
 
-            foreach (String slatext in slablock)
+            foreach (string slatext in slablock)
             {
                 ParseSLABlocks(blocklist, slatext);
             }
@@ -333,11 +333,11 @@ namespace CombatManager
 
                     if (levelMatch.Groups["daily"].Success)
                     {
-                        if (String.Compare(levelMatch.Groups["daily"].Value.Trim(), "At Will", true) == 0)
+                        if (string.Compare(levelMatch.Groups["daily"].Value.Trim(), "At Will", true) == 0)
                         {
                             levelInfo.AtWill = true;
                         }
-                        else if (String.Compare(levelMatch.Groups["daily"].Value.Trim(), "Constant", true) == 0)
+                        else if (string.Compare(levelMatch.Groups["daily"].Value.Trim(), "Constant", true) == 0)
                         {
                             levelInfo.Constant = true;
                         }
@@ -397,8 +397,8 @@ namespace CombatManager
             spellname = StringCapitalizer.Capitalize(spellname).Trim();
 
             SpellInfo spellInfo = null;
-            if ((String.Compare(spellname, "lesser", true) == 0 ||
-                String.Compare(spellname, "greater", true) == 0) && prevInfo != null)
+            if ((string.Compare(spellname, "lesser", true) == 0 ||
+                string.Compare(spellname, "greater", true) == 0) && prevInfo != null)
             {
                 spellInfo = prevInfo;
                 spellname = spellInfo.Name + ", " + spellname;
@@ -419,7 +419,7 @@ namespace CombatManager
 
             if (spell.Groups["spellcast"].Success)
             {
-                if (String.Compare(spell.Groups["spellcast"].Value, "already", true) == 0)
+                if (string.Compare(spell.Groups["spellcast"].Value, "already", true) == 0)
                 {
                     spellInfo.AlreadyCast = true;
                 }
@@ -453,7 +453,7 @@ namespace CombatManager
         }
 
 
-        public String Class
+        public string Class
         {
             get { return _Class; }
             set
@@ -514,7 +514,7 @@ namespace CombatManager
             }
         }
 
-        public String BlockType
+        public string BlockType
         {
             get { return _BlockType; }
             set

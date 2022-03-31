@@ -1,4 +1,4 @@
-/*
+﻿/*
  *  SourceInfo.cs
  *
  *  Copyright (C) 2010-2012 Kyle Olson, kyle@kyleolson.com
@@ -19,7 +19,7 @@
  *
  */
 
-﻿using System;
+ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -44,7 +44,7 @@ namespace CombatManager
         private SourceInfo() { }
 
 
-        static HashSet<String> unfoundSources = new HashSet<string>();
+        static HashSet<string> unfoundSources = new HashSet<string>();
 
         private struct NameTypePair
         {
@@ -290,7 +290,7 @@ namespace CombatManager
             string dNum = module.ToString("D2", CultureInfo.InvariantCulture);
             string gNum = module.ToString("G", CultureInfo.InvariantCulture);
 
-            List<String> names = new List<string>();
+            List<string> names = new List<string>();
             names.Add("Pathfinder Society S" + season + "-" + dNum);
             names.Add("PFS S" + season + "-" + dNum);
             names.Add("PFS " + season + "-" + dNum);
@@ -355,12 +355,12 @@ namespace CombatManager
 
 
 
-        public static String UnfoundSourcesList
+        public static string UnfoundSourcesList
         {
             get
             {
                 StringBuilder list = new StringBuilder();
-                foreach (String code in from x in unfoundSources orderby x select x )
+                foreach (string code in from x in unfoundSources orderby x select x )
                 {
                     list.Append(code);
                     list.Append("\r\n");

@@ -1,4 +1,4 @@
-/*
+﻿/*
  *  CustomCombatList.xaml.cs
  *
  *  Copyright (C) 2010-2012 Kyle Olson, kyle@kyleolson.com
@@ -19,19 +19,12 @@
  *
  */
 
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows;
+ using System;
+ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Globalization;
+ using System.Windows.Media;
+ using System.Globalization;
 
 namespace CombatManager
 {
@@ -78,7 +71,7 @@ namespace CombatManager
 		private void CreateCurrentPlayerView()
 		{
 		   _CurrentPlayerView = new ListCollectionView(_CombatState.CombatList);
-           foreach (Character ch in _CombatState.CombatList)
+           foreach (var ch in _CombatState.CombatList)
            {
                ch.PropertyChanged += new System.ComponentModel.PropertyChangedEventHandler(Character_PropertyChanged);
            }
@@ -94,7 +87,7 @@ namespace CombatManager
 
         void CustomCombatList_Unloaded(object sender, RoutedEventArgs e)
         {
-            foreach (Character ch in _CombatState.CombatList)
+            foreach (var ch in _CombatState.CombatList)
             {
                 ch.PropertyChanged -= new System.ComponentModel.PropertyChangedEventHandler(Character_PropertyChanged);
             }
@@ -153,7 +146,7 @@ namespace CombatManager
 		
 		public bool CharacterFilter(object item)
 		{
-			Character c = (Character)item;
+			var c = (Character)item;
 			return c.InitiativeLeader == null &&
                (c.IsMonster ? _ShowMonsters : ShowPlayers) && !c.IsHidden && !c.IsIdle;
 		}
@@ -259,13 +252,13 @@ namespace CombatManager
             if (grid.DataContext is Character)
             {
 
-                Character ch = (Character)grid.DataContext;
+                var ch = (Character)grid.DataContext;
 
                 if (ch != null)
                 {
-                    ListBox box = (ListBox)LogicalTreeHelper.FindLogicalNode(grid, "FollowerListBox");
+                    var box = (ListBox)LogicalTreeHelper.FindLogicalNode(grid, "FollowerListBox");
 
-                    ListCollectionView view = new ListCollectionView(ch.InitiativeFollowers);
+                    var view = new ListCollectionView(ch.InitiativeFollowers);
                     view.Filter += new Predicate<object>(delegate(object ob) { return !((Character)ob).IsHidden; });
 
                     box.DataContext = view;
@@ -288,7 +281,7 @@ namespace CombatManager
             Character c = null;
             CustomCombatList list = null;
 
-            foreach (object ob in values)
+            foreach (var ob in values)
             {
                 if (ob != null)
                 {

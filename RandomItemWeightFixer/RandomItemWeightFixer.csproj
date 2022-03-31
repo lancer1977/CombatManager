@@ -110,9 +110,9 @@
       <Project>{89cf9a2f-fae7-46e5-b2cc-fc478d9662fa}</Project>
       <Name>CombatManagerCore</Name>
     </ProjectReference>
-    <ProjectReference Include="..\CombatManager\CombatManager.csproj">
+    <ProjectReference Include="..\CombatManager\CombatManager.WPF.csproj">
       <Project>{37bb3c34-4d03-4b0e-9958-91cb107637e3}</Project>
-      <Name>CombatManager</Name>
+      <Name>CombatManager.WPF</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

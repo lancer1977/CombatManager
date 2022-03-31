@@ -24,7 +24,7 @@ namespace CombatManager
             {
                 try
                 {
-                    value = Int32.Parse(el.Value);
+                    value = int.Parse(el.Value);
                 }
                 catch (Exception ex)
                 {

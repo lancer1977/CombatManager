@@ -1,4 +1,4 @@
-/*
+﻿/*
  *  NaturalAttackWindow.xaml.cs
  *
  *  Copyright (C) 2010-2012 Kyle Olson, kyle@kyleolson.com
@@ -19,19 +19,12 @@
  *
  */
 
-﻿using System;
+ using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows;
+ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using System.ComponentModel;
+ using System.ComponentModel;
 
 namespace CombatManager
 {
@@ -59,11 +52,11 @@ namespace CombatManager
 
             NaturalAttackListBox.DataContext = weaponView;
 
-            DieRoll step = new DieRoll(0, 1, 0);
+            var step = new DieRoll(0, 1, 0);
 
-            for (int i = 0; i < 12; i++)
+            for (var i = 0; i < 12; i++)
             {
-                ComboBoxItem item = new ComboBoxItem();
+                var item = new ComboBoxItem();
                 
                 item.DataContext = step.Step;
                 item.Content = step.Text;
@@ -71,10 +64,10 @@ namespace CombatManager
                 step = DieRoll.StepDie(step, 1);
             }
 
-            for (int i = 1; i < 12; i++)
+            for (var i = 1; i < 12; i++)
             {
 
-                ComboBoxItem item = new ComboBoxItem();
+                var item = new ComboBoxItem();
 
                 item.DataContext = i;
                 item.Content = i.ToString();
@@ -87,7 +80,7 @@ namespace CombatManager
 
         void NaturalAttackListBox_GotFocus(object sender, RoutedEventArgs e)
         {
-            Weapon weapon = (Weapon)weaponView.CurrentItem;
+            var weapon = (Weapon)weaponView.CurrentItem;
 
             if (weapon != null)
             {
@@ -98,7 +91,7 @@ namespace CombatManager
 
         void weaponView_CurrentChanged(object sender, EventArgs e)
         {
-            Weapon weapon = (Weapon)weaponView.CurrentItem;
+            var weapon = (Weapon)weaponView.CurrentItem;
 
             if (weapon != null)
             {
@@ -108,7 +101,7 @@ namespace CombatManager
 
         public bool NaturalWeaponFilter(object ob)
         {
-            Weapon weapon = (Weapon)ob;
+            var weapon = (Weapon)ob;
 
             return weapon.Natural;
         }
@@ -116,9 +109,9 @@ namespace CombatManager
         private void CreateWeaponItem(Weapon weapon)
         {
 
-            WeaponItem item = new WeaponItem(weapon);
+            var item = new WeaponItem(weapon);
 
-            DieRoll roll = DieRoll.FromString(item.Weapon.DmgM);
+            var roll = DieRoll.FromString(item.Weapon.DmgM);
             roll = DieRoll.StepDie(roll, ((int)SizeMods.GetSize(monster.Size)) - (int)MonsterSize.Medium);
             item.Step = roll.Step;
 
@@ -178,7 +171,7 @@ namespace CombatManager
             {
                 if (weaponItem.Step == null)
                 {
-                    DieRoll roll = DieRoll.FromString(weaponItem.Weapon.DmgM);
+                    var roll = DieRoll.FromString(weaponItem.Weapon.DmgM);
                     roll = DieRoll.StepDie(roll, ((int)SizeMods.GetSize(monster.Size)) - (int)MonsterSize.Medium);
                     weaponItem.Step = roll.Step;
                 }
@@ -224,7 +217,7 @@ namespace CombatManager
 
             }
             Weapon weapon = null;
-            string atkname = AttackName.Text.Trim();
+            var atkname = AttackName.Text.Trim();
 
             if (Weapon.Weapons.ContainsKey(atkname))
             {
@@ -237,7 +230,7 @@ namespace CombatManager
                 weapon.Name = atkname;
                 weapon.Hands = "One-Handed";
                 weapon.Class = "Natural";
-                DieRoll roll = DieRoll.FromString(AttackDamage.Text);
+                var roll = DieRoll.FromString(AttackDamage.Text);
                 roll = DieRoll.StepDie(roll, ((int)SizeMods.GetSize(monster.Size)) - (int)MonsterSize.Medium);
                 weapon.DmgM = roll.Text;
                 weapon.DmgS = DieRoll.StepDie(roll, -1).Text;
@@ -257,19 +250,19 @@ namespace CombatManager
 
         private void EnableOK()
         {
-            bool hasDamage =  AttackDamage.Text.Length > 0;
+            var hasDamage =  AttackDamage.Text.Length > 0;
 
-            bool hasAttack = false;
+            var hasAttack = false;
 
 
             if (AttackName.Text.Trim().Length > 0)
             {
                 hasAttack = true;
-                string atkname = AttackName.Text.Trim();
+                var atkname = AttackName.Text.Trim();
 
                 if (Weapon.Weapons.ContainsKey(atkname))
                 {
-                    Weapon weapon = Weapon.Weapons[atkname];
+                    var weapon = Weapon.Weapons[atkname];
 
                     if (!weapon.Natural)
                     {

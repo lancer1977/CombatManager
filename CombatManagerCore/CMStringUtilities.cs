@@ -1,4 +1,4 @@
-/*
+﻿/*
  *  CMStringUtilities.cs
  *
  *  Copyright (C) 2010-2012 Kyle Olson, kyle@kyleolson.com
@@ -19,7 +19,7 @@
  *
  */
 
-﻿using System;
+ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -29,18 +29,18 @@ namespace CombatManager
     public static class CMStringUtilities
     {
 
-        public static bool CommaMatch(string name1, String name2)
+        public static bool CommaMatch(string name1, string name2)
         {
-            return String.Compare(DecommaText(name1), DecommaText(name2), true) == 0;
+            return string.Compare(DecommaText(name1), DecommaText(name2), true) == 0;
         }
 
-        public static String DecommaText(string text)
+        public static string DecommaText(string text)
         {
             bool changed;
             return DecommaText(text, out changed);
         }
 
-        public static String DecommaText(string text, out bool changed)
+        public static string DecommaText(string text, out bool changed)
         {
 
 
@@ -59,24 +59,24 @@ namespace CombatManager
             }
         }
 
-        public static String Decomma(this String text)
+        public static string Decomma(this string text)
         {
             return DecommaText(text);
         }
 
-        public static String Capitalize(this String text)
+        public static string Capitalize(this string text)
         {
             return StringCapitalizer.Capitalize(text);
         }
 
-        public static List<String> Tokenize(this String text, char token)
+        public static List<string> Tokenize(this string text, char token)
         {
             if (text == null)
             {
-                return new List<String>();
+                return new List<string>();
             }
-            List<String> strings = new List<String>();
-            foreach (string str in ((String)text).Split(new char[]{','}))
+            List<string> strings = new List<string>();
+            foreach (string str in ((string)text).Split(new char[]{','}))
             {
                 strings.Add(str.Trim());
             }

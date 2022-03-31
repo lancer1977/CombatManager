@@ -449,7 +449,7 @@ namespace CombatManager
 	
         public static string CreateTableStatementForDesc(DBTableDesc table)
         {
-            String str = "CREATE TABLE " + table.Name + "(ID INTEGER PRIMARY KEY ASC";
+            string str = "CREATE TABLE " + table.Name + "(ID INTEGER PRIMARY KEY ASC";
 
             if (!table.Primary)
             {
@@ -469,7 +469,7 @@ namespace CombatManager
 
         }
 
-        public DBLoader(String filename)
+        public DBLoader(string filename)
         {
             Type type = typeof(T);
 
@@ -566,7 +566,7 @@ namespace CombatManager
                     if (ret.Rows.Count == 0)
                     {
 
-                        String str = CreateTableStatementForDesc(desc);
+                        string str = CreateTableStatementForDesc(desc);
                         sql.ExecuteCommand(str);
                     }
                     else
@@ -723,7 +723,7 @@ namespace CombatManager
             
 #endif
 
-            String str = CreateTableStatementForDesc(table);
+            string str = CreateTableStatementForDesc(table);
             sql2.ExecuteCommand(str);
 
 #if ANDROID
@@ -950,11 +950,11 @@ namespace CombatManager
         private static DBFieldDesc GetDescForType(string fieldname, Type type, PropertyInfo info)
         {
 
-            if (type == typeof(Int32) || type == typeof(Int64) || type == typeof(bool))
+            if (type == typeof(int) || type == typeof(long) || type == typeof(bool))
             {
                 return new DBFieldDesc(fieldname, "INTEGER", false, info);
             }
-            else if (type == typeof(Nullable<Int32>) || type == typeof(Nullable<Int64>))
+            else if (type == typeof(Nullable<int>) || type == typeof(Nullable<long>))
             {
                 return new DBFieldDesc(fieldname, "INTEGER", true, info);
             }
@@ -1071,7 +1071,7 @@ namespace CombatManager
             foreach (Row row in ret.Rows)
             {
                 ConstructorInfo info = table.Type.GetConstructor(new Type[] { });
-                Object item = info.Invoke(new object[]{});
+                object item = info.Invoke(new object[]{});
 
                 int index = row.IntValue("ID");
 
@@ -1157,36 +1157,36 @@ namespace CombatManager
             return list;
         }
 
-        public Object ParseObjectForType(string text, Type t)
+        public object ParseObjectForType(string text, Type t)
         {
             try
             {
-                if (t == typeof(Int32))
+                if (t == typeof(int))
                 {
-                    return Int32.Parse(text);
+                    return int.Parse(text);
                 }
-                if (t == typeof(Int64))
+                if (t == typeof(long))
                 {
-                    return Int64.Parse(text);
+                    return long.Parse(text);
                 }
-                if (t == typeof(Nullable<Int32>))
+                if (t == typeof(Nullable<int>))
                 {
-                    Nullable<Int32> val = null;
+                    Nullable<int> val = null;
 
                     int num;
-                    if (Int32.TryParse(text, out num))
+                    if (int.TryParse(text, out num))
                     {
                         val = num;
                     }
 
                     return val;
                 }
-                if (t == typeof(Nullable<Int64>))
+                if (t == typeof(Nullable<long>))
                 {
-                    Nullable<Int64> val = null;
+                    Nullable<long> val = null;
 
-                    Int64 num;
-                    if (Int64.TryParse(text, out num))
+                    long num;
+                    if (long.TryParse(text, out num))
                     {
                         val = num;
                     }
@@ -1257,7 +1257,7 @@ namespace CombatManager
             else
             {
                 var row = ret.Rows[0];
-                String text = row.Cols[0];
+                string text = row.Cols[0];
                 int index;
                 int.TryParse(text, out index);
 
@@ -1351,13 +1351,13 @@ namespace CombatManager
             foreach (DBFieldDesc desc in table.SubtableFields)
             {
 
-                Object subitem = desc.Info.GetGetMethod().Invoke(item, new object[] { });
+                object subitem = desc.Info.GetGetMethod().Invoke(item, new object[] { });
 
                 if (subitem != null)
                 {
                     if (IsEnumerationTableType(desc.Info.PropertyType))
                     {
-                        foreach (Object o in ((IEnumerable)subitem))
+                        foreach (object o in ((IEnumerable)subitem))
                         {
                             if (IsSimpleValueEnumeration(desc.Info.PropertyType))
                             {
@@ -1397,7 +1397,7 @@ namespace CombatManager
         public void DeleteItems(IEnumerable<T> items)
         {
 
-            List<String> statementList = new List<string>();
+            List<string> statementList = new List<string>();
             List<object[]> paramList = new List<object[]>();
             foreach (T item in items)
             {
@@ -1421,7 +1421,7 @@ namespace CombatManager
                 throw new ArgumentException("Invalid DBLoaderID", "item");
             }
 
-            List<String> statementList = new List<string>();
+            List<string> statementList = new List<string>();
             List<object[]> paramList = new List<object[]>();
             CreateDeleteTableItemStatements(RootTableDesc, item.DBLoaderID, statementList, paramList);
 
@@ -1454,7 +1454,7 @@ namespace CombatManager
 
             sql.ExecuteCommand("BEGIN TRANSACTION;");
             
-            List<String> statementList = new List<string>();
+            List<string> statementList = new List<string>();
             List<object[]> paramList = new List<object[]>();
             CreateDeleteTableItemStatements(RootTableDesc, item.DBLoaderID, statementList, paramList);
 
@@ -1466,12 +1466,12 @@ namespace CombatManager
         }
 
 
-        public void CreateDeleteTableItemStatements(DBTableDesc basetable, int index, List<String> statementList, List<object[]> paramList)
+        public void CreateDeleteTableItemStatements(DBTableDesc basetable, int index, List<string> statementList, List<object[]> paramList)
         {
             CreateDeleteTableItemStatements(basetable, index, statementList, paramList, false);
         }
 
-        public void CreateDeleteTableItemStatements(DBTableDesc basetable, int index, List<String> statementList, List<object[]> paramList, bool ignoreCurrent)
+        public void CreateDeleteTableItemStatements(DBTableDesc basetable, int index, List<string> statementList, List<object[]> paramList, bool ignoreCurrent)
         {
             object[] idParam = new object[]{index};
             if (!ignoreCurrent)
@@ -1510,8 +1510,8 @@ namespace CombatManager
         {
             Type type = enumType.GetGenericArguments()[0];
 
-            return type == typeof(Int32) || type == typeof(Int64) || type == typeof(bool)  ||
-                type == typeof(Nullable<Int32>) || type == typeof(Nullable<Int64>) ||
+            return type == typeof(int) || type == typeof(long) || type == typeof(bool)  ||
+                type == typeof(Nullable<int>) || type == typeof(Nullable<long>) ||
                 type == typeof(string);
         }
 

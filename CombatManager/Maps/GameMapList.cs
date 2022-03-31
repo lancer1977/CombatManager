@@ -4,7 +4,6 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Xml.Serialization;
 
 namespace CombatManager.Maps
@@ -31,7 +30,7 @@ namespace CombatManager.Maps
 
         public static GameMapList CreateEmptyList()
         {
-            GameMapList list = new GameMapList();
+            var list = new GameMapList();
             list.version = 1;
 
             list.RootFolder = new MapFolder();
@@ -84,8 +83,8 @@ namespace CombatManager.Maps
 
         public static string GetMapFileName(int mapiId, String name)
         {
-            FileInfo file = new FileInfo(name);
-            String filename = "MapFile" + mapiId + file.Extension;
+            var file = new FileInfo(name);
+            var filename = "MapFile" + mapiId + file.Extension;
             return Path.Combine(MapFileDir, filename);
         }
 
@@ -96,11 +95,11 @@ namespace CombatManager.Maps
 
         public GameMap CreateMap(String name, MapFolder folder)
         {
-            FileInfo file = new FileInfo(name);
+            var file = new FileInfo(name);
 
-            int newId = Id++;
+            var newId = Id++;
 
-            String filename = GetMapFileName(newId, name);
+            var filename = GetMapFileName(newId, name);
 
             file.CopyTo(filename, true);
 
@@ -110,9 +109,9 @@ namespace CombatManager.Maps
             }
 
 
-            GameMap map = new GameMap(newId, filename, file.Name.Substring(0, file.Name.Length - file.Extension.Length), new List<int>(folder.FolderPath));
+            var map = new GameMap(newId, filename, file.Name.Substring(0, file.Name.Length - file.Extension.Length), new List<int>(folder.FolderPath));
 
-            MapStub stub = new MapStub(map);
+            var stub = new MapStub(map);
 
             CurrentFolder.Maps.Add(stub);
             map.CanSave = true;
@@ -129,23 +128,23 @@ namespace CombatManager.Maps
         public MapFolder CreateFolder(String name, MapFolder parent)
         {
             folderId++;
-            MapFolder folder = new MapFolder(name, folderId, parent.FolderPath);
+            var folder = new MapFolder(name, folderId, parent.FolderPath);
             parent.Folders.Add(folder);
             return folder;
         }
 
         public void DeleteFolder(MapFolder folder)
         {
-            List<MapFolder> subfolders = new List<MapFolder>(folder.Folders);
+            var subfolders = new List<MapFolder>(folder.Folders);
 
-            foreach (MapFolder sub in subfolders)
+            foreach (var sub in subfolders)
             {
                 DeleteFolder(sub);
             }
 
-            List<MapStub> stubs = new List<MapStub>(folder.Maps);
+            var stubs = new List<MapStub>(folder.Maps);
 
-            foreach (MapStub stub in stubs)
+            foreach (var stub in stubs)
             {
                 DeleteMapFile(stub);
             }
@@ -163,7 +162,7 @@ namespace CombatManager.Maps
 
         public GameMap LoadStub(MapStub stub)
         {
-            GameMap map = GameMap.LoadMap(stub.Id);
+            var map = GameMap.LoadMap(stub.Id);
             stub.Map = map;
             if (stub.SourceFile == null)
             {
@@ -180,7 +179,7 @@ namespace CombatManager.Maps
 
 
             DeleteMapFile(stub);
-            MapFolder folder = GetFolder(stub);
+            var folder = GetFolder(stub);
             folder.Maps.Remove(stub);
             GameMap.Delete(stub.Id);
         }
@@ -206,12 +205,12 @@ namespace CombatManager.Maps
 
         public void UpdateMap(String name, MapStub stub)
         {
-            GameMap map = stub.Map;
+            var map = stub.Map;
             DeleteMapFile(stub);
 
-            FileInfo file = new FileInfo(name);
+            var file = new FileInfo(name);
 
-            String filename = GetMapFileName(stub.Id, name);
+            var filename = GetMapFileName(stub.Id, name);
 
             file.CopyTo(filename);
 
@@ -221,7 +220,7 @@ namespace CombatManager.Maps
 
         public void MoveMapToFolder(MapStub stub, MapFolder newFolder)
         {
-            MapFolder oldFolder = GetFolder(stub);
+            var oldFolder = GetFolder(stub);
             oldFolder.Maps.Remove(stub);
             stub.FolderPath = new List<int>(newFolder.FolderPath);
             newFolder.Maps.Add(stub);
@@ -312,7 +311,7 @@ namespace CombatManager.Maps
 
         public bool UpdateVersions()
         {
-            bool updated = false;
+            var updated = false;
             if (version == 0)
             {
                 ConvertToVersion1();
@@ -328,9 +327,9 @@ namespace CombatManager.Maps
             {
                 currentFolderPath = new ObservableCollection<int>() { 0 };
                 
-                MapFolder folder = CurrentFolder;
+                var folder = CurrentFolder;
                 folder.FolderPath = currentFolderPath;
-                foreach (MapStub stub in maps)
+                foreach (var stub in maps)
                 {
                     folder.Maps.Add(stub);
                 }
@@ -351,14 +350,14 @@ namespace CombatManager.Maps
             {
                 if (currentFolderPath != value)
                 {
-                    bool startEmpty = currentFolderPath.IsEmptyOrNull();
+                    var startEmpty = currentFolderPath.IsEmptyOrNull();
                     if (currentFolderPath != null)
                     {
 
                         currentFolderPath.CollectionChanged -= CurrentFolderPath_CollectionChanged;
                     }
                     currentFolderPath = value;
-                    bool endEmpty = currentFolderPath.IsEmptyOrNull(); 
+                    var endEmpty = currentFolderPath.IsEmptyOrNull(); 
                     if (currentFolderPath != null)
                     {
                         currentFolderPath.CollectionChanged += CurrentFolderPath_CollectionChanged;
@@ -408,7 +407,7 @@ namespace CombatManager.Maps
 
         public MapFolder GetFolderByPath(IEnumerable<int> folderPath)
         {
-            MapFolder folder = RootFolder;
+            var folder = RootFolder;
 
             if (folder == null)
             {
@@ -418,7 +417,7 @@ namespace CombatManager.Maps
             }
 
 
-            List<int> searchPath = new List<int>();
+            var searchPath = new List<int>();
             if (folderPath != null)
             {
                 searchPath = new List<int>(folderPath);
@@ -426,8 +425,8 @@ namespace CombatManager.Maps
             }
             while (searchPath.Count > 0)
             {
-                int next = searchPath.PopFront();
-                MapFolder nextFolder = folder.Folders.FirstOrDefault((x) => (x.Id == next));
+                var next = searchPath.PopFront();
+                var nextFolder = folder.Folders.FirstOrDefault((x) => (x.Id == next));
                 if (nextFolder == null)
                 {
                     break;
@@ -446,7 +445,7 @@ namespace CombatManager.Maps
         {
             get
             {
-                MapFolder folder = CurrentFolder;
+                var folder = CurrentFolder;
                 return folder.Maps;
             }
         }

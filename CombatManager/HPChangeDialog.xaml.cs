@@ -1,4 +1,4 @@
-/*
+﻿/*
  *  HPChangeDialog.xaml.cs
  *
  *  Copyright (C) 2010-2012 Kyle Olson, kyle@kyleolson.com
@@ -19,19 +19,10 @@
  *
  */
 
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows;
+ using System;
+ using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using System.ComponentModel;
+ using System.ComponentModel;
 using System.Collections.ObjectModel;
 
 namespace CombatManager
@@ -66,7 +57,7 @@ namespace CombatManager
                     items = new ObservableCollection<HPChangeItem>();
                     foreach (Character c in _view.Items)
                     {
-                        HPChangeItem item = new HPChangeItem();
+                        var item = new HPChangeItem();
                         item.Character = c;
                         item.Selected = _view.SelectedItems.Contains(c);
                         item.Half = false;
@@ -176,7 +167,7 @@ namespace CombatManager
         {
             try
             {
-                foreach (HPChangeItem item in items)
+                foreach (var item in items)
                 {
                     if (item.Selected)
                     {
@@ -196,11 +187,11 @@ namespace CombatManager
             
             try
             {
-                foreach (HPChangeItem item in items)
+                foreach (var item in items)
                 {
                     if (item.Selected)
                     {
-                        int change = item.Half ? (HPChange / 2) : HPChange;
+                        var change = item.Half ? (HPChange / 2) : HPChange;
 
                         if (change + item.Character.HP > item.Character.MaxHP)
                         {
@@ -220,7 +211,7 @@ namespace CombatManager
 
         private void SelectAllButton_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-        	foreach (HPChangeItem item in items)
+        	foreach (var item in items)
 			{
 				item.Selected = true;
 			}
@@ -228,7 +219,7 @@ namespace CombatManager
 
         private void UnselectAllButton_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-        	foreach (HPChangeItem item in items)
+        	foreach (var item in items)
 			{
 				item.Selected = false;
 			}

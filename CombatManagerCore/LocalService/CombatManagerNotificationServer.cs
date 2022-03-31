@@ -80,7 +80,7 @@ namespace CombatManager.LocalService
 
         protected override async Task OnMessageReceivedAsync(IWebSocketContext context, byte[] buffer, IWebSocketReceiveResult result)
         {
-            ArraySegment<Byte> bufferSegment = new ArraySegment<byte>(buffer);
+            ArraySegment<byte> bufferSegment = new ArraySegment<byte>(buffer);
             var sender = _users.FirstOrDefault(x => x.Id == context.Id);
             while (true)
             {

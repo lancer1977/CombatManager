@@ -15,7 +15,7 @@
     <AndroidResgenClass>Resource</AndroidResgenClass>
     <AssemblyName>CombatManagerCoreDroid</AssemblyName>
     <ReleaseVersion>1.05</ReleaseVersion>
-    <TargetFrameworkVersion>v9.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v11.0</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>True</DebugSymbols>
@@ -39,6 +39,9 @@
     <DefineConstants>MONO;ANDROID</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CombatManager.Api.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\PolyhydraGames.CombatManager.Api.Core.1.0.0.6\lib\netstandard2.0\CombatManager.Api.Core.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -98,28 +101,6 @@
     <Compile Include="LocalService\BinaryResourceManager.cs" />
     <Compile Include="LocalService\CombatManagerHTMLServer.cs" />
     <Compile Include="LocalService\CombatManagerNotificationServer.cs" />
-    <Compile Include="LocalService\Data\RemoteActiveCondition.cs" />
-    <Compile Include="LocalService\Data\RemoteAffliction.cs" />
-    <Compile Include="LocalService\Data\RemoteBonus.cs" />
-    <Compile Include="LocalService\Data\RemoteCharacter.cs" />
-    <Compile Include="LocalService\Data\RemoteCharacterInitState.cs" />
-    <Compile Include="LocalService\Data\RemoteCombatState.cs" />
-    <Compile Include="LocalService\Data\RemoteConditon.cs" />
-    <Compile Include="LocalService\Data\RemoteDBItem.cs" />
-    <Compile Include="LocalService\Data\RemoteDBListing.cs" />
-    <Compile Include="LocalService\Data\RemoteDie.cs" />
-    <Compile Include="LocalService\Data\RemoteDieResult.cs" />
-    <Compile Include="LocalService\Data\RemoteDieRoll.cs" />
-    <Compile Include="LocalService\Data\RemoteFeat.cs" />
-    <Compile Include="LocalService\Data\RemoteFeatList.cs" />
-    <Compile Include="LocalService\Data\RemoteInitiativeCount.cs" />
-    <Compile Include="LocalService\Data\RemoteMagicItem.cs" />
-    <Compile Include="LocalService\Data\RemoteMagicItemList.cs" />
-    <Compile Include="LocalService\Data\RemoteMonster.cs" />
-    <Compile Include="LocalService\Data\RemoteMonsterList.cs" />
-    <Compile Include="LocalService\Data\RemoteRollResult.cs" />
-    <Compile Include="LocalService\Data\RemoteSpell.cs" />
-    <Compile Include="LocalService\Data\RemoteSpellList.cs" />
     <Compile Include="LocalService\ImageServer.cs" />
     <Compile Include="LocalService\LocalCombatManagerService.cs" />
     <Compile Include="LocalService\LocalCombatManagerServiceController.cs" />
@@ -127,22 +108,6 @@
     <Compile Include="LocalService\LocalServiceHelper.cs" />
     <Compile Include="LocalService\LocalServiceMessage.cs" />
     <Compile Include="LocalService\LocalServiceUtilities.cs" />
-    <Compile Include="LocalService\Request\AddConditionRequest.cs" />
-    <Compile Include="LocalService\Request\CharacterRequest.cs" />
-    <Compile Include="LocalService\Request\FeatListRequest.cs" />
-    <Compile Include="LocalService\Request\FeatRequest.cs" />
-    <Compile Include="LocalService\Request\FeatsRequest.cs" />
-    <Compile Include="LocalService\Request\MagicItemListRequest.cs" />
-    <Compile Include="LocalService\Request\MagicItemRequest.cs" />
-    <Compile Include="LocalService\Request\MagicItemsRequest.cs" />
-    <Compile Include="LocalService\Request\MonsterAddRequest.cs" />
-    <Compile Include="LocalService\Request\MonsterListRequest.cs" />
-    <Compile Include="LocalService\Request\MonsterRequest.cs" />
-    <Compile Include="LocalService\Request\MonstersRequest.cs" />
-    <Compile Include="LocalService\Request\RemoveConditionRequest.cs" />
-    <Compile Include="LocalService\Request\SpellListRequest.cs" />
-    <Compile Include="LocalService\Request\SpellRequest.cs" />
-    <Compile Include="LocalService\Request\SpellsRequest.cs" />
     <Compile Include="Pathfinder.Herolab.Serializable.class.cs" />
     <Compile Include="PF2\PF2Action.cs" />
     <Compile Include="PF2\PF2ActionDamage.cs" />

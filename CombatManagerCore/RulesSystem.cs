@@ -17,7 +17,7 @@ namespace CombatManager
     {
         public static string SystemName(RulesSystem system)
         {
-            String text = "";
+            string text = "";
             switch (system)
             {
                 case RulesSystem.DD5:

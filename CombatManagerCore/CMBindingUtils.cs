@@ -7,6 +7,13 @@ using System.Threading.Tasks;
 
 namespace CombatManager
 {
+    public static class FileUtilities
+    {
+        public static bool IsZipFile(this string value)
+        {
+            return value.ToLower().Contains(".zip");
+        }
+    }
     public static class CMBindingUtils
     {
     }

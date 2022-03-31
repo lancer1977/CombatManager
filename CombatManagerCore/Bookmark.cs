@@ -10,12 +10,12 @@ namespace CombatManager
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private String _Type;
-        private String _Name;
-        private String _ID;
-        private String _Data;
+        private string _Type;
+        private string _Name;
+        private string _ID;
+        private string _Data;
 
-        public String Type
+        public string Type
         {
             get { return _Type; }
             set
@@ -27,7 +27,7 @@ namespace CombatManager
                 }
             }
         }
-        public String Name
+        public string Name
         {
             get { return _Name; }
             set
@@ -39,7 +39,7 @@ namespace CombatManager
                 }
             }
         }
-        public String ID
+        public string ID
         {
             get { return _ID; }
             set
@@ -51,7 +51,7 @@ namespace CombatManager
                 }
             }
         }
-        public String Data
+        public string Data
         {
             get { return _Data; }
             set

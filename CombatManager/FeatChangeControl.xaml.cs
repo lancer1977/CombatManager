@@ -1,4 +1,4 @@
-/*
+﻿/*
  *  FeatChangeControl.xaml.cs
  *
  *  Copyright (C) 2010-2012 Kyle Olson, kyle@kyleolson.com
@@ -19,22 +19,14 @@
  *
  */
 
-﻿using System;
+ using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Windows;
+ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Collections.ObjectModel;
+ using System.Windows.Input;
+ using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Xml.Serialization;
-using System.Text.RegularExpressions;
 
 namespace CombatManager
 {
@@ -65,9 +57,9 @@ namespace CombatManager
 
         private bool FeatsViewFilter(Object obj)
         {
-            Feat feat = (Feat)obj;
+            var feat = (Feat)obj;
 
-            string text = FeatFilterTextBox.Text.Trim();
+            var text = FeatFilterTextBox.Text.Trim();
 
             if (text.Length == 0)
             {
@@ -97,7 +89,7 @@ namespace CombatManager
         {
             foreach (Feat feat in SelectFeatBox.SelectedItems)
             {
-                string name = feat.Name;
+                var name = feat.Name;
 
                 if (feat.AltName != null && feat.AltName.Length > 0)
                 {
@@ -123,9 +115,9 @@ namespace CombatManager
             {
                 _Monster = value;
                 _CurrentFeats = new ObservableCollection<ParsedFeat>();
-                foreach (string feat in _Monster.FeatsList)
+                foreach (var feat in _Monster.FeatsList)
                 {
-                    ParsedFeat cf = new ParsedFeat();
+                    var cf = new ParsedFeat();
                     _CurrentFeats.Add(new ParsedFeat(feat));
                 }
                 _CurrentFeatsView = new ListCollectionView(_CurrentFeats);
@@ -137,9 +129,9 @@ namespace CombatManager
 
         private void DeleteButton_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            FrameworkElement el = (FrameworkElement)sender;
+            var el = (FrameworkElement)sender;
 
-            ParsedFeat feat = (ParsedFeat)el.DataContext;
+            var feat = (ParsedFeat)el.DataContext;
 
             _CurrentFeats.Remove(feat);
             _Monster.RemoveFeat(feat.Text);
@@ -148,9 +140,9 @@ namespace CombatManager
 
         private void TextBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
         {
-            FrameworkElement el = (FrameworkElement)sender;
+            var el = (FrameworkElement)sender;
 
-            ParsedFeat feat = (ParsedFeat)el.DataContext;
+            var feat = (ParsedFeat)el.DataContext;
         	_Monster.RemoveFeat(feat.FeatSource);
             feat.FeatSource = feat.Text;
 			_Monster.AddFeat(feat.FeatSource);
@@ -176,7 +168,7 @@ namespace CombatManager
 
         private void RemoveButton_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            ParsedFeat feat = (ParsedFeat)CurrentFeatsBox.SelectedItem;
+            var feat = (ParsedFeat)CurrentFeatsBox.SelectedItem;
 
             if (feat != null)
             {

@@ -1,4 +1,4 @@
-/*
+﻿/*
  *  Equipment.cs
  *
  *  Copyright (C) 2010-2012 Kyle Olson, kyle@kyleolson.com
@@ -19,7 +19,7 @@
  *
  */
 
-﻿using System;
+ using System;
 using System.ComponentModel;
 using System.Collections.Generic;
 using System.IO;
@@ -34,12 +34,12 @@ namespace CombatManager
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private String _Name;
-        private String _Cost;
-        private String _Weight;
-        private String _Source;
-        private String _Type;
-        private String _Subtype;
+        private string _Name;
+        private string _Cost;
+        private string _Weight;
+        private string _Source;
+        private string _Type;
+        private string _Subtype;
 
         private static List<Equipment> _Equipment;
 
@@ -49,7 +49,7 @@ namespace CombatManager
         }
 
 
-        public String Name
+        public string Name
         {
             get { return _Name; }
             set
@@ -61,7 +61,7 @@ namespace CombatManager
                 }
             }
         }
-        public String Cost
+        public string Cost
         {
             get { return _Cost; }
             set
@@ -73,7 +73,7 @@ namespace CombatManager
                 }
             }
         }
-        public String Weight
+        public string Weight
         {
             get { return _Weight; }
             set
@@ -85,7 +85,7 @@ namespace CombatManager
                 }
             }
         }
-        public String Source
+        public string Source
         {
             get { return _Source; }
             set
@@ -97,7 +97,7 @@ namespace CombatManager
                 }
             }
         }
-        public String Type
+        public string Type
         {
             get { return _Type; }
             set
@@ -109,7 +109,7 @@ namespace CombatManager
                 }
             }
         }
-        public String Subtype
+        public string Subtype
         {
             get { return _Subtype; }
             set

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.IO.Pipes;
-using System.Threading;
 
 class PipeServer
 {
@@ -42,9 +41,9 @@ class PipeServer
                     pipeServer.EndWaitForConnection(a);
                    
                     // Read user input and send that to the client process. 
-                    using (StreamReader sr = new StreamReader(pipeServer))
+                    using (var sr = new StreamReader(pipeServer))
                     {
-                        String name = sr.ReadLine();
+                        var name = sr.ReadLine();
                         
                         
                         if (name != null)
@@ -54,7 +53,7 @@ class PipeServer
                                 FileRecieved(this, new PipeServerEventArgs() {File = name});
                             }
                         }
-                        StreamWriter sw = new StreamWriter(pipeServer);
+                        var sw = new StreamWriter(pipeServer);
                         
                         sw.WriteLine(hwnd.ToInt32().ToString());
                         sw.Flush();

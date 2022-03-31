@@ -1,16 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace CombatManager.Maps
 {
@@ -32,7 +23,7 @@ namespace CombatManager.Maps
             base.OnRender(drawingContext);
             
 
-            GameMap map = (GameMap)DataContext;
+            var map = (GameMap)DataContext;
             if (map != null)
             {
                
@@ -40,12 +31,12 @@ namespace CombatManager.Maps
                 Brush b = new SolidColorBrush(PlayerMode?Color.FromArgb(255, 0, 0, 0):Color.FromArgb(128, 0, 0, 0));
 
 
-                Rect drawRect = OriginRect();
+                var drawRect = OriginRect();
 
 
-                Rect rectStart = new Rect();
-                bool running = false;
-                for (int y = 0; y < map.CellsHeight; y++)
+                var rectStart = new Rect();
+                var running = false;
+                for (var y = 0; y < map.CellsHeight; y++)
                 {
                     Action drawIfRunning = () =>
                     {
@@ -55,11 +46,11 @@ namespace CombatManager.Maps
 
                             rectStart.Width = drawRect.X - rectStart.X;
 
-                            Rect finalRect = rectStart;
+                            var finalRect = rectStart;
 
                             if (playerMode)
                             {
-                                double extra = finalRect.Height * .01;
+                                var extra = finalRect.Height * .01;
                                 finalRect.Y -= extra;
                                 finalRect.Height += extra * 2.0;
                             }
@@ -74,7 +65,7 @@ namespace CombatManager.Maps
                     };
 
 
-                    for (int x = 0; x < map.CellsWidth; x++)
+                    for (var x = 0; x < map.CellsWidth; x++)
                     {
 
                         if (map[x, y])
@@ -98,30 +89,30 @@ namespace CombatManager.Maps
                     drawRect.Y += drawRect.Height;
                 }
                 
-                foreach (KeyValuePair<int, List<GameMap.Marker>> pair in map.Markers)
+                foreach (var pair in map.Markers)
                 {
 
-                    foreach (GameMap.Marker m in pair.Value)
+                    foreach (var m in pair.Value)
                     {
                         DrawMarker(drawingContext, pair.Key, m);
                     }
    
                 }
 
-                Point anchorPoint = map.CellOrigin;
+                var anchorPoint = map.CellOrigin;
                 anchorPoint = anchorPoint.Multiply(UseScale);
 
 
                 if (drawAnchor)
                 {
-                    LineGeometry ln = new LineGeometry(anchorPoint.Add(-15, -15), anchorPoint.Add(15, 15));
+                    var ln = new LineGeometry(anchorPoint.Add(-15, -15), anchorPoint.Add(15, 15));
 
-                    LineGeometry ln2 = new LineGeometry(anchorPoint.Add(-15, 15), anchorPoint.Add(15, -15));
+                    var ln2 = new LineGeometry(anchorPoint.Add(-15, 15), anchorPoint.Add(15, -15));
 
-                    EllipseGeometry ellipse = new EllipseGeometry(anchorPoint, 12, 12);
+                    var ellipse = new EllipseGeometry(anchorPoint, 12, 12);
 
 
-                    Pen p = new Pen(new SolidColorBrush(Color.FromRgb(255, 0, 0)), 2.0);
+                    var p = new Pen(new SolidColorBrush(Color.FromRgb(255, 0, 0)), 2.0);
 
                     drawingContext.DrawGeometry(null, p, ln);
                     drawingContext.DrawGeometry(null, p, ln2);
@@ -171,14 +162,14 @@ namespace CombatManager.Maps
 
         public Geometry CreateMarkerPath(int index, GameMap.Marker marker)
         {
-            GameMap map = (GameMap)DataContext;
+            var map = (GameMap)DataContext;
             if (map != null)
             {
-                GameMap.MapCell cell = map.IndexToCell(index);
+                var cell = map.IndexToCell(index);
 
-                Rect rect = CellRect(cell);
+                var rect = CellRect(cell);
 
-                double penWidth = CurrentScale;
+                var penWidth = CurrentScale;
 
 
                 switch (marker.Style)
@@ -189,7 +180,7 @@ namespace CombatManager.Maps
                         return rect.RectanglePath(penWidth);
                     case GameMap.MarkerStyle.Circle:
 
-                        Rect cicleRect = rect;
+                        var cicleRect = rect;
                         cicleRect.ScaleCenter(.9, .9);
 
                         return rect.CirclePath(penWidth);
@@ -207,21 +198,21 @@ namespace CombatManager.Maps
 
         public void DrawMarker(DrawingContext context, int index, GameMap.Marker marker)
         {
-            GameMap map = (GameMap)DataContext;
+            var map = (GameMap)DataContext;
             if (map != null)
             {
-                GameMap.MapCell cell = map.IndexToCell(index);
+                var cell = map.IndexToCell(index);
 
-                Rect rect = CellRect(cell);
+                var rect = CellRect(cell);
 
-                Color brushColor = marker.Color;
+                var brushColor = marker.Color;
                 brushColor.A = (byte)(brushColor.A / 2);
 
-                double penWidth = Math.Min(UseCellSize.Width, UseCellSize.Height)/25.0;
+                var penWidth = Math.Min(UseCellSize.Width, UseCellSize.Height)/25.0;
 
 
                 Brush b = new SolidColorBrush(brushColor);
-                Pen p = new Pen(new SolidColorBrush(marker.Color), penWidth);
+                var p = new Pen(new SolidColorBrush(marker.Color), penWidth);
 
                 
                 context.DrawGeometry(b, p, CreateMarkerPath(index, marker));
@@ -236,7 +227,7 @@ namespace CombatManager.Maps
         {
             get
             {
-                GameMap map = (GameMap)DataContext;
+                var map = (GameMap)DataContext;
                 if (map != null)
                 {
                     return UseScale;
@@ -249,8 +240,8 @@ namespace CombatManager.Maps
 
         Rect OriginRect()
         {
-            Rect originRect = new Rect();
-            GameMap map = (GameMap)DataContext;
+            var originRect = new Rect();
+            var map = (GameMap)DataContext;
             if (map != null)
             {
                 originRect = new Rect(UseGridOrigin.X, UseGridOrigin.Y, UseCellSize.Width, UseCellSize.Height);
@@ -269,11 +260,11 @@ namespace CombatManager.Maps
         Rect CellRect(int x, int y)
         {
 
-            Rect drawRect = new Rect();
+            var drawRect = new Rect();
 
             drawRect = OriginRect();
 
-            Size cellSize = CellSize();
+            var cellSize = CellSize();
 
             drawRect.X += cellSize.Width * (double)x;
             drawRect.Y += cellSize.Height * (double)y;
@@ -284,9 +275,9 @@ namespace CombatManager.Maps
 
         Size CellSize()
         {
-            Size size = new Size();
+            var size = new Size();
 
-            GameMap map = (GameMap)DataContext;
+            var map = (GameMap)DataContext;
             if (map != null)
             {
 
@@ -302,12 +293,12 @@ namespace CombatManager.Maps
         {
             get
             {
-                GameMap map = (GameMap)DataContext;
+                var map = (GameMap)DataContext;
                 return playerMode ? map.TableScale : map.Scale;
             }
             set
             {
-                GameMap map = (GameMap)DataContext;
+                var map = (GameMap)DataContext;
                 if (playerMode)
                 {
                     map.TableScale = value;
@@ -323,7 +314,7 @@ namespace CombatManager.Maps
         {
             get
             {
-                GameMap map = (GameMap)DataContext;
+                var map = (GameMap)DataContext;
                 return playerMode ? map.TableCellSize : map.ActualCellSize;
             }
         }
@@ -332,7 +323,7 @@ namespace CombatManager.Maps
         {
             get
             {
-                GameMap map = (GameMap)DataContext;
+                var map = (GameMap)DataContext;
                 return playerMode ? map.TableGridOrigin : map.ActualGridOrigin;
             }
         }

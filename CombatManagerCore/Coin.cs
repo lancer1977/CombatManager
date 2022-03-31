@@ -1,4 +1,4 @@
-/*
+﻿/*
  *  Coin.cs
  *
  *  Copyright (C) 2010-2012 Kyle Olson, kyle@kyleolson.com
@@ -19,7 +19,7 @@
  *
  */
 
-﻿using System;
+ using System;
 using System.ComponentModel;
 using System.Collections.Generic;
 using System.Linq;
@@ -54,7 +54,7 @@ namespace CombatManager
             this._CP = c._CP;
         }
 
-        public Coin(String s)
+        public Coin(string s)
         {
             string text = s.Replace(",", "");
             Regex regCoin = new Regex("(?<val>[0-9]+) +(?<type>(pp|gp|sp|cp))");

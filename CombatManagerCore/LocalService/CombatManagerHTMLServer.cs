@@ -107,7 +107,7 @@ namespace CombatManager.LocalService
                 return ShowErrorPage(context, 404, "Not found");
             }
 
-            String text = MonsterHtmlCreator.CreateHtml(ch.Monster, ch, completePage : true, css: "WebStyles");
+            string text = MonsterHtmlCreator.CreateHtml(ch.Monster, ch, completePage : true, css: "WebStyles");
 
 
             context.Response.StatusCode = 200;
@@ -138,7 +138,7 @@ namespace CombatManager.LocalService
 
             blocks.CreateHtmlFooter();
 
-            String text = blocks.ToString();
+            string text = blocks.ToString();
 
             context.Response.StatusCode = 200;
 

@@ -1,4 +1,4 @@
-/*
+﻿/*
  *  CombatState.cs
  *
  *  Copyright (C) 2010-2012 Kyle Olson, kyle@kyleolson.com
@@ -19,7 +19,7 @@
  *
  */
 
-﻿using System;
+ using System;
 using System.ComponentModel;
 using System.Collections.Generic;
 using System.Linq;
@@ -1746,7 +1746,7 @@ namespace CombatManager
 
                 FileInfo fi = new FileInfo(filename);
 
-                if (String.Compare(fi.Extension, ".por", true) == 0 || String.Compare(fi.Extension, ".rpgrp", true) == 0)
+                if (string.Compare(fi.Extension, ".por", true) == 0 || string.Compare(fi.Extension, ".rpgrp", true) == 0)
                 {
                     ImportFromFile(filename, isMonster);
                 }
@@ -1956,7 +1956,7 @@ namespace CombatManager
 
         public class BonusDamage
         {
-            public String DamageType { get; set; }
+            public string DamageType { get; set; }
             public RollResult Damage { get; set; }
         }
 
@@ -1993,11 +1993,11 @@ namespace CombatManager
         {
             Attack _Attack;
 
-            String _Name;
+            string _Name;
 
             Character _Character;
 
-            public String Name
+            public string Name
             {
                 get
                 {

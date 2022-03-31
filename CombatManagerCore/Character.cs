@@ -1,4 +1,4 @@
-/*
+﻿/*
  *  Character.cs
  *
  *  Copyright (C) 2010-2012 Kyle Olson, kyle@kyleolson.com
@@ -19,7 +19,7 @@
  *
  */
 
-﻿using System;
+ using System;
 using System.ComponentModel;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -74,7 +74,7 @@ namespace CombatManager
         private uint? color;
 
 
-        private String originalFilename;
+        private string originalFilename;
 
 
         //unsaved data
@@ -95,7 +95,7 @@ namespace CombatManager
         private CharacterAdjuster adjuster;
 
 
-        Dictionary<String, bool> _KnownConditions = new Dictionary<String, bool>();
+        Dictionary<string, bool> _KnownConditions = new Dictionary<string, bool>();
 
         private static Random rand = new Random();
 
@@ -943,7 +943,7 @@ namespace CombatManager
         public IEnumerable<ActiveCondition> FindAllConditions(string name)
         {
             return Stats.ActiveConditions.Where<ActiveCondition>
-                (a => String.Compare(a.Condition.Name, name, true) == 0);
+                (a => string.Compare(a.Condition.Name, name, true) == 0);
         }
 
         public void RemoveConditionByName(string name)

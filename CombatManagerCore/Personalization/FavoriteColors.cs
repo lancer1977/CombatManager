@@ -8,9 +8,9 @@ namespace CombatManager.Personalization
 {
     public class FavoriteColors
     {
-        static Dictionary<String, List<uint>> recentColors;
+        static Dictionary<string, List<uint>> recentColors;
 
-        static Dictionary<String, List<uint>> RecentColors
+        static Dictionary<string, List<uint>> RecentColors
         {
             get
             {
@@ -52,7 +52,7 @@ namespace CombatManager.Personalization
 
         }
 
-        public static List<uint> GetList(String name, List<uint> defaultColors = null)
+        public static List<uint> GetList(string name, List<uint> defaultColors = null)
         {
             List<uint> colors;
 
@@ -71,13 +71,13 @@ namespace CombatManager.Personalization
             return colors;
         }
 
-        public static void SetList(String name, List<uint> list)
+        public static void SetList(string name, List<uint> list)
         {
             RecentColors[name] = list;
             SaveColors();
         }
 
-        public static void Push(String name, uint color, List<uint> defaultColors = null, int ? limit = null)
+        public static void Push(string name, uint color, List<uint> defaultColors = null, int ? limit = null)
         {
             List<uint> list = GetList(name, defaultColors);
 
@@ -101,7 +101,7 @@ namespace CombatManager.Personalization
         
         public class ColorListEntry
         {
-            public String Name;
+            public string Name;
             public List<uint> Colors;
         }
 

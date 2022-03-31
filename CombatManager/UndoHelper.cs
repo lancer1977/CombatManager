@@ -1,4 +1,4 @@
-/*
+﻿/*
  *  UndoHelper.cs
  *
  *  Copyright (C) 2010-2012 Kyle Olson, kyle@kyleolson.com
@@ -19,10 +19,8 @@
  *
  */
 
-﻿using System;
+ using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace CombatManager
 {
@@ -68,7 +66,7 @@ namespace CombatManager
 
         void ClearGroupIfNeccessary()
         {
-            bool resetRedo = false;
+            var resetRedo = false;
 
             if (undoStack.Count >= 2)
             {
@@ -100,11 +98,11 @@ namespace CombatManager
 
         public List<UndoAction> UndoAction()
         {
-            List<UndoAction> ret = new List<UndoAction>();
+            var ret = new List<UndoAction>();
 
             if (undoStack.Count > 0)
             {
-                UndoAction act = undoStack.Last.Value;
+                var act = undoStack.Last.Value;
                 undoStack.RemoveLast();
                 redoStack.AddLast(act);
                 ret.Add(act);
@@ -135,11 +133,11 @@ namespace CombatManager
 
         public List<UndoAction> RedoAction()
         {
-            List<UndoAction> ret = new List<UndoAction>();
+            var ret = new List<UndoAction>();
 
             if (redoStack.Count > 0)
             {
-                UndoAction act = redoStack.Last.Value;
+                var act = redoStack.Last.Value;
                 redoStack.RemoveLast();
                 undoStack.AddLast(act);
                 ret.Add(act);
