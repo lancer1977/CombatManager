@@ -14,7 +14,7 @@ namespace CombatManager
 {
 	
 	
-	[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Xamarin.Android.Build.Tasks", "1.0.0.0")]
+	[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Xamarin.Android.Build.Tasks", "13.2.2.120")]
 	public partial class Resource
 	{
 		
@@ -32,22 +32,6 @@ namespace CombatManager
 			}
 			
 			private Attribute()
-			{
-			}
-		}
-		
-		public partial class Xml
-		{
-			
-			// aapt resource value: 0x7F010000
-			public static int xamarin_essentials_fileprovider_file_paths = 2130771968;
-			
-			static Xml()
-			{
-				global::Android.Runtime.ResourceIdManager.UpdateIdValues();
-			}
-			
-			private Xml()
 			{
 			}
 		}
