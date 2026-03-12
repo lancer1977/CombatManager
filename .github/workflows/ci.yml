@@ -53,3 +53,7 @@ jobs:
       - name: Build solution
         run: |
           msbuild CombatManager.sln /p:Configuration=Release /m
+
+      - name: Test
+        run: |
+          dotnet test CombatManager.Api.Test/CombatManagerApi.Test.csproj -c Release --verbosity normal
