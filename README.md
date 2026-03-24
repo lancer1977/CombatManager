@@ -34,3 +34,9 @@ This repo includes legacy Windows-only WPF projects (old .NET Framework) and mod
 
 If the API is ever extracted to a standaloneNuGet package for use in external projects, a separate publication workflow would be needed.
 
+
+
+## 📖 Documentation
+Detailed documentation can be found in the following sections:
+- [Feature Index](./docs/features/README.md)
+- [Core Capabilities](./docs/features/core-capabilities.md)
