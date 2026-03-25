@@ -22,17 +22,23 @@ This repo includes legacy Windows-only WPF projects (old .NET Framework) and mod
 
 - WPF / .NET Framework projects are **intentionally excluded** from Linux builds.
 
-### Api.Core Dependency
+### Api.Core Dependency Model
 
-`CombatManager.Api` uses a **ProjectReference** to `CombatManager.Api.Core` (local project reference).
+`CombatManager.Api.Core` is a **local project**, not a NuGet package. All development uses ProjectReference to the local source.
 
-**Decision rationale (2026-03-11):**
-- Both projects are in the same repository and versioned together
-- ProjectReference allows for instant rebuild propagation during development (no NuGet publish step)
-- Eliminates version synchronization issues between package and local project
-- The package reference approach (used previously with `CombatManager.Api.Core` NuGet 1.0.0.8) required publishing to a NuGet feed, adding friction to development
+| Project | Reference Type | Status |
+|---------|-----------------|--------|
+| CombatManager.Api | ProjectReference | ✓ Correct |
+| CombatManagerCore | PackageReference (v1.0.0.6) | Deprecated - convert when modernizing |
 
-If the API is ever extracted to a standaloneNuGet package for use in external projects, a separate publication workflow would be needed.
+**Why local reference:**
+- API Core and API are versioned together in the same repo
+- ProjectReference enables instant rebuild propagation
+- No NuGet publish friction during development
+
+**Decision record:** [ADR-0001: Api.Core Dependency Model](./docs/decisions/0001-api-core-dependency-model.md)
+
+> ⚠️ The `PolyhydraGames.CombatManager.Api.Core` NuGet package is deprecated and no longer updated. Use the local project reference instead.
 
 
 
