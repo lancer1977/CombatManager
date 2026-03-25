@@ -36,6 +36,15 @@ If the API is ever extracted to a standaloneNuGet package for use in external pr
 
 
 
+## NuGet Authentication
+
+This repo references packages from Azure DevOps Artifacts (PolyhydraGames feed). Some projects require authentication to restore.
+
+See [docs/nuget-feed-auth.md](docs/nuget-feed-auth.md) for:
+- Expected failure mode without auth (401 Unauthorized)
+- Azure Artifacts Credential Provider setup
+- PAT-based authentication for CI/CD
+
 ## 📖 Documentation
 Detailed documentation can be found in the following sections:
 - [Feature Index](./docs/features/README.md)
