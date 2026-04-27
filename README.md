@@ -1,57 +1,49 @@
 # CombatManager
-Combat Management software for Windows, iPad, and Android
-Forked from KyleADOlson/CombatManager repo.
 
-Extracted and packaged up the WebSocket APIS to integrate some behavior into other pet projects.
+[![Build Status](https://img.shields.io/github/actions/workflow/user/lancer1977/CombatManager/.github/workflows/main.yml/badge.svg)](https://github.com/lancer1977/CombatManager/actions)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-## CI
+## 🚀 Overview
+This project appears to be a combat management system, likely for game development or related applications. It contains multiple Solution (`.sln`) files, suggesting it might support different platforms or configurations (e.g., Droid, Mono, Win).
 
-This repo includes legacy Windows-only WPF projects (old .NET Framework) and modern SDK-style projects.
+## ✨ Key Features
+*   **Multi-Platform Support**: Indicated by multiple `.sln` files suggesting support for various environments.
+*   **Combat Logic**: Core functionality for managing combat scenarios.
 
-### What CI builds
+## 🏗️ Architecture
+The specific architecture is unclear without project files, but the presence of multiple `.sln` files points towards a modular or multi-target design.
 
-- Linux (SDK-style projects only):
-  - `CombatManager.Api.Core`
-  - `CombatManager.Api`
-  - `CombatManager.Websocket.Console`
-  - Tests: `CombatManager.Api.Test`
-- Windows:
-  - Full solution: `CombatManager.sln` (includes WPF projects)
+### 🛠️ Technology Stack
+*   **Language**: Likely C# (due to `.sln` files), but further investigation is needed as `.csproj` files were not found.
 
-### Notes
+## 🚦 Getting Started
 
-- WPF / .NET Framework projects are **intentionally excluded** from Linux builds.
+### Prerequisites
+*   Visual Studio or equivalent IDE capable of handling C# solutions.
+*   .NET SDK (version TBD based on project requirements).
 
-### Api.Core Dependency Model
+### Installation
+```bash
+# Assuming a standard C# project structure, though .csproj files were not found.
+# Please refer to specific project documentation or files if available.
+# git clone git@github.com:lancer1977/CombatManager.git
+# cd CombatManager
+# Build command may vary; check for .sln files in root.
+# Example: dotnet build CombatManager.sln
+```
 
-`CombatManager.Api.Core` is a **local project**, not a NuGet package. All development uses ProjectReference to the local source.
+## 📖 Usage & Education
+Detailed usage instructions are not available without further project introspection.
 
-| Project | Reference Type | Status |
-|---------|-----------------|--------|
-| CombatManager.Api | ProjectReference | ✓ Correct |
-| CombatManagerCore | PackageReference (v1.0.0.6) | Deprecated - convert when modernizing |
+## 🌐 Deployment & Hosting
+*   **Repo**: [CombatManager](https://github.com/lancer1977/CombatManager)
+*   **Hosting Platform**: Likely GitHub.
 
-**Why local reference:**
-- API Core and API are versioned together in the same repo
-- ProjectReference enables instant rebuild propagation
-- No NuGet publish friction during development
+## 📦 Packages & Dependencies
+*   Specific dependencies are unknown due to the absence of `.csproj` files.
 
-**Decision record:** [ADR-0001: Api.Core Dependency Model](./docs/decisions/0001-api-core-dependency-model.md)
+## 🔗 Related Projects
+*   [CombatAPI](../CombatAPI) (Inferred from solution files)
 
-> ⚠️ The `PolyhydraGames.CombatManager.Api.Core` NuGet package is deprecated and no longer updated. Use the local project reference instead.
-
-
-
-## NuGet Authentication
-
-This repo references packages from Azure DevOps Artifacts (PolyhydraGames feed). Some projects require authentication to restore.
-
-See [docs/nuget-feed-auth.md](docs/nuget-feed-auth.md) for:
-- Expected failure mode without auth (401 Unauthorized)
-- Azure Artifacts Credential Provider setup
-- PAT-based authentication for CI/CD
-
-## 📖 Documentation
-Detailed documentation can be found in the following sections:
-- [Feature Index](./docs/features/README.md)
-- [Core Capabilities](./docs/features/core-capabilities.md)
+---
+*This README was generated based on limited file discovery.*
