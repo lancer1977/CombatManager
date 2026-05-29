@@ -816,6 +816,16 @@ namespace CombatManager
 
         public void MoveNext()
         {
+            if (CombatList.Count == 0)
+            {
+                if (CurrentCharacter != null)
+                {
+                    CurrentCharacter = null;
+                }
+
+                return;
+            }
+
             UpdateAllConditions();
 
             int next = CombatList.IndexOf(CurrentCharacter) + 1;
@@ -870,11 +880,11 @@ namespace CombatManager
 			
 			if (character != null)
 			{
-	            if (character.IsReadying)
+            if (character.IsReadying)
 	            {
 	                character.IsReadying = false;
 	            }
-	            if (character.IsDelaying)
+            if (character.IsDelaying)
 	            {
 	                character.IsDelaying = false;
 	            }
@@ -885,16 +895,23 @@ namespace CombatManager
 
         public void MovePrevious()
         {
+            if (CombatList.Count == 0)
+            {
+                if (CurrentCharacter != null)
+                {
+                    CurrentCharacter = null;
+                }
+
+                return;
+            }
+
             UpdateAllConditions();
 
-
             int next = CombatList.IndexOf(CurrentCharacter) - 1;
-
 
             if (next < 0)
             {
                 next = CombatList.Count - 1;
-
 
                 if (Round == null)
                 {
@@ -912,7 +929,7 @@ namespace CombatManager
 
         private void MoveCurrentCharacterToIndex(int next)
         {
-            if (CombatList.Count > next)
+            if (next >= 0 && CombatList.Count > next)
             {
                 CurrentCharacter = CombatList[next];
             }
@@ -1372,16 +1389,33 @@ namespace CombatManager
             RegroupFollowers(character);
             UnlinkLeader(character);
 
-            if (_CurrentCharacter == character)
-            {
-                MoveNext();
-            }
+            bool removingCurrent = _CurrentCharacter == character;
+            int currentIndex = removingCurrent ? CombatList.IndexOf(character) : -1;
 
             sortingList = true;
             Characters.Remove(character);
             _UnfilteredCombatList.Remove(character);
             FilterList();
             sortingList = false;
+
+            if (removingCurrent)
+            {
+                if (CombatList.Count == 0)
+                {
+                    CurrentCharacter = null;
+                }
+                else
+                {
+                    if (currentIndex < 0 || currentIndex >= CombatList.Count)
+                    {
+                        currentIndex = 0;
+                    }
+
+                    CurrentCharacter = CombatList[currentIndex];
+                }
+
+                HandleTurnChanged();
+            }
             
             CharacterSortCompleted?.Invoke(this, new EventArgs());
         }

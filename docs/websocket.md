@@ -13,7 +13,7 @@ The CombatManager WebSocket API provides real-time bidirectional communication f
 ### Connection Endpoint
 
 ```
-ws://localhost:12457/api/notification
+ws://localhost:12457/api/notification/
 ```
 
 ## Connection Lifecycle
@@ -21,7 +21,7 @@ ws://localhost:12457/api/notification
 ### 1. Connect
 
 ```csharp
-var chat = new NotificationApiChat("ws://localhost:12457/api/notification");
+var chat = new NotificationApiChat("ws://localhost:12457/api/notification/");
 chat.StateChanged += (sender, message) =>
 {
     Console.WriteLine($"{message.Name}: {message.Data}");
@@ -31,14 +31,14 @@ await chat.StartConnection(cancellationToken);
 
 ### 2. Keep-Alive
 
-The client automatically sends WebSocket ping frames to maintain the connection. If the connection is lost, `StartConnection` will attempt to reconnect automatically.
+The client currently sends WebSocket ping frames in a loop to keep the socket alive. If the connection is lost, `StartConnection` catches the failure and retries the connection.
 
 ### 3. Disconnect
 
 The connection closes when:
 - The client sends a close frame (`Console.ReadLine()` returns null)
 - The server closes the connection
-- Network failure occurs (auto-reconnect kicks in)
+- Network failure occurs, which causes the outer reconnect loop to run again
 
 ## Message Format
 
@@ -84,7 +84,7 @@ class Program
 {
     static async Task Main(string[] args)
     {
-        var chat = new NotificationApiChat("ws://localhost:12457/api/notification");
+        var chat = new NotificationApiChat("ws://localhost:12457/api/notification/");
         chat.StateChanged += (sender, msg) =>
         {
             Console.WriteLine($"{msg.Name}: {msg.Data}");
@@ -136,7 +136,7 @@ try
 catch (Exception ex)
 {
     Console.WriteLine(ex.Message);  // Log error
-    // StartConnection will auto-reconnect
+    // StartConnection will retry on the next loop iteration
 }
 ```
 
@@ -146,3 +146,5 @@ catch (Exception ex)
 - Messages are JSON-encoded using Newtonsoft.Json
 - The connection uses a ping/pong keep-alive mechanism
 - Auto-reconnect is built into the `StartConnection` loop
+- Known gap: the server removes disconnected users from its internal list, but it does not currently broadcast a fresh `Users` message on disconnect
+- Known gap: the client keep-alive loop has no delay or cooperative cancellation path yet; follow-up work should reconcile reconnect/cancellation behavior with the documented lifecycle

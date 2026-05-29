@@ -40,12 +40,12 @@ Both repositories (`rpg-combat-manager` and `rpg-combat-manager.apis`) contain t
 | Project | Reference Type | Action |
 |---------|-----------------|--------|
 | CombatManager.Api | ProjectReference | Correct - keep |
-| CombatManagerCore | PackageReference | Convert to ProjectReference when modernizing |
-| CombatManagerCoreDroid | DLL Reference | Legacy - remove or convert when modernizing |
+| CombatManagerCore | ProjectReference | Modernized - use the local API.Core project |
+| CombatManagerCoreDroid | ProjectReference | Modernized - use the local API.Core project |
 
 ### NuGet Package Status
 
-The `PolyhydraGames.CombatManager.Api.Core` NuGet package (v1.0.0.6) is **deprecated**. It was previously published to Azure Artifacts but is no longer updated. New development should use the local project reference.
+The `PolyhydraGames.CombatManager.Api.Core` NuGet package (v1.0.0.6) is **deprecated** and this repo now builds `CombatManager.Api.Core` from source via ProjectReference. It was previously published to Azure Artifacts but is no longer updated. New development should use the local project reference.
 
 ## Consequences
 
@@ -75,4 +75,4 @@ For now, all internal development uses ProjectReference.
 
 ## History
 
-- 2026-03-25: ADR accepted and documented
+- 2026-05-27: API/core boundary checks added and the remaining internal package/DLL references were converted to ProjectReference.

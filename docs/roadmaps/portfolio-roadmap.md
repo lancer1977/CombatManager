@@ -24,16 +24,34 @@
 - [ ] Add explicit release gates for backward compatibility and migration behavior
 
 ## V1 (stability)
-- [ ] Stabilize combat state lifecycle in the active modules
-- [ ] Add smoke checks for core action flows and session creation
+- [x] Stabilize combat state lifecycle in the active modules
+- [x] Add smoke checks for core action flows and session creation
 - [ ] Normalize package/config assumptions for local run/build paths
 - [ ] Capture upgrade path in a clear checklist from `UpgradeLog3.htm`
 
+### Runtime smoke path
+- Start the local CombatManager service.
+- Seed a fresh combat session with at least one blank player or monster.
+- Run `combat/rollinit`, then `combat/next`, then `combat/prev` against the same session.
+- Remove the active combatant and confirm the state rebinds to the next valid combatant or clears the current turn cleanly.
+
+### Runtime breakpoints and recovery
+- Empty combat lists are a valid state: `combat/next` and `combat/prev` now no-op safely instead of throwing.
+- Removing the current combatant should never leave a stale active reference behind.
+- If the session is empty or the turn chain breaks, recover by seeding a new blank combatant and rerunning initiative.
+
 ## V2 (confidence)
-- [ ] Add tests or validation for API/core behavior boundaries
+- [x] Add tests or validation for API/core behavior boundaries
 - [ ] Document and exercise sqlite/persistence behavior under common workflows
 - [ ] Expand migration/testing guidance for desktop and mobile compatibility
 - [ ] Strengthen runbook for known breakpoints in combat state flow
+- [ ] Validate CombatStateViewer refresh behavior against live `CurrentPlayerChanged` / `CombatListChanged` / `CharactersChanged` callbacks
+- [ ] Decide whether the viewer should surface `GetRound()` or remain an intentionally snapshot-only surface
+
+## Viewer contract notes
+- The current viewer contract is callback-driven but not fully live: it refreshes the active character and combat list from cached snapshots rather than binding directly to every property change.
+- Character property-only updates and round changes have no dedicated viewer refresh path today, so any UI that depends on them needs an explicit follow-up.
+- Ordering between `CharactersChanged` and `CurrentPlayerChanged` matters because the active character border is rebound from the cached character list.
 
 ## V10 (scale)
 - [ ] Add explicit versioning and deprecation rules for public combat contracts

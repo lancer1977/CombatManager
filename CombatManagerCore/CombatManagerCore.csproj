@@ -285,9 +285,7 @@
     <PackageReference Include="Newtonsoft.Json">
       <Version>12.0.2</Version>
     </PackageReference>
-    <PackageReference Include="PolyhydraGames.CombatManager.Api.Core">
-      <Version>1.0.0.6</Version>
-    </PackageReference>
+    <ProjectReference Include="..\CombatManager.Api.Core\CombatManager.Api.Core.csproj" />
     <PackageReference Include="SharpSerializer">
       <Version>3.0.1</Version>
     </PackageReference>

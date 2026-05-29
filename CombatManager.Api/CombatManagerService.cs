@@ -9,7 +9,7 @@ namespace CombatManager.Api
     {
         public CombatManagerService(string address)
         {
-            RootAddress = address;
+            RootAddress = string.IsNullOrWhiteSpace(address) ? address : address.TrimEnd('/') + "/";
         }
 
         public CombatManagerService()
