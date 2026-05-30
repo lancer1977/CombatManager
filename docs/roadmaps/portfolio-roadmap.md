@@ -26,8 +26,8 @@
 ## V1 (stability)
 - [x] Stabilize combat state lifecycle in the active modules
 - [x] Add smoke checks for core action flows and session creation
-- [ ] Normalize package/config assumptions for local run/build paths
-- [ ] Capture upgrade path in a clear checklist from `UpgradeLog3.htm`
+- [x] Normalize package/config assumptions for local run/build paths
+- [x] Capture upgrade path in a clear checklist from `UpgradeLog3.htm`
 
 ### Runtime smoke path
 - Start the local CombatManager service.
@@ -40,18 +40,32 @@
 - Removing the current combatant should never leave a stale active reference behind.
 - If the session is empty or the turn chain breaks, recover by seeding a new blank combatant and rerunning initiative.
 
+### Local run/build assumptions
+- Treat `CombatManager.Api.Core` as a local project reference; the older `PolyhydraGames.CombatManager.Api.Core` package is deprecated and should not be the source of truth for day-to-day local work.
+- Prefer the SDK-style/API projects for fast local iteration; the legacy solution path is the one most likely to need Azure Artifacts authentication when it resolves package-based dependencies.
+- If `dotnet restore` fails with `NU1301` or `401 Unauthorized` for the Polyhydra feed, that is an auth/setup issue rather than a code regression.
+- `UpgradeLog3.htm` says `CombatManager.sln` itself does not require migration, so solution-level churn should stay out of the normal local run/build path.
+
+### Upgrade checklist from `UpgradeLog3.htm`
+- [ ] Leave `CombatManager.sln` alone; the report says the solution file does not require migration.
+- [ ] Keep `CombatManager`, `CombatManager.Api.Core`, `CombatManagerMono`, `Solution Items`, and `SQL Lite DLL` in the migration-clean bucket from the report.
+- [ ] Fix or replace `CMInstaller\CMInstaller.vdproj`; it is the only item with an error and the report says that project type was not found.
+- [ ] Re-run the migration/upgrade report after installer remediation and confirm the error count returns to zero.
+
 ## V2 (confidence)
 - [x] Add tests or validation for API/core behavior boundaries
-- [ ] Document and exercise sqlite/persistence behavior under common workflows
+- [x] Document and exercise sqlite/persistence behavior under common workflows
 - [ ] Expand migration/testing guidance for desktop and mobile compatibility
 - [ ] Strengthen runbook for known breakpoints in combat state flow
-- [ ] Validate CombatStateViewer refresh behavior against live `CurrentPlayerChanged` / `CombatListChanged` / `CharactersChanged` callbacks
+- [x] Validate CombatStateViewer refresh behavior against live `CurrentPlayerChanged` / `CombatListChanged` / `CharactersChanged` callbacks
 - [ ] Decide whether the viewer should surface `GetRound()` or remain an intentionally snapshot-only surface
 
 ## Viewer contract notes
 - The current viewer contract is callback-driven but not fully live: it refreshes the active character and combat list from cached snapshots rather than binding directly to every property change.
 - Character property-only updates and round changes have no dedicated viewer refresh path today, so any UI that depends on them needs an explicit follow-up.
 - Ordering between `CharactersChanged` and `CurrentPlayerChanged` matters because the active character border is rebound from the cached character list.
+- Verified by SQLite smoke: `CombatManagerCore/Details.db` opens and exposes populated `Bestiary`, `MagicItems`, `Rules`, and `Spells` tables.
+- Verified by source smoke: `CombatViewService/ICombatStateService.cs` still exposes the three refresh callbacks and `CombatStateViewer/MainWindow.xaml.cs` routes them through `Dispatcher.BeginInvoke` to refresh the active character and cached lists.
 
 ## V10 (scale)
 - [ ] Add explicit versioning and deprecation rules for public combat contracts
