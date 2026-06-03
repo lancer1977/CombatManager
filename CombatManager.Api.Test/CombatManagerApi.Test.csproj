@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CombatManager.Api\CombatManager.Api.csproj" />
+    <ProjectReference Include="..\..\rpg-pf-assistant\PolyhydraGames.Rpg.Contracts\PolyhydraGames.Rpg.Contracts.csproj" />
     <PackageReference Include="Microsoft.Data.Sqlite" Version="5.0.7" />
   </ItemGroup>
 

@@ -3,6 +3,23 @@
 [![Build Status](https://img.shields.io/github/actions/workflow/user/lancer1977/CombatManager/.github/workflows/main.yml/badge.svg)](https://github.com/lancer1977/CombatManager/actions)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
+## Tags
+
+- rpg
+- rpg-combat-manager
+- tabletop
+- dotnet
+- combat
+- manager
+
+## Related Repos
+
+- [`rpg-pf-assistant`](../rpg-pf-assistant/)
+- [`rpg-gm-tools`](../rpg-gm-tools/)
+- [`rpg-d20`](../rpg-d20/)
+- [`rpg-StarFinder`](../rpg-StarFinder/)
+- [`rpg-PathfinderLoot`](../rpg-PathfinderLoot/)
+
 ## 🚀 Overview
 This project appears to be a combat management system, likely for game development or related applications. It contains multiple Solution (`.sln`) files, suggesting it might support different platforms or configurations (e.g., Droid, Mono, Win).
 
