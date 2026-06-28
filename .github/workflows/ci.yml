@@ -2,58 +2,22 @@ name: CI
 
 on:
   push:
-    branches: [ "**" ]
+    branches:
+      - main
+      - master
   pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
 
 jobs:
-  build_test_linux:
-    name: Build + Test (Linux)
+  validate:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v4
-
-      # This repo contains a netcoreapp3.1 test project and a net5.0 console project.
-      # We install both SDKs to keep `dotnet test` / `dotnet build` happy.
-      - name: Setup .NET SDKs
-        uses: actions/setup-dotnet@v4
+      - uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: |
-            3.1.x
-            5.0.x
-
-      - name: Build (Linux projects only)
-        run: |
-          dotnet --info
-          dotnet build CombatManager.Api.Core/CombatManager.Api.Core.csproj -c Release
-          dotnet build CombatManager.Api/CombatManager.Api.csproj -c Release
-          dotnet build CombatManager.Websocket.Console/CombatManager.Websocket.Console.csproj -c Release
-
-      - name: Test
-        run: |
-          dotnet test CombatManager.Api.Test/CombatManagerApi.Test.csproj -c Release --verbosity normal
-
-  build_windows:
-    name: Build (Windows full solution)
-    runs-on: windows-latest
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Setup .NET SDKs
-        uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: |
-            3.1.x
-            5.0.x
-
-      - name: Setup MSBuild
-        uses: microsoft/setup-msbuild@v2
-
-      - name: Build solution
-        run: |
-          msbuild CombatManager.sln /p:Configuration=Release /m
-
-      - name: Test
-        run: |
-          dotnet test CombatManager.Api.Test/CombatManagerApi.Test.csproj -c Release --verbosity normal
+          dotnet-version: 10.0.x
+      - name: Validate Linux-safe API lane
+        run: bash scripts/validate.sh

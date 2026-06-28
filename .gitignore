@@ -146,6 +146,7 @@ coverage/
 CoverageResults/
 TestResults/
 node_modules/
+.devstudio/runtime/
 
 # Logs / temp
 *.log

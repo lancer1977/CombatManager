@@ -20,47 +20,59 @@
 - [`rpg-StarFinder`](../rpg-StarFinder/)
 - [`rpg-PathfinderLoot`](../rpg-PathfinderLoot/)
 
-## 🚀 Overview
-This project appears to be a combat management system, likely for game development or related applications. It contains multiple Solution (`.sln`) files, suggesting it might support different platforms or configurations (e.g., Droid, Mono, Win).
+## Overview
 
-## ✨ Key Features
-*   **Multi-Platform Support**: Indicated by multiple `.sln` files suggesting support for various environments.
-*   **Combat Logic**: Core functionality for managing combat scenarios.
+CombatManager is a legacy tabletop combat manager workspace. The repo contains
+older WPF, Xamarin, Mono, and .NET Framework application surfaces plus a smaller
+API/test lane that can be validated on a modern Linux workstation.
 
-## 🏗️ Architecture
-The specific architecture is unclear without project files, but the presence of multiple `.sln` files points towards a modular or multi-target design.
+## Key Features
 
-### 🛠️ Technology Stack
-*   **Language**: Likely C# (due to `.sln` files), but further investigation is needed as `.csproj` files were not found.
+- Combat state API contracts and client service.
+- Remote character, monster, spell, feat, and initiative DTOs.
+- Websocket console bridge.
+- Legacy desktop/mobile solution files for the original Combat Manager app.
 
-## 🚦 Getting Started
+## Architecture
+
+- `CombatManager.Api.Core/` contains shared request and data contracts.
+- `CombatManager.Api/` contains API service/client behavior.
+- `CombatManager.Api.Test/` contains fixture-backed NUnit smoke and dependency-boundary tests.
+- `CombatManager.Websocket.Console/` contains the console bridge.
+- `CombatManager.sln`, `CombatManagerWin.sln`, and mobile/Mono solution files are legacy Windows-capable surfaces.
+
+## Technology Stack
+
+- C# / .NET.
+- NUnit for the Linux-safe API test lane.
+- WPF, Xamarin, Mono, and .NET Framework for legacy application surfaces.
+
+## Getting Started
 
 ### Prerequisites
-*   Visual Studio or equivalent IDE capable of handling C# solutions.
-*   .NET SDK (version TBD based on project requirements).
+- .NET SDK 10 for the default validation lane.
+- Windows with Visual Studio/MSBuild for the full legacy desktop/mobile solution lane.
 
-### Installation
+### Validation
 ```bash
-# Assuming a standard C# project structure, though .csproj files were not found.
-# Please refer to specific project documentation or files if available.
-# git clone git@github.com:lancer1977/CombatManager.git
-# cd CombatManager
-# Build command may vary; check for .sln files in root.
-# Example: dotnet build CombatManager.sln
+bash scripts/validate.sh
 ```
 
-## 📖 Usage & Education
-Detailed usage instructions are not available without further project introspection.
+The default validation lane runs API tests, builds the websocket console, checks
+package vulnerabilities for `CombatAPI.sln`, and runs DevStudio validation when
+available.
 
-## 🌐 Deployment & Hosting
-*   **Repo**: [CombatManager](https://github.com/lancer1977/CombatManager)
-*   **Hosting Platform**: Likely GitHub.
+## Documentation
 
-## 📦 Packages & Dependencies
-*   Specific dependencies are unknown due to the absence of `.csproj` files.
+- [Project Atlas](./docs/project-atlas/README.md)
+- [Code Health](./code_health.md)
+- [Architecture Notes](./ARCHITECTURE.md)
+
+## Legacy Validation
+
+The full `CombatManager.sln` includes Windows desktop/mobile projects and is not
+the Linux CI default. Validate it on a Windows runner or workstation with the
+matching Visual Studio/MSBuild workloads.
 
 ## 🔗 Related Projects
 *   [CombatAPI](../CombatAPI) (Inferred from solution files)
-
----
-*This README was generated based on limited file discovery.*

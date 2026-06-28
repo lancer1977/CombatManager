@@ -6,7 +6,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CombatManager.Api.Core\CombatManager.Api.Core.csproj" />
-    <ProjectReference Include="..\..\rpg-pf-assistant\PolyhydraGames.Rpg.Contracts\PolyhydraGames.Rpg.Contracts.csproj" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
 
