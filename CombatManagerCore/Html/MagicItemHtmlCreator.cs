@@ -11,7 +11,7 @@ namespace CombatManager.Html
         {
         }
         
-        public static String CreateHtml(MagicItem item, bool showTitle = true, bool completepage = true, string css = null)
+        public static string CreateHtml(MagicItem item, bool showTitle = true, bool completepage = true, string css = null)
         {
 
             StringBuilder blocks = new StringBuilder();
@@ -41,11 +41,11 @@ namespace CombatManager.Html
 
 
 
-            if (!String.IsNullOrEmpty(item.DescHTML) || !String.IsNullOrEmpty(item.Description))
+            if (!string.IsNullOrEmpty(item.DescHTML) || !string.IsNullOrEmpty(item.Description))
             {
                 blocks.CreateSectionHeader("DESCRIPTION");
 
-                if (!String.IsNullOrEmpty(item.DescHTML) && item.DescHTML != "NULL")
+                if (!string.IsNullOrEmpty(item.DescHTML) && item.DescHTML != "NULL")
                 {
 
                     blocks.AppendOpenTag("p", "description");
@@ -79,7 +79,7 @@ namespace CombatManager.Html
 
             }
 
-            if (!String.IsNullOrEmpty(item.Destruction) && item.Destruction != "NULL")
+            if (!string.IsNullOrEmpty(item.Destruction) && item.Destruction != "NULL")
             {
                 blocks.CreateSectionHeader("DESTRUCTION");
 

@@ -277,7 +277,7 @@ namespace CombatManager
         }
 
         [DataMember]
-        public String Resist
+        public string Resist
         {
             get
             {
@@ -290,7 +290,7 @@ namespace CombatManager
             }
         }
         [DataMember]
-        public String Immune
+        public string Immune
         {
             get
             {
@@ -303,7 +303,7 @@ namespace CombatManager
             }
         }
         [DataMember]
-        public String Weaknesses
+        public string Weaknesses
         {
             get
             {
@@ -317,7 +317,7 @@ namespace CombatManager
         }
 
         [DataMember]
-        public String Source
+        public string Source
         {
             get
             {
@@ -567,7 +567,7 @@ namespace CombatManager
         public ActiveCondition FindCondition(string name)
         {
             return ActiveConditions.FirstOrDefault
-                (a => String.Compare(a.Condition.Name, name, true) == 0);
+                (a => string.Compare(a.Condition.Name, name, true) == 0);
         }
 
         public void AddCondition(ActiveCondition c)

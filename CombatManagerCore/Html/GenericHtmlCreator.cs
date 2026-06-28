@@ -33,7 +33,7 @@ namespace CombatManager.Html
 		{
 		}
 
-        public static string CreateHtml(String title, string text)
+        public static string CreateHtml(string title, string text)
         {
         	StringBuilder blocks = new StringBuilder();
 			blocks.CreateHtmlHeader();

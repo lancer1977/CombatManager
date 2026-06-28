@@ -1,4 +1,4 @@
-/*
+﻿/*
  *  ExportDialog.xaml.cs
  *
  *  Copyright (C) 2010-2012 Kyle Olson, kyle@kyleolson.com
@@ -19,18 +19,10 @@
  *
  */
 
-﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using System.ComponentModel;
 using System.Collections.ObjectModel;
 
@@ -255,13 +247,13 @@ namespace CombatManager
         private void Export()
         {
 
-            Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog();
+            var dlg = new Microsoft.Win32.SaveFileDialog();
 
             dlg.Filter = exportFileFilter;
 
             if (dlg.ShowDialog() == true)
             {
-                ExportData d = new ExportData();
+                var d = new ExportData();
                 d.Monsters.AddRange(from x in monstersList where x.IsSelected select (Monster)x.Item);
                 foreach (var source in d.Monsters.Where(source => source.SkillsParsed))
                 {
@@ -278,24 +270,24 @@ namespace CombatManager
         private void Import()
         {
 
-            foreach (Monster m in from x in monstersList where x.IsSelected select (Monster)x.Item)
+            foreach (var m in from x in monstersList where x.IsSelected select (Monster)x.Item)
             {
                 m.DBLoaderID = 0;
                 MonsterDB.DB.AddMonster(m);
                 Monster.Monsters.Add(m);
             }
-            foreach (Spell s in from x in spellsList where x.IsSelected select (Spell)x.Item)
+            foreach (var s in from x in spellsList where x.IsSelected select (Spell)x.Item)
             {
                 s.DBLoaderID = 0;
                 Spell.AddCustomSpell(s);
             }
-            foreach (Feat s in from x in featsList where x.IsSelected select (Feat)x.Item)
+            foreach (var s in from x in featsList where x.IsSelected select (Feat)x.Item)
             {
                 s.DBLoaderID = 0;
                 Feat.AddCustomFeat(s);
             }
-            bool loadedConditions = false;
-            foreach (Condition s in from x in conditionsList where x.IsSelected select (Condition)x.Item)
+            var loadedConditions = false;
+            foreach (var s in from x in conditionsList where x.IsSelected select (Condition)x.Item)
             {
                 Condition.CustomConditions.Add(s);
                 loadedConditions = true;
@@ -343,9 +335,9 @@ namespace CombatManager
 
         private void ItemCheckBox_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-        	ExportItem item = (ExportItem)((FrameworkElement)sender).DataContext;
+        	var item = (ExportItem)((FrameworkElement)sender).DataContext;
 
-            CheckBox clickedBox = (CheckBox)sender;
+            var clickedBox = (CheckBox)sender;
             
             ListBox listBox = null;
 			ObservableCollection<ExportItem> view  = null;
@@ -381,9 +373,9 @@ namespace CombatManager
             }
             System.Diagnostics.Debug.Assert(view != null);
            
-			bool selected = false;
-			bool unselected = false;
-            foreach (ExportItem x in view)
+			var selected = false;
+			var unselected = false;
+            foreach (var x in view)
 			{
                 if (MatchesFilter(GetExportItemName(x), textbox))
                 {

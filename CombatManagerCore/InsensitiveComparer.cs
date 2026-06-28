@@ -1,4 +1,4 @@
-/*
+﻿/*
  *  InsensitiveComparer.cs
  *
  *  Copyright (C) 2010-2012 Kyle Olson, kyle@kyleolson.com
@@ -19,7 +19,7 @@
  *
  */
 
-﻿using System;
+ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -31,7 +31,7 @@ namespace CombatManager
     {
         public bool Equals(string a, string b)
         {
-            return String.Compare(a, b, true) == 0;
+            return string.Compare(a, b, true) == 0;
         }
 
         public int GetHashCode(string a)
@@ -44,7 +44,7 @@ namespace CombatManager
     {
         public int Compare(string a, string b)
         {
-            return String.Compare(a, b, true);
+            return string.Compare(a, b, true);
         }
     }
 }

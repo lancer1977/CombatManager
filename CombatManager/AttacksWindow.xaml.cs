@@ -1,4 +1,4 @@
-/*
+﻿/*
  *  AttacksWindow.xaml.cs
  *
  *  Copyright (C) 2010-2012 Kyle Olson, kyle@kyleolson.com
@@ -19,20 +19,14 @@
  *
  */
 
-﻿using System;
+ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Windows;
+ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+ using System.Windows.Input;
 
 namespace CombatManager
 {
@@ -73,7 +67,7 @@ namespace CombatManager
                     {
                         _Checked = value;
 
-                        SortedDictionary<string, string> abilities = WeaponItem.SpecialAbilitySet;
+                        var abilities = WeaponItem.SpecialAbilitySet;
 
                         if (_Checked)
                         {
@@ -164,8 +158,8 @@ namespace CombatManager
         {
             if (_Monster != null)
             {
-                ObservableCollection<AttackSet> sets = new ObservableCollection<AttackSet>(_Monster.MeleeAttacks);
-                ObservableCollection<Attack> ranged = new ObservableCollection<Attack>(_Monster.RangedAttacks);
+                var sets = new ObservableCollection<AttackSet>(_Monster.MeleeAttacks);
+                var ranged = new ObservableCollection<Attack>(_Monster.RangedAttacks);
                 attacks = new CharacterAttacks(sets, ranged);
 				
 				characterAttacks = attacks;
@@ -197,7 +191,7 @@ namespace CombatManager
 
         private void DeleteButton_Click(object sender, RoutedEventArgs e)
         {
-            WeaponItem item = (WeaponItem)((Button)sender).DataContext;
+            var item = (WeaponItem)((Button)sender).DataContext;
 
 
 
@@ -215,13 +209,13 @@ namespace CombatManager
             }
             else if (!item.Weapon.Natural)
             {
-                List<WeaponItem> list = (List<WeaponItem>)meleeView.CurrentItem;
+                var list = (List<WeaponItem>)meleeView.CurrentItem;
 
                 list.Remove(item);
 
-                int i = 0;
+                var i = 0;
 
-                foreach (WeaponItem listItem in list)
+                foreach (var listItem in list)
                 {
                     listItem.MainHand = (i == 0);
                     i++;
@@ -236,8 +230,8 @@ namespace CombatManager
 
         private void MagicBonusComboBox_Loaded(object sender, System.Windows.RoutedEventArgs e)
         {
-            ComboBox box = (ComboBox)sender;
-            WeaponItem item = (WeaponItem)box.DataContext;
+            var box = (ComboBox)sender;
+            var item = (WeaponItem)box.DataContext;
             item.PropertyChanged += delegate(object send, PropertyChangedEventArgs eChanged)
             {
                 if ((eChanged.PropertyName == "MagicBonus") || (eChanged.PropertyName == "Masterwork") || (eChanged.PropertyName == "Broken"))
@@ -284,8 +278,8 @@ namespace CombatManager
 
         private void MagicBonusComboBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
-            ComboBox box = (ComboBox)sender;
-            WeaponItem item = (WeaponItem)box.DataContext;
+            var box = (ComboBox)sender;
+            var item = (WeaponItem)box.DataContext;
 
             if (e.RemovedItems.Count > 0)
             {
@@ -338,19 +332,19 @@ namespace CombatManager
 
         private void SpecialAbilitesListBox_Loaded(object sender, System.Windows.RoutedEventArgs e)
         {
-        	ListBox box = (ListBox)sender;
+        	var box = (ListBox)sender;
             if (box.DataContext.GetType() == typeof(WeaponItem))
             {
-                WeaponItem item = (WeaponItem)box.DataContext;
+                var item = (WeaponItem)box.DataContext;
 
-                List<WeaponSpecialAbilityItem> list = new List<WeaponSpecialAbilityItem>();
+                var list = new List<WeaponSpecialAbilityItem>();
 
                 if (item.Weapon.Ranged)
                 {
-                    foreach (WeaponSpecialAbility ability in WeaponSpecialAbility.RangedAbilities)
+                    foreach (var ability in WeaponSpecialAbility.RangedAbilities)
                     {
 
-                        bool contains = false;
+                        var contains = false;
 
                         if (item.SpecialAbilitySet.ContainsKey(ability.Name))
                         {
@@ -370,9 +364,9 @@ namespace CombatManager
                 }
                 else
                 {
-                    foreach (WeaponSpecialAbility ability in WeaponSpecialAbility.MeleeAbilities)
+                    foreach (var ability in WeaponSpecialAbility.MeleeAbilities)
                     {
-                        bool contains = false;
+                        var contains = false;
 
                         if (item.SpecialAbilitySet.ContainsKey(ability.Name))
                         {
@@ -404,11 +398,11 @@ namespace CombatManager
         private void AddWeaponButton_Click(object sender, RoutedEventArgs e)
         {
 			
-            Button button = (Button)sender;
+            var button = (Button)sender;
 			
-            List<WeaponItem> items = (List<WeaponItem>)button.DataContext;
+            var items = (List<WeaponItem>)button.DataContext;
 
-            WeaponItem item = ShowMeleeWeaponDialog(items, true, false, false);
+            var item = ShowMeleeWeaponDialog(items, true, false, false);
 			
 			
 			if (item != null)
@@ -430,7 +424,7 @@ namespace CombatManager
 
         private WeaponItem ShowMeleeWeaponDialog(IEnumerable<WeaponItem> items, bool melee, bool ranged, bool natural)
         {
-            WeaponSelectWindow wind = new WeaponSelectWindow();
+            var wind = new WeaponSelectWindow();
             wind.Owner = this;
             wind.Melee = melee;
 			wind.Ranged = ranged;
@@ -482,9 +476,9 @@ namespace CombatManager
 
         private int CountHands(IEnumerable<WeaponItem> items)
         {
-            int count = 0;
+            var count = 0;
 
-            foreach (WeaponItem item in items)
+            foreach (var item in items)
             {
                 count += item.Weapon.HandsUsed;
             }
@@ -495,9 +489,9 @@ namespace CombatManager
 
         private void AddWeaponButton_Loaded(object sender, System.Windows.RoutedEventArgs e)
         {
-			Button button = (Button)sender;
+			var button = (Button)sender;
 
-            List<WeaponItem> items = (List<WeaponItem>)button.DataContext;
+            var items = (List<WeaponItem>)button.DataContext;
 			
 
 			button.IsEnabled = (characterAttacks.Hands > CountHands(items))?true:false;
@@ -506,12 +500,12 @@ namespace CombatManager
         private void AddWeaponButton_DataContextChanged(object sender, System.Windows.DependencyPropertyChangedEventArgs e)
         {
         
-			Button button = (Button)sender;
+			var button = (Button)sender;
 
             if (button.DataContext != null && button.DataContext.GetType() == typeof(List<WeaponItem>))
             {
 
-                List<WeaponItem> items = (List<WeaponItem>)button.DataContext;
+                var items = (List<WeaponItem>)button.DataContext;
 
                 button.IsEnabled = (characterAttacks.Hands > CountHands(items)) ? true : false;
             }
@@ -540,16 +534,16 @@ namespace CombatManager
 
         private void Button_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-			Button button = (Button)sender;
+			var button = (Button)sender;
 			
 
-            WeaponItem item = ShowMeleeWeaponDialog(attacks.RangedWeapons, false, false, true);
+            var item = ShowMeleeWeaponDialog(attacks.RangedWeapons, false, false, true);
 			
 			
 			if (item != null)
 			{
-                bool bAdded = false;
-                foreach (WeaponItem wi in attacks.NaturalAttacks)
+                var bAdded = false;
+                foreach (var wi in attacks.NaturalAttacks)
                 {
                     if (String.Compare(wi.Name, item.Name, true) == 0)
                     {
@@ -573,7 +567,7 @@ namespace CombatManager
 
         private void RemoveSetButton_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            List<WeaponItem> items = (List<WeaponItem>)MeleeTabControl.SelectedItem;
+            var items = (List<WeaponItem>)MeleeTabControl.SelectedItem;
 
 
 
@@ -592,10 +586,10 @@ namespace CombatManager
         private void AddRangedWeaponButton_Click(object sender, System.Windows.RoutedEventArgs e)
         {
 			
-            Button button = (Button)sender;
+            var button = (Button)sender;
 			
 
-            WeaponItem item = ShowMeleeWeaponDialog(attacks.RangedWeapons, false, true, false);
+            var item = ShowMeleeWeaponDialog(attacks.RangedWeapons, false, true, false);
 			
 			
 			if (item != null)
@@ -622,18 +616,18 @@ namespace CombatManager
 
         private void TextBlock_Loaded(object sender, System.Windows.RoutedEventArgs e)
         {
-            TextBlock block = (TextBlock)sender;
+            var block = (TextBlock)sender;
 
-            List<WeaponItem> list = (List<WeaponItem>)block.DataContext;
+            var list = (List<WeaponItem>)block.DataContext;
 
-            int index = characterAttacks.MeleeWeaponSets.IndexOf(list);
+            var index = characterAttacks.MeleeWeaponSets.IndexOf(list);
 
             block.Text = "Set #" + (index + 1);
         }
 
         private void EditNaturalAttackButton_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            NaturalAttackWindow window = new NaturalAttackWindow();
+            var window = new NaturalAttackWindow();
             window.WeaponItem = (WeaponItem)((Button)sender).DataContext;
             window.Monster = this._Monster;
             window.Owner = this;
@@ -647,7 +641,7 @@ namespace CombatManager
         private void AddNaturalAttackButton_Click(object sender, System.Windows.RoutedEventArgs e)
         {
 
-            NaturalAttackWindow window = new NaturalAttackWindow();
+            var window = new NaturalAttackWindow();
             window.Monster = this._Monster;
             window.Owner = this;
             if (window.ShowDialog() == true)
@@ -660,8 +654,8 @@ namespace CombatManager
 
 		private void Attack_MouseDown(object sender, MouseButtonEventArgs e)
 		{
-			Image image = sender as Image;
-			WeaponItem item = image.DataContext as WeaponItem;
+			var image = sender as Image;
+			var item = image.DataContext as WeaponItem;
 			if (item != null && item.Weapon.Hands.Equals("One-Handed", StringComparison.InvariantCultureIgnoreCase))
 			{
 				item.TwoHanded = !item.TwoHanded;

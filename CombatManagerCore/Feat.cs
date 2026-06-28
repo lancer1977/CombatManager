@@ -1,4 +1,4 @@
-/*
+﻿/*
  *  Feat.cs
  *
  *  Copyright (C) 2010-2012 Kyle Olson, kyle@kyleolson.com
@@ -19,7 +19,7 @@
  *
  */
 
-﻿using System;
+ using System;
 using System.ComponentModel;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -39,27 +39,27 @@ namespace CombatManager
     {
 
 
-        private String _Name;
-        private String _AltName;
-        private String _Type;
-        private String _Prerequistites;
-        private String _Summary;
-        private String _Source;
-        private String _System;
-        private String _License;
-        private String _URL;
-        private String _Detail; 
-        private String _Benefit;
-        private String _Normal;
-        private String _Special;
-        private SortedDictionary<String, String> _Types;
+        private string _Name;
+        private string _AltName;
+        private string _Type;
+        private string _Prerequistites;
+        private string _Summary;
+        private string _Source;
+        private string _System;
+        private string _License;
+        private string _URL;
+        private string _Detail; 
+        private string _Benefit;
+        private string _Normal;
+        private string _Special;
+        private SortedDictionary<string, string> _Types;
 
         private bool _DetailParsed;
 
 
 
-        private static Dictionary<String, Feat> featMap;
-        private static Dictionary<String, String> altFeatMap;
+        private static Dictionary<string, Feat> featMap;
+        private static Dictionary<string, string> altFeatMap;
         private static SortedDictionary<string, string> types;
         private static ObservableCollection<Feat> feats;
 
@@ -71,7 +71,7 @@ namespace CombatManager
 
         public Feat()
         {
-            _Types = new SortedDictionary<String, String>();
+            _Types = new SortedDictionary<string, string>();
             _DetailParsed = false;
         }
 
@@ -128,7 +128,7 @@ namespace CombatManager
 
             featMap = new Dictionary<string, Feat>();
             altFeatMap = new Dictionary<string, string>();
-            types = new SortedDictionary<String, String>();
+            types = new SortedDictionary<string, string>();
             _FeatsByDetailsID = new Dictionary<int, Feat>();
 
 
@@ -206,7 +206,7 @@ namespace CombatManager
         }
 
 
-        public static Dictionary<String, Feat> FeatMap
+        public static Dictionary<string, Feat> FeatMap
         {
             get
             {
@@ -260,7 +260,7 @@ namespace CombatManager
             return s != null;
         }
 
-        public static Dictionary<String, String> AltFeatMap
+        public static Dictionary<string, string> AltFeatMap
         {
             get
             {
@@ -283,7 +283,7 @@ namespace CombatManager
 
 
 
-        public String Name
+        public string Name
         {
             get { return _Name; }
             set
@@ -295,7 +295,7 @@ namespace CombatManager
                 }
             }
         }
-        public String AltName
+        public string AltName
         {
             get { return _AltName; }
             set
@@ -307,7 +307,7 @@ namespace CombatManager
                 }
             }
         }
-        public String Type
+        public string Type
         {
             get { return _Type; }
             set
@@ -327,7 +327,7 @@ namespace CombatManager
                 }
             }
         }
-        public String Prerequistites
+        public string Prerequistites
         {
             get { return _Prerequistites; }
             set
@@ -339,7 +339,7 @@ namespace CombatManager
                 }
             }
         }
-        public String Summary
+        public string Summary
         {
             get { return _Summary; }
             set
@@ -351,7 +351,7 @@ namespace CombatManager
                 }
             }
         }
-        public String Source
+        public string Source
         {
             get { return _Source; }
             set
@@ -363,7 +363,7 @@ namespace CombatManager
                 }
             }
         }
-        public String System
+        public string System
         {
             get { return _System; }
             set
@@ -375,7 +375,7 @@ namespace CombatManager
                 }
             }
         }
-        public String License
+        public string License
         {
             get { return _License; }
             set
@@ -388,7 +388,7 @@ namespace CombatManager
             }
         }
 
-        public String URL
+        public string URL
         {
             get { return _URL; }
             set
@@ -401,7 +401,7 @@ namespace CombatManager
             }
         }
 
-        public String Detail
+        public string Detail
         {
             get { return _Detail; }
             set
@@ -413,7 +413,7 @@ namespace CombatManager
                 }
             }
         }
-        public String Benefit
+        public string Benefit
         {
             get 
             {
@@ -433,7 +433,7 @@ namespace CombatManager
                 }
             }
         }
-        public String Normal
+        public string Normal
         {
             get
             {
@@ -452,7 +452,7 @@ namespace CombatManager
                 }
             }
         }
-        public String Special
+        public string Special
         {
             get
             {
@@ -493,7 +493,7 @@ namespace CombatManager
 
 
         [XmlIgnore]
-        public ICollection<String> Types
+        public ICollection<string> Types
         {
             get
             {
@@ -521,7 +521,7 @@ namespace CombatManager
                 {
                     Match matchStart;
 
-                    String detailCheck = _Detail;
+                    string detailCheck = _Detail;
 
 
 
@@ -550,14 +550,14 @@ namespace CombatManager
             }
         }
 
-        private Regex CreateHeaderRegex(String item)
+        private Regex CreateHeaderRegex(string item)
         {
             string spanTag = "<span(.|\n|\t)*?>";
 
             return new Regex("(<b>|" + spanTag + ") *" + item + "s? *:? *(</b>|</span>|" + spanTag + ")+:?", RegexOptions.IgnoreCase);
         }
 
-        private String FinishItem(Match matchStart, string detailCheck)
+        private string FinishItem(Match matchStart, string detailCheck)
         {
             int start = matchStart.Index + matchStart.Length;
 

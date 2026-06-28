@@ -1,4 +1,4 @@
-/*
+﻿/*
  *  OGLWindow.xaml.cs
  *
  *  Copyright (C) 2010-2012 Kyle Olson, kyle@kyleolson.com
@@ -19,19 +19,10 @@
  *
  */
 
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using System.IO;
+ using System;
+ using System.Windows;
+ using System.Windows.Documents;
+ using System.IO;
 
 namespace CombatManager
 {
@@ -44,12 +35,12 @@ namespace CombatManager
         {
             InitializeComponent();
 
-            using (Stream textStream = Application.GetResourceStream(new Uri("pack://application:,,,/ogl.txt")).Stream)
+            using (var textStream = Application.GetResourceStream(new Uri("pack://application:,,,/ogl.txt")).Stream)
             {
 
-                StreamReader reader = new StreamReader(textStream);
+                var reader = new StreamReader(textStream);
 
-                string text = reader.ReadToEnd();
+                var text = reader.ReadToEnd();
 
 
 

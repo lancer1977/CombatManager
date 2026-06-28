@@ -1,4 +1,4 @@
-/*
+﻿/*
  *  ArmorWeaponSpecialChart.cs
  *
  *  Copyright (C) 2010-2012 Kyle Olson, kyle@kyleolson.com
@@ -19,7 +19,7 @@
  *
  */
 
-﻿using System;
+ using System;
 using System.ComponentModel;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,13 +37,13 @@ namespace CombatManager
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private String _Minor;
-        private String _Medium;
-        private String _Major;
-        private String _Name;
-        private String _Cost;
-        private String _Bonus;
-        private String _Type;
+        private string _Minor;
+        private string _Medium;
+        private string _Major;
+        private string _Name;
+        private string _Cost;
+        private string _Bonus;
+        private string _Type;
 
         
         private static List<ArmorWeaponSpecialChart> _Chart;
@@ -53,7 +53,7 @@ namespace CombatManager
             _Chart = XmlListLoader<ArmorWeaponSpecialChart>.Load("ArmorWeaponSpecialChart.xml");
         }
 
-        public String Minor
+        public string Minor
         {
             get { return _Minor; }
             set
@@ -65,7 +65,7 @@ namespace CombatManager
                 }
             }
         }
-        public String Medium
+        public string Medium
         {
             get { return _Medium; }
             set
@@ -77,7 +77,7 @@ namespace CombatManager
                 }
             }
         }
-        public String Major
+        public string Major
         {
             get { return _Major; }
             set
@@ -89,7 +89,7 @@ namespace CombatManager
                 }
             }
         }
-        public String Name
+        public string Name
         {
             get { return _Name; }
             set
@@ -101,7 +101,7 @@ namespace CombatManager
                 }
             }
         }
-        public String Cost
+        public string Cost
         {
             get { return _Cost; }
             set
@@ -113,7 +113,7 @@ namespace CombatManager
                 }
             }
         }
-        public String Bonus
+        public string Bonus
         {
             get { return _Bonus; }
             set
@@ -125,7 +125,7 @@ namespace CombatManager
                 }
             }
         }
-        public String Type
+        public string Type
         {
             get { return _Type; }
             set

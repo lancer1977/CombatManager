@@ -1,4 +1,4 @@
-/*
+﻿/*
  *  SizeMods.cs
  *
  *  Copyright (C) 2010-2012 Kyle Olson, kyle@kyleolson.com
@@ -19,7 +19,7 @@
  *
  */
 
-﻿using System;
+ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -42,12 +42,12 @@ namespace CombatManager
     public class SizeMods
     {
         private MonsterSize _Size;
-        private String _Name;
+        private string _Name;
         private int _Attack;
         private int _Combat;
         private int _Fly;
         private int _Stealth;
-        private String _Space;
+        private string _Space;
         private int _Strength;
         private int _Dexterity;
         private int _Constitution;
@@ -57,7 +57,7 @@ namespace CombatManager
 
 
 
-        private static Dictionary<String, MonsterSize> nameSizeDictionary;
+        private static Dictionary<string, MonsterSize> nameSizeDictionary;
         private static Dictionary<MonsterSize, SizeMods> sizeModsDictionary;
 
 
@@ -157,7 +157,7 @@ namespace CombatManager
 
         
 
-        public SizeMods(MonsterSize size, String name, int attack, int combat, int fly, int stealth, string space,
+        public SizeMods(MonsterSize size, string name, int attack, int combat, int fly, int stealth, string space,
             int strength, int dexterity, int constitution, int naturalArmor)
         {
             _Size = size;
@@ -179,7 +179,7 @@ namespace CombatManager
         {
             get { return _Size; }
         }
-        public String Name
+        public string Name
         {
             get { return _Name; }
             

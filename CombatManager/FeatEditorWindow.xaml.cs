@@ -1,4 +1,4 @@
-/*
+﻿/*
  *  FeatEditorWindow.xaml.cs
  *
  *  Copyright (C) 2010-2012 Kyle Olson, kyle@kyleolson.com
@@ -19,18 +19,11 @@
  *
  */
 
-﻿using System;
+ using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Windows;
+ using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace CombatManager
 {
@@ -71,11 +64,11 @@ namespace CombatManager
 
 				loaded = false;
                 typeItems = new List<FeatEditorTypeItem>();
-                foreach (string type in Feat.FeatTypes)
+                foreach (var type in Feat.FeatTypes)
                 {
                     if (String.Compare(type, "General", true) != 0)
                     {
-                        FeatEditorTypeItem item = new FeatEditorTypeItem();
+                        var item = new FeatEditorTypeItem();
                         item.Type = type;
                         if (Feat.Types.Contains(type, new InsensitiveEqualityCompararer()))
                         {
@@ -95,9 +88,9 @@ namespace CombatManager
         {
             if (typeItems != null && _Feat != null)
             {
-                string types = "";
+                var types = "";
 
-                foreach (FeatEditorTypeItem item in typeItems)
+                foreach (var item in typeItems)
                 {
                     if (item.Selected)
                     {

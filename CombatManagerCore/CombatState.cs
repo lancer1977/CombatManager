@@ -1,4 +1,4 @@
-/*
+﻿/*
  *  CombatState.cs
  *
  *  Copyright (C) 2010-2012 Kyle Olson, kyle@kyleolson.com
@@ -19,7 +19,7 @@
  *
  */
 
-﻿using System;
+ using System;
 using System.ComponentModel;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,29 +33,6 @@ using System.Timers;
 
 namespace CombatManager
 {
-
-    [DataContract]
-    public class SimpleCombatListItem
-    {
-        [DataMember]
-        public Guid ID {get; set;}
-
-        [DataMember]
-        public List<Guid> Followers { get; set; }
-    }
-
-    public class CombatStateCharacterEventArgs
-    {
-        public Character Character { get; set; }
-        public string Property { get; set; }
-    }
-
-    public delegate void CombatStateNotificationEvent(object sender, CombatStateNotification notification);
-
-
-    public delegate void CombatStateCharacterEvent(object sender, CombatStateCharacterEventArgs e);
-
-
     [DataContract]
     public class CombatState : INotifyPropertyChanged
     {
@@ -839,6 +816,16 @@ namespace CombatManager
 
         public void MoveNext()
         {
+            if (CombatList.Count == 0)
+            {
+                if (CurrentCharacter != null)
+                {
+                    CurrentCharacter = null;
+                }
+
+                return;
+            }
+
             UpdateAllConditions();
 
             int next = CombatList.IndexOf(CurrentCharacter) + 1;
@@ -893,11 +880,11 @@ namespace CombatManager
 			
 			if (character != null)
 			{
-	            if (character.IsReadying)
+            if (character.IsReadying)
 	            {
 	                character.IsReadying = false;
 	            }
-	            if (character.IsDelaying)
+            if (character.IsDelaying)
 	            {
 	                character.IsDelaying = false;
 	            }
@@ -908,16 +895,23 @@ namespace CombatManager
 
         public void MovePrevious()
         {
+            if (CombatList.Count == 0)
+            {
+                if (CurrentCharacter != null)
+                {
+                    CurrentCharacter = null;
+                }
+
+                return;
+            }
+
             UpdateAllConditions();
 
-
             int next = CombatList.IndexOf(CurrentCharacter) - 1;
-
 
             if (next < 0)
             {
                 next = CombatList.Count - 1;
-
 
                 if (Round == null)
                 {
@@ -935,7 +929,7 @@ namespace CombatManager
 
         private void MoveCurrentCharacterToIndex(int next)
         {
-            if (CombatList.Count > next)
+            if (next >= 0 && CombatList.Count > next)
             {
                 CurrentCharacter = CombatList[next];
             }
@@ -1395,16 +1389,33 @@ namespace CombatManager
             RegroupFollowers(character);
             UnlinkLeader(character);
 
-            if (_CurrentCharacter == character)
-            {
-                MoveNext();
-            }
+            bool removingCurrent = _CurrentCharacter == character;
+            int currentIndex = removingCurrent ? CombatList.IndexOf(character) : -1;
 
             sortingList = true;
             Characters.Remove(character);
             _UnfilteredCombatList.Remove(character);
             FilterList();
             sortingList = false;
+
+            if (removingCurrent)
+            {
+                if (CombatList.Count == 0)
+                {
+                    CurrentCharacter = null;
+                }
+                else
+                {
+                    if (currentIndex < 0 || currentIndex >= CombatList.Count)
+                    {
+                        currentIndex = 0;
+                    }
+
+                    CurrentCharacter = CombatList[currentIndex];
+                }
+
+                HandleTurnChanged();
+            }
             
             CharacterSortCompleted?.Invoke(this, new EventArgs());
         }
@@ -1769,7 +1780,7 @@ namespace CombatManager
 
                 FileInfo fi = new FileInfo(filename);
 
-                if (String.Compare(fi.Extension, ".por", true) == 0 || String.Compare(fi.Extension, ".rpgrp", true) == 0)
+                if (string.Compare(fi.Extension, ".por", true) == 0 || string.Compare(fi.Extension, ".rpgrp", true) == 0)
                 {
                     ImportFromFile(filename, isMonster);
                 }
@@ -1979,7 +1990,7 @@ namespace CombatManager
 
         public class BonusDamage
         {
-            public String DamageType { get; set; }
+            public string DamageType { get; set; }
             public RollResult Damage { get; set; }
         }
 
@@ -2016,11 +2027,11 @@ namespace CombatManager
         {
             Attack _Attack;
 
-            String _Name;
+            string _Name;
 
             Character _Character;
 
-            public String Name
+            public string Name
             {
                 get
                 {

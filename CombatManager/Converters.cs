@@ -1,4 +1,4 @@
-/*
+﻿/*
  *  Converters.cs
  *
  *  Copyright (C) 2010-2012 Kyle Olson, kyle@kyleolson.com
@@ -21,14 +21,11 @@
 
  //
 
-﻿﻿using System;
-using System.ComponentModel;
-using System.Collections.Generic;
+ ﻿using System;
+  using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.IO;
-using System.Text;
-using System.Text.RegularExpressions;
+  using System.IO;
+  using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -63,7 +60,7 @@ namespace CombatManager
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            bool res = (value != null);
+            var res = (value != null);
             return res;
         }
 
@@ -133,7 +130,7 @@ namespace CombatManager
                 return null;
             }
 			
-			bool visible = (bool)value;
+			var visible = (bool)value;
 			if (parameter != null && parameter.GetType() == typeof(bool))
 			{
 				if ((bool)parameter)
@@ -159,9 +156,9 @@ namespace CombatManager
                 return null;
 
             }
-            Visibility vis = (Visibility)value;
+            var vis = (Visibility)value;
 			
-			bool invert = false;
+			var invert = false;
 			if (parameter != null && parameter.GetType() == typeof(bool))
 			{
 				invert = (bool)parameter;
@@ -182,7 +179,7 @@ namespace CombatManager
                 return null;
             }
 
-            bool visible = ((string)value) == "1";
+            var visible = ((string)value) == "1";
             if (parameter != null && parameter.GetType() == typeof(bool))
             {
                 if ((bool)parameter)
@@ -208,15 +205,15 @@ namespace CombatManager
                 return null;
 
             }
-            Visibility vis = (Visibility)value;
+            var vis = (Visibility)value;
 
-            bool invert = false;
+            var invert = false;
             if (parameter != null && parameter.GetType() == typeof(bool))
             {
                 invert = (bool)parameter;
             }
 
-            bool val =  invert ? (vis != Visibility.Visible) : (vis == Visibility.Visible);
+            var val =  invert ? (vis != Visibility.Visible) : (vis == Visibility.Visible);
             return val ? "1" : "0";
         }
     }
@@ -233,8 +230,8 @@ namespace CombatManager
             }
 
 
-            Visibility falseVis = Visibility.Collapsed;
-            Visibility trueVis = Visibility.Visible;
+            var falseVis = Visibility.Collapsed;
+            var trueVis = Visibility.Visible;
 
             if (parameter != null)
             {
@@ -255,7 +252,7 @@ namespace CombatManager
                 return null;
 
             }
-            Visibility vis = (Visibility)value;
+            var vis = (Visibility)value;
 
             return (vis == Visibility.Visible);
         }
@@ -299,8 +296,8 @@ namespace CombatManager
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
 
-            Visibility nullVis = Visibility.Collapsed;
-            Visibility notNullVis = Visibility.Visible;
+            var nullVis = Visibility.Collapsed;
+            var notNullVis = Visibility.Visible;
 
             if (parameter != null)
             {
@@ -311,7 +308,7 @@ namespace CombatManager
 
 			if (value != null &&  value.GetType() == typeof(String))
 			{
-				String text = (String)value;
+				var text = (String)value;
 
                 return (text.Length == 0) ? nullVis : notNullVis;
 			}
@@ -331,7 +328,7 @@ namespace CombatManager
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
 
-            BrushCollection brushes = (BrushCollection)parameter;
+            var brushes = (BrushCollection)parameter;
 
             if (brushes == null)
             {
@@ -370,7 +367,7 @@ namespace CombatManager
                 return null;
             }
 
-            BrushCollection brushes = (BrushCollection)parameter;
+            var brushes = (BrushCollection)parameter;
 
 
             return (bool)value ? brushes[1] :
@@ -406,11 +403,11 @@ namespace CombatManager
             }
             else
             {
-                uint ui = ((uint?)value).Value;
-                byte a = (byte)(ui >> 24);
-                byte r = (byte)(ui >> 16);
-                byte g = (byte)(ui >> 8);
-                byte b = (byte)ui;
+                var ui = ((uint?)value).Value;
+                var a = (byte)(ui >> 24);
+                var r = (byte)(ui >> 16);
+                var g = (byte)(ui >> 8);
+                var b = (byte)ui;
                 return new SolidColorBrush(Color.FromArgb(a, r, g, b));
             }
         }
@@ -697,9 +694,9 @@ namespace CombatManager
                 return DependencyProperty.UnsetValue;
             }
 
-            Monster.AlignmentType al = Monster.ParseAlignment((string)value);
+            var al = Monster.ParseAlignment((string)value);
 
-            int val = 0;
+            var val = 0;
 
             val += (int)al.Order;
             val += 3 * (int)al.Moral;
@@ -717,7 +714,7 @@ namespace CombatManager
                 return DependencyProperty.UnsetValue;
             }
 
-            Monster.AlignmentType type = new Monster.AlignmentType();
+            var type = new Monster.AlignmentType();
             type.Moral = (Monster.MoralAxis)((int)value / 3);
             type.Order = (Monster.OrderAxis)((int)value % 3);
 
@@ -780,7 +777,7 @@ namespace CombatManager
                 return null;
             }
 
-            Attack attack = (Attack)value;
+            var attack = (Attack)value;
 
             if (attack.Weapon != null)
             {
@@ -822,7 +819,7 @@ namespace CombatManager
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
 
-            string name = (string)value;
+            var name = (string)value;
 
             return FromName(name);
         }
@@ -878,7 +875,7 @@ namespace CombatManager
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
 
-            string name = (string)value;
+            var name = (string)value;
 
             ImageSource image = null;
 
@@ -900,7 +897,7 @@ namespace CombatManager
                 }
 
             }
-            Image imageControl = new Image();
+            var imageControl = new Image();
             imageControl.Source = image;
             return imageControl;
         }
@@ -923,7 +920,7 @@ namespace CombatManager
             
             string[] ignore = { "the", "of", "from", "to", "and" };
 
-            foreach (string str in ignore)
+            foreach (var str in ignore)
             {
                 ignoreWords.Add(str);
             }
@@ -950,11 +947,11 @@ namespace CombatManager
             if (text != null)
             {
 
-                Regex regWord = new Regex("\\w+('s)?");
+                var regWord = new Regex("\\w+('s)?");
 
                 text = regWord.Replace(text, delegate(Match m)
                 {
-                    string x = m.Value;
+                    var x = m.Value;
 
                     if (!ignoreWords.Contains(x))
                     {
@@ -991,7 +988,7 @@ namespace CombatManager
                 return DependencyProperty.UnsetValue;
             }
 
-            WeaponItem item = (WeaponItem)value;
+            var item = (WeaponItem)value;
 
 			if (item == null)
 			{
@@ -1034,12 +1031,12 @@ namespace CombatManager
                 return DependencyProperty.UnsetValue;
             }
 
-            string senses = (string)values[0];
+            var senses = (string)values[0];
             _Perception = (int)values[1];
 
-            Regex regEx = new Regex("(?<senses>.*?)(; )?Perception (\\+|\\-)[0-9]+");
+            var regEx = new Regex("(?<senses>.*?)(; )?Perception (\\+|\\-)[0-9]+");
 
-            Match m = regEx.Match(senses);
+            var m = regEx.Match(senses);
 
             if (m.Success)
             {
@@ -1055,11 +1052,11 @@ namespace CombatManager
         object[] IMultiValueConverter.ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
         {
 
-            object[] objects = new object[targetTypes.Length];
+            var objects = new object[targetTypes.Length];
 
-            string senses = ((string)value).Trim();
+            var senses = ((string)value).Trim();
 
-            string sensesText = "";
+            var sensesText = "";
 
             if (senses.Length > 0)
             {
@@ -1098,9 +1095,9 @@ namespace CombatManager
                 return DependencyProperty.UnsetValue;
             }
 
-            string cr = (string)value;
+            var cr = (string)value;
 
-            long? xpVal = Monster.TryGetCRValue(cr);
+            var xpVal = Monster.TryGetCRValue(cr);
 
             if (xpVal == null)
             {
@@ -1119,16 +1116,16 @@ namespace CombatManager
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
 
-            string strVal = (string)value;
+            var strVal = (string)value;
 
 
-            int retVal = 0;
+            var retVal = 0;
 
             if (strVal != null)
             {
 
-                Regex regFt = new Regex("(?<num>[0-9]+) +ft\\.");
-                Match m = regFt.Match(strVal);
+                var regFt = new Regex("(?<num>[0-9]+) +ft\\.");
+                var m = regFt.Match(strVal);
 
 
                 if (m.Success)
@@ -1159,7 +1156,7 @@ namespace CombatManager
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
 
-            string strVal = (string)value;
+            var strVal = (string)value;
 
 
             if (strVal != null)
@@ -1173,7 +1170,7 @@ namespace CombatManager
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            string strVal = (string)value;
+            var strVal = (string)value;
 
             if (strVal != null && strVal.Trim().Length > 0)
             {
@@ -1198,7 +1195,7 @@ namespace CombatManager
             try
             {
                 _Schools = new List<string>();
-                foreach (Rule r in Rule.Rules.FindAll(a => a.Type == "Magic" && a.Subtype == "School"))
+                foreach (var r in Rule.Rules.FindAll(a => a.Type == "Magic" && a.Subtype == "School"))
                 {
                     _Schools.Add(r.Name.ToLower());
                 }
@@ -1234,7 +1231,7 @@ namespace CombatManager
                 return DependencyProperty.UnsetValue;
             }
 
-            int index = (int)value;
+            var index = (int)value;
 
             if (index < _Schools.Count)
             {
@@ -1264,7 +1261,7 @@ namespace CombatManager
                 return null;
             }
 
-            Key k = (Key)value;
+            var k = (Key)value;
 
             return k.ToString();
         }
@@ -1277,7 +1274,7 @@ namespace CombatManager
 
             }
 
-            String s = (String)value;
+            var s = (String)value;
 
             Key returnKey;
             if (KeysList.TryGetValue(s, out returnKey))

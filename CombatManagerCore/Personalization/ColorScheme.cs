@@ -21,18 +21,18 @@ namespace CombatManager.Personalization
             return Prefixes[hue] + Shades[shade];
         }
 
-        public static String GetTextColorBaseName(bool fore)
+        public static string GetTextColorBaseName(bool fore)
         {
             return "ThemeText" + (fore ? "Foreground" : "Background");
         }
 
-        public static String GetTextColorName(bool fore, bool dark)
+        public static string GetTextColorName(bool fore, bool dark)
         {
             return GetTextColorBaseName(fore) + ( dark ? "Dark" : "Light");
         }
 
-        private List<List<String>> colors;
-        private String name;
+        private List<List<string>> colors;
+        private string name;
 
         private List<int> textColors;
 
@@ -41,7 +41,7 @@ namespace CombatManager.Personalization
         public event PropertyChangedEventHandler PropertyChanged;
 
         [DataMember]
-        public List<List<String>> Colors
+        public List<List<string>> Colors
         {
             get
             {
@@ -109,7 +109,7 @@ namespace CombatManager.Personalization
             }
         }
 
-        public UInt32 GetTextColor(bool fore, bool dark)
+        public uint GetTextColor(bool fore, bool dark)
         {
             if (TextColors == null || TextColors.Count < 4)
             {
@@ -128,7 +128,7 @@ namespace CombatManager.Personalization
 
         }
 
-        public String ColorFromIndex(int index)
+        public string ColorFromIndex(int index)
         {
             if (index == -1)
             {
@@ -158,19 +158,19 @@ namespace CombatManager.Personalization
             }*/
         }
 
-        public UInt32 GetColorUInt32(int hue, int shade)
+        public uint GetColorUInt32(int hue, int shade)
         {
-            String color = Colors[hue][shade];
+            string color = Colors[hue][shade];
             return UInt32FromString(color);
         }
 
-        private UInt32 UInt32FromString (String color)
+        private uint UInt32FromString (string color)
         {
 
-            return UInt32.Parse(color, System.Globalization.NumberStyles.AllowHexSpecifier);
+            return uint.Parse(color, System.Globalization.NumberStyles.AllowHexSpecifier);
         }
 
-        public void SetColorUInt32(int hue, int shade, UInt32 value)
+        public void SetColorUInt32(int hue, int shade, uint value)
         {
             Colors[hue][shade] = value.ToString("X8");
         }

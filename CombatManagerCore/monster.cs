@@ -33,7 +33,6 @@ using System.IO;
 using System.Runtime.Serialization;
 using System.Xml.Linq;
 using System.IO.Compression;
-using IonicZipFile = Ionic.Zip.ZipFile;
 using System.Threading.Tasks;
 using static CombatManager.Character;
 
@@ -142,9 +141,9 @@ namespace CombatManager
         }
 
 
-        private static List<Monster> LoadMonsterFromXml(String filename)
+        private static List<Monster> LoadMonsterFromXml(string filename)
         {
-            String lastMonster = "";
+            string lastMonster = "";
             try
             {
 
@@ -412,7 +411,7 @@ namespace CombatManager
 
         private bool skillsParsed;
         private bool skillValuesMayNeedUpdate;
-        private SortedDictionary<String, SkillValue> skillValueDictionary;
+        private SortedDictionary<string, SkillValue> skillValueDictionary;
         private List<SkillValue> skillValueList;
 
         private bool featsParsed;
@@ -473,7 +472,7 @@ namespace CombatManager
         {
             public string Name { get; set; }
             public Stat Stat { get; set; }
-            public List<String> Subtypes { get; set; }
+            public List<string> Subtypes { get; set; }
             public bool TrainedOnly { get; set; }
         }
 
@@ -782,9 +781,9 @@ namespace CombatManager
 
         }
 
-        static SortedDictionary<double, String> _crs;
+        static SortedDictionary<double, string> _crs;
 
-        public static SortedDictionary<double, String> CRList
+        public static SortedDictionary<double, string> CRList
         {
             get
             {
@@ -814,7 +813,7 @@ namespace CombatManager
 
         public Monster()
         {
-            skillValueDictionary = new SortedDictionary<String, SkillValue>(StringComparer.OrdinalIgnoreCase);
+            skillValueDictionary = new SortedDictionary<string, SkillValue>(StringComparer.OrdinalIgnoreCase);
             skillValueList = new List<SkillValue>();
             TResources = new ObservableCollection<ActiveResource>();
         }
@@ -1140,7 +1139,7 @@ namespace CombatManager
             m.skillsParsed = skillsParsed;
             if (skillsParsed)
             {
-                m.skillValueDictionary = new SortedDictionary<String, SkillValue>(StringComparer.OrdinalIgnoreCase);
+                m.skillValueDictionary = new SortedDictionary<string, SkillValue>(StringComparer.OrdinalIgnoreCase);
                 foreach (SkillValue skillValue in skillValueDictionary.Values)
                 {
 
@@ -1197,7 +1196,7 @@ namespace CombatManager
             List<Monster> returnMonsters = null;
             try
             {
-                if (IonicZipFile.IsZipFile(filename))
+                if (filename.IsZipFile())
                 {
                     returnMonsters = FromHeroLabZip(filename);
                 }
@@ -1371,7 +1370,7 @@ namespace CombatManager
         private static List<Monster> FromHeroLabZip(string filename)
         {
             List<Monster> monsters = new List<Monster>();
-            if (!IonicZipFile.IsZipFile(filename))
+            if (filename.IsZipFile())
             {
                 return monsters;
             }
@@ -1584,8 +1583,8 @@ namespace CombatManager
                 string attacks = GetElementStringValue(it, "attack");
                 attacks = Regex.Replace(attacks, "(\r?\n)|:|(\r)", "");
 
-                List<String> meleeStrings = new List<string>();
-                List<String> rangedStrings = new List<string>();
+                List<string> meleeStrings = new List<string>();
+                List<string> rangedStrings = new List<string>();
 
                 Regex regAttack = new Regex("(?<weapon>[ ,\\p{L}0-9+]+)( \\((?<sub>[-+ \\p{L}0-9/]+)\\))? (?<bonus>(N/A|([-+/0-9]+))) (?<type>(melee|ranged)) (?<dmg>\\([0-9]+d[0-9]+(\\+[0-9]+)?(/[0-9]+-20)?(/x[0-9]+)?\\))");
 
@@ -1600,7 +1599,7 @@ namespace CombatManager
 
                     string weaponname = ma.Groups["weapon"].Value.Trim();
 
-                    if (String.Compare(weaponname, "Longbow", true) == 0)
+                    if (string.Compare(weaponname, "Longbow", true) == 0)
                     {
                         if (ma.Groups["sub"].Success)
                         {
@@ -1715,7 +1714,7 @@ namespace CombatManager
             {
                 try
                 {
-                    value = Int32.Parse(el.Value);
+                    value = int.Parse(el.Value);
                 }
                 catch (Exception ex)
                 {
@@ -1734,7 +1733,7 @@ namespace CombatManager
             {
                 try
                 {
-                    value = Int32.Parse(el.Value);
+                    value = int.Parse(el.Value);
                 }
                 catch (Exception ex)
                 {
@@ -1745,7 +1744,7 @@ namespace CombatManager
             return value;
         }
 
-        static String GetElementStringValue(XElement it, string name)
+        static string GetElementStringValue(XElement it, string name)
         {
             string text = null;
             XElement el = it.Element(name);
@@ -1762,13 +1761,13 @@ namespace CombatManager
             XAttribute el = it.Attribute(name);
             if (el != null)
             {
-                value = Int32.Parse(el.Value);
+                value = int.Parse(el.Value);
             }
             return value;
         }
 
 
-        static String GetAttributeStringValue(XElement it, string name)
+        static string GetAttributeStringValue(XElement it, string name)
         {
             string text = null;
             XAttribute el = it.Attribute(name);
@@ -1803,7 +1802,7 @@ namespace CombatManager
             if (readNameBlock)
             {
 
-                String name = "";
+                string name = "";
 
                 Regex nameRegex = new Regex("(--------------------\r\n)?(?<name>.+?)(\t| +)CR");
                 Match sm = nameRegex.Match(statsblock);
@@ -1830,7 +1829,7 @@ namespace CombatManager
             //System.Diagnostics.Debug.WriteLine(statsblock);
 
 
-            String strStatSeparator = ",[ ]+";
+            string strStatSeparator = ",[ ]+";
 
             //get stats
             string statsRegStr = HeroLabStatRegexString("Str") + strStatSeparator +
@@ -1915,7 +1914,7 @@ namespace CombatManager
             else if (doc != null)
             {
                 XElement cr = characterElement.Element("challengerating");
-                String crText = cr?.Attribute("text")?.Value;
+                string crText = cr?.Attribute("text")?.Value;
                 if (crText != null)
                 {
                     monster.CR = crText.Substring(3);
@@ -1937,8 +1936,8 @@ namespace CombatManager
                 foreach (var resource in reources.Select(r => new ActiveResource
                 {
                     Name = r.Attribute("name").Value,
-                    Current = Int32.Parse(r.Attribute("left").Value),
-                    Max = Int32.Parse(r.Attribute("max").Value)
+                    Current = int.Parse(r.Attribute("left").Value),
+                    Max = int.Parse(r.Attribute("max").Value)
                 })) monster.TResources.Add(resource);
             }
 
@@ -2065,7 +2064,7 @@ namespace CombatManager
 
             Regex endLine = new Regex("(?<line>.+)");
             m = endLine.Match(statsblock, defStart + 1);
-            String defLine = m.Value;
+            string defLine = m.Value;
 
             //string da = FixHeroLabDefensiveAbilities(GetLine("Defensive Abilities", statsblock, true));
             monster.DefensiveAbilities = GetItem("Defensive Abilities", defLine, true);
@@ -2333,7 +2332,7 @@ namespace CombatManager
             }
         }
 
-        static private bool FindDR(String drval, out string drtype, out int val)
+        static private bool FindDR(string drval, out string drtype, out int val)
         {
             drtype = null;
             val = 0;
@@ -2630,7 +2629,7 @@ namespace CombatManager
                     }
 
 
-                    List<String> list = new List<string>();
+                    List<string> list = new List<string>();
                     string specRegString = "\\((?<type>(Ex|Su|Sp))(, (?<cp>[0-9]+) CP)?\\):?";
                     Regex specFindRegex = new Regex("((?<startline>^)|\\.)[-\\p{L} ',]+" + specRegString);
                     Regex specRegex = new Regex(specRegString);
@@ -2799,7 +2798,7 @@ namespace CombatManager
 
         private void ParseSkills()
         {
-            skillValueDictionary = new SortedDictionary<String, SkillValue>(StringComparer.OrdinalIgnoreCase);
+            skillValueDictionary = new SortedDictionary<string, SkillValue>(StringComparer.OrdinalIgnoreCase);
             if (Skills != null)
             {
                 Regex skillReg = new Regex("([ \\p{L}]+)( )(\\(([- \\p{L}]+)\\) )?((\\+|-)[0-9]+)");
@@ -3118,7 +3117,7 @@ namespace CombatManager
 
                 int newVal = val;
 
-                String newText = CMStringUtilities.PlusFormatNumber(newVal);
+                string newText = CMStringUtilities.PlusFormatNumber(newVal);
 
                 returnText = returnText.Remove(match.Index + modMatch.Index, modMatch.Length);
                 returnText = returnText.Insert(match.Index + modMatch.Index, newText);
@@ -3153,7 +3152,7 @@ namespace CombatManager
                     int oldVal = int.Parse(modMatch.Value);
                     int newVal = oldVal + diff;
 
-                    String newText = CMStringUtilities.PlusFormatNumber(newVal);
+                    string newText = CMStringUtilities.PlusFormatNumber(newVal);
 
                     returnText = returnText.Remove(match.Index + modMatch.Index, modMatch.Length);
                     returnText = returnText.Insert(match.Index + modMatch.Index, newText);
@@ -4216,10 +4215,10 @@ namespace CombatManager
 
         public bool MakeSkeleton(bool bloody, bool burning, bool champion)
         {
-            if (String.Compare(Type, "undead", true) == 0 ||
-                String.Compare(Type, "construct", true) == 0 ||
+            if (string.Compare(Type, "undead", true) == 0 ||
+                string.Compare(Type, "construct", true) == 0 ||
                 Strength == null || Dexterity == null ||
-                    (SubType != null && String.Compare(SubType, "swarm", true) == 0))
+                    (SubType != null && string.Compare(SubType, "swarm", true) == 0))
             {
                 return false;
             }
@@ -4470,7 +4469,7 @@ namespace CombatManager
 
         public bool MakeLich()
         {
-            if (String.Compare(Type, "undead", true) == 0 ||
+            if (string.Compare(Type, "undead", true) == 0 ||
                 Strength == null || Dexterity == null)
             {
                 return false;
@@ -4556,7 +4555,7 @@ namespace CombatManager
 
         public bool MakeVampire()
         {
-            if (String.Compare(Type, "undead", true) == 0 ||
+            if (string.Compare(Type, "undead", true) == 0 ||
                 Strength == null || Dexterity == null)
             {
                 return false;
@@ -4721,7 +4720,7 @@ namespace CombatManager
             Telekinesis = 4
         }
 
-        public static String GetGhostTemplateAbilityName(GhostTemplateAbilities ability)
+        public static string GetGhostTemplateAbilityName(GhostTemplateAbilities ability)
         {
             switch (ability)
             {
@@ -4911,7 +4910,7 @@ namespace CombatManager
         public bool MakeZombie(ZombieType zombieType)
         {
 
-            if (String.Compare(Type, "undead", true) == 0 ||
+            if (string.Compare(Type, "undead", true) == 0 ||
                 Strength == null || Dexterity == null)
             {
                 return false;
@@ -5650,7 +5649,7 @@ namespace CombatManager
                 bool bAdded = false;
                 foreach (WeaponItem wi in attacks.NaturalAttacks)
                 {
-                    if (String.Compare(wi.Name, Name, true) == 0)
+                    if (string.Compare(wi.Name, Name, true) == 0)
                     {
                         if (wi.Count < count)
                         {
@@ -6479,7 +6478,7 @@ namespace CombatManager
 
             int diff = newBonus - oldBonus;
 
-            if (String.Compare(Type, "Undead", true) == 0)
+            if (string.Compare(Type, "Undead", true) == 0)
             {
 
                 //adjust save
@@ -6504,11 +6503,11 @@ namespace CombatManager
             //get hp mod
             int hpMod = 0;
 
-            if (String.Compare(Type, "undead", true) == 0)
+            if (string.Compare(Type, "undead", true) == 0)
             {
                 hpMod = AbilityBonus(Charisma);
             }
-            else if (String.Compare(Type, "construct", true) != 0)
+            else if (string.Compare(Type, "construct", true) != 0)
             {
                 hpMod = AbilityBonus(Constitution);
             }
@@ -6582,7 +6581,7 @@ namespace CombatManager
 
         }
 
-        private static string ChangeSpellLikeCL(String text, int diff)
+        private static string ChangeSpellLikeCL(string text, int diff)
         {
             if (text == null)
             {
@@ -6642,7 +6641,7 @@ namespace CombatManager
             {
                 Match match = new Regex(";").Match(text);
 
-                string newText = String.Format("darkvision {0} ft.", dist);
+                string newText = string.Format("darkvision {0} ft.", dist);
 
                 newText += match.Success ? ", " : "; ";
 
@@ -6783,7 +6782,7 @@ namespace CombatManager
 
         private bool AddSubtype(string subtype)
         {
-            String work = "";
+            string work = "";
             if (SubType != null)
             {
                 work = SubType.Trim(new char[] { '(', ')' });
@@ -7421,7 +7420,7 @@ namespace CombatManager
             return type;
         }
 
-        public static String AlignmentText(AlignmentType alignment)
+        public static string AlignmentText(AlignmentType alignment)
         {
             if (alignment.Moral == MoralAxis.Neutral && alignment.Order == OrderAxis.Neutral)
             {
@@ -7666,27 +7665,27 @@ namespace CombatManager
         {
             Stat stat = Stat.Strength;
 
-            if (String.Compare("Strength", name, true) == 0)
+            if (string.Compare("Strength", name, true) == 0)
             {
                 stat = Stat.Strength;
             }
-            else if (String.Compare("Dexterity", name, true) == 0)
+            else if (string.Compare("Dexterity", name, true) == 0)
             {
                 stat = Stat.Dexterity;
             }
-            else if (String.Compare("Constitution", name, true) == 0)
+            else if (string.Compare("Constitution", name, true) == 0)
             {
                 stat = Stat.Constitution;
             }
-            else if (String.Compare("Intelligence", name, true) == 0)
+            else if (string.Compare("Intelligence", name, true) == 0)
             {
                 stat = Stat.Intelligence;
             }
-            else if (String.Compare("Wisdom", name, true) == 0)
+            else if (string.Compare("Wisdom", name, true) == 0)
             {
                 stat = Stat.Wisdom;
             }
-            else if (String.Compare("Charisma", name, true) == 0)
+            else if (string.Compare("Charisma", name, true) == 0)
             {
                 stat = Stat.Charisma;
             }
@@ -7812,7 +7811,7 @@ namespace CombatManager
 
             if (match.Success)
             {
-                String dieText = DieRollText(roll);
+                string dieText = DieRollText(roll);
 
                 returnText = regRoll.Replace(returnText, dieText, 1, start);
 
@@ -8142,7 +8141,7 @@ namespace CombatManager
 
 
             int reachInt = units * 5;
-            return String.Format("{0} ft.", reachInt);
+            return string.Format("{0} ft.", reachInt);
 
         }
 
@@ -8571,7 +8570,7 @@ namespace CombatManager
             attack.CritRange = item.Broken ? 20 : item.Weapon.CritRange;
 
 
-            if (String.Compare(attack.Name, "Bite", true) == 0 && cf.savageBite)
+            if (string.Compare(attack.Name, "Bite", true) == 0 && cf.savageBite)
             {
                 attack.CritRange -= 1;
             }
@@ -8636,12 +8635,12 @@ namespace CombatManager
 
             int strDamageBonus = AbilityBonus(Strength);
 
-            if (cf.powerfulBite && String.Compare(attack.Name, "Bite", true) == 0 && !makeSecondary)
+            if (cf.powerfulBite && string.Compare(attack.Name, "Bite", true) == 0 && !makeSecondary)
             {
                 strDamageBonus = AbilityBonus(Strength) * 2;
             }
-            else if (((cf.savageBite || cf.isDragon) && String.Compare(attack.Name, "Bite", true) == 0) ||
-                (cf.isDragon && ((String.Compare(attack.Name, "Tail", true) == 0) || (String.Compare(attack.Name, "Tail Slap", true) == 0))) ||
+            else if (((cf.savageBite || cf.isDragon) && string.Compare(attack.Name, "Bite", true) == 0) ||
+                (cf.isDragon && ((string.Compare(attack.Name, "Tail", true) == 0) || (string.Compare(attack.Name, "Tail Slap", true) == 0))) ||
                 attack.TwoHanded || item.TwoHanded || (onlyNatural && AbilityBonus(Strength) > 0) && !makeSecondary)
             {
 
@@ -8703,7 +8702,7 @@ namespace CombatManager
         {
             int strDamageBonus = 0;
 
-            if ((String.Compare(attack.Name, "Rock", true) == 0 && cf.rockThrowing))
+            if ((string.Compare(attack.Name, "Rock", true) == 0 && cf.rockThrowing))
             {
                 strDamageBonus = AbilityBonus(Strength) + AbilityBonus(Strength) / 2;
             }
@@ -8925,7 +8924,7 @@ namespace CombatManager
 
             foreach (SpecialAbility a in SpecialAbilitiesList)
             {
-                if (String.Compare(a.Name, name, true) == 0)
+                if (string.Compare(a.Name, name, true) == 0)
                 {
                     return true;
                 }
@@ -9445,7 +9444,7 @@ namespace CombatManager
 
 
         [DataMember]
-        public String XP
+        public string XP
         {
             get
             {
@@ -9459,7 +9458,7 @@ namespace CombatManager
         }
 
         [DataMember]
-        public String Race
+        public string Race
         {
             get
             {
@@ -9473,7 +9472,7 @@ namespace CombatManager
         }
 
         [DataMember]
-        public String Class
+        public string Class
         {
             get
             {
@@ -9487,7 +9486,7 @@ namespace CombatManager
         }
 
         [DataMember]
-        public String Type
+        public string Type
         {
             get
             {
@@ -9501,7 +9500,7 @@ namespace CombatManager
         }
 
         [DataMember]
-        public String SubType
+        public string SubType
         {
             get
             {
@@ -9538,7 +9537,7 @@ namespace CombatManager
         }
 
         [DataMember]
-        public String Senses
+        public string Senses
         {
             get
             {
@@ -9552,7 +9551,7 @@ namespace CombatManager
         }
 
         [DataMember]
-        public String AC
+        public string AC
         {
             get
             {
@@ -9566,7 +9565,7 @@ namespace CombatManager
         }
 
         [DataMember]
-        public String AC_Mods
+        public string AC_Mods
         {
             get
             {
@@ -9580,7 +9579,7 @@ namespace CombatManager
         }
 
         [DataMember]
-        public String HD
+        public string HD
         {
             get
             {
@@ -9594,7 +9593,7 @@ namespace CombatManager
         }
 
         [DataMember]
-        public String Saves
+        public string Saves
         {
             get
             {
@@ -9610,7 +9609,7 @@ namespace CombatManager
 
 
         [DataMember]
-        public String Save_Mods
+        public string Save_Mods
         {
             get
             {
@@ -9630,7 +9629,7 @@ namespace CombatManager
    
 
         [DataMember]
-        public String DR
+        public string DR
         {
             get
             {
@@ -9644,7 +9643,7 @@ namespace CombatManager
         }
 
         [DataMember]
-        public String SR
+        public string SR
         {
             get
             {
@@ -9660,7 +9659,7 @@ namespace CombatManager
 
 
         [DataMember]
-        public String Melee
+        public string Melee
         {
             get
             {
@@ -9674,7 +9673,7 @@ namespace CombatManager
         }
 
         [DataMember]
-        public String Ranged
+        public string Ranged
         {
             get
             {
@@ -9688,7 +9687,7 @@ namespace CombatManager
         }
 
         [DataMember]
-        public String Space
+        public string Space
         {
             get
             {
@@ -9702,7 +9701,7 @@ namespace CombatManager
         }
 
         [DataMember]
-        public String Reach
+        public string Reach
         {
             get
             {
@@ -9716,7 +9715,7 @@ namespace CombatManager
         }
 
         [DataMember]
-        public String SpecialAttacks
+        public string SpecialAttacks
         {
             get
             {
@@ -9732,7 +9731,7 @@ namespace CombatManager
         }
 
         [DataMember]
-        public String SpellLikeAbilities
+        public string SpellLikeAbilities
         {
             get
             {
@@ -9762,7 +9761,7 @@ namespace CombatManager
         }
 
         [DataMember]
-        public String AbilitiyScores
+        public string AbilitiyScores
         {
             get
             {
@@ -9790,7 +9789,7 @@ namespace CombatManager
         }
 
         [DataMember]
-        public String CMB
+        public string CMB
         {
             get
             {
@@ -9806,7 +9805,7 @@ namespace CombatManager
         }
 
         [DataMember]
-        public String CMD
+        public string CMD
         {
             get
             {
@@ -9822,7 +9821,7 @@ namespace CombatManager
         }
 
         [DataMember]
-        public String Feats
+        public string Feats
         {
             get
             {
@@ -9837,7 +9836,7 @@ namespace CombatManager
         }
 
         [DataMember]
-        public String Skills
+        public string Skills
         {
             get
             {
@@ -9852,7 +9851,7 @@ namespace CombatManager
         }
 
         [DataMember]
-        public String RacialMods
+        public string RacialMods
         {
             get
             {
@@ -9867,7 +9866,7 @@ namespace CombatManager
 
 
         [DataMember]
-        public String SQ
+        public string SQ
         {
             get
             {
@@ -9881,7 +9880,7 @@ namespace CombatManager
         }
 
         [DataMember]
-        public String Environment
+        public string Environment
         {
             get
             {
@@ -9895,7 +9894,7 @@ namespace CombatManager
         }
 
         [DataMember]
-        public String Organization
+        public string Organization
         {
             get
             {
@@ -9909,7 +9908,7 @@ namespace CombatManager
         }
 
         [DataMember]
-        public String Treasure
+        public string Treasure
         {
             get
             {
@@ -9928,7 +9927,7 @@ namespace CombatManager
 
 
         [DataMember]
-        public String Description_Visual
+        public string Description_Visual
         {
             get
             {
@@ -9948,7 +9947,7 @@ namespace CombatManager
         }
 
         [DataMember]
-        public String Group
+        public string Group
         {
             get
             {
@@ -9964,7 +9963,7 @@ namespace CombatManager
 
 
         [DataMember]
-        public String IsTemplate
+        public string IsTemplate
         {
             get
             {
@@ -9978,7 +9977,7 @@ namespace CombatManager
         }
 
         [DataMember]
-        public String SpecialAbilities
+        public string SpecialAbilities
         {
             get
             {
@@ -9993,7 +9992,7 @@ namespace CombatManager
         }
 
         [DataMember]
-        public String Description
+        public string Description
         {
             get
             {
@@ -10008,7 +10007,7 @@ namespace CombatManager
         }
 
         [DataMember]
-        public String FullText
+        public string FullText
         {
             get
             {
@@ -10022,7 +10021,7 @@ namespace CombatManager
         }
 
         [DataMember]
-        public String Gender
+        public string Gender
         {
             get
             {
@@ -10036,7 +10035,7 @@ namespace CombatManager
         }
 
         [DataMember]
-        public String Bloodline
+        public string Bloodline
         {
             get
             {
@@ -10050,7 +10049,7 @@ namespace CombatManager
         }
 
         [DataMember]
-        public String ProhibitedSchools
+        public string ProhibitedSchools
         {
             get
             {
@@ -10064,7 +10063,7 @@ namespace CombatManager
         }
 
         [DataMember]
-        public String BeforeCombat
+        public string BeforeCombat
         {
             get
             {
@@ -10084,7 +10083,7 @@ namespace CombatManager
         }
 
         [DataMember]
-        public String DuringCombat
+        public string DuringCombat
         {
             get
             {
@@ -10104,7 +10103,7 @@ namespace CombatManager
         }
 
         [DataMember]
-        public String Morale
+        public string Morale
         {
             get
             {
@@ -10123,7 +10122,7 @@ namespace CombatManager
         }
 
         [DataMember]
-        public String Gear
+        public string Gear
         {
             get
             {
@@ -10142,7 +10141,7 @@ namespace CombatManager
         }
 
         [DataMember]
-        public String OtherGear
+        public string OtherGear
         {
             get
             {
@@ -10157,7 +10156,7 @@ namespace CombatManager
         }
 
         [DataMember]
-        public String Vulnerability
+        public string Vulnerability
         {
             get
             {
@@ -10175,7 +10174,7 @@ namespace CombatManager
         }
 
         [DataMember]
-        public String Note
+        public string Note
         {
             get
             {
@@ -10189,7 +10188,7 @@ namespace CombatManager
         }
 
         [DataMember]
-        public String CharacterFlag
+        public string CharacterFlag
         {
             get
             {
@@ -10203,7 +10202,7 @@ namespace CombatManager
         }
 
         [DataMember]
-        public String CompanionFlag
+        public string CompanionFlag
         {
             get
             {
@@ -10217,7 +10216,7 @@ namespace CombatManager
         }
 
         [DataMember]
-        public String Fly
+        public string Fly
         {
             get
             {
@@ -10231,7 +10230,7 @@ namespace CombatManager
         }
 
         [DataMember]
-        public String Climb
+        public string Climb
         {
             get
             {
@@ -10245,7 +10244,7 @@ namespace CombatManager
         }
 
         [DataMember]
-        public String Burrow
+        public string Burrow
         {
             get
             {
@@ -10259,7 +10258,7 @@ namespace CombatManager
         }
 
         [DataMember]
-        public String Swim
+        public string Swim
         {
             get
             {
@@ -10273,7 +10272,7 @@ namespace CombatManager
         }
 
         [DataMember]
-        public String Land
+        public string Land
         {
             get
             {
@@ -10287,7 +10286,7 @@ namespace CombatManager
         }
 
         [DataMember]
-        public String TemplatesApplied
+        public string TemplatesApplied
         {
             get
             {
@@ -10301,7 +10300,7 @@ namespace CombatManager
         }
 
         [DataMember]
-        public String OffenseNote
+        public string OffenseNote
         {
             get
             {
@@ -10315,7 +10314,7 @@ namespace CombatManager
         }
 
         [DataMember]
-        public String BaseStatistics
+        public string BaseStatistics
         {
             get
             {
@@ -10329,7 +10328,7 @@ namespace CombatManager
         }
 
         [DataMember]
-        public String SpellsPrepared
+        public string SpellsPrepared
         {
             get
             {
@@ -10359,7 +10358,7 @@ namespace CombatManager
         }
 
         [DataMember]
-        public String SpellDomains
+        public string SpellDomains
         {
             get
             {
@@ -10373,7 +10372,7 @@ namespace CombatManager
         }
 
         [DataMember]
-        public String Aura
+        public string Aura
         {
             get
             {
@@ -10387,7 +10386,7 @@ namespace CombatManager
         }
 
         [DataMember]
-        public String DefensiveAbilities
+        public string DefensiveAbilities
         {
             get
             {
@@ -10402,7 +10401,7 @@ namespace CombatManager
 
 
         [DataMember]
-        public String SpellsKnown
+        public string SpellsKnown
         {
             get
             {
@@ -10434,7 +10433,7 @@ namespace CombatManager
 
 
         [DataMember]
-        public String Speed_Mod
+        public string Speed_Mod
         {
             get
             {
@@ -10448,7 +10447,7 @@ namespace CombatManager
         }
 
         [DataMember]
-        public String MonsterSource
+        public string MonsterSource
         {
             get
             {
@@ -10462,7 +10461,7 @@ namespace CombatManager
         }
 
         [DataMember]
-        public String ExtractsPrepared
+        public string ExtractsPrepared
         {
             get { return extractsPrepared; }
             set
@@ -10476,7 +10475,7 @@ namespace CombatManager
         }
 
         [DataMember]
-        public String AgeCategory
+        public string AgeCategory
         {
             get { return ageCategory; }
             set
@@ -10504,7 +10503,7 @@ namespace CombatManager
         }
 
         [DataMember]
-        public String VariantParent
+        public string VariantParent
         {
             get { return variantParent; }
             set
@@ -10518,7 +10517,7 @@ namespace CombatManager
         }
 
         [DataMember]
-        public String DescHTML
+        public string DescHTML
         {
             get { return descHTML; }
             set
@@ -10776,7 +10775,7 @@ namespace CombatManager
         }
 
         [XmlIgnore]
-        public SortedDictionary<String, SkillValue> SkillValueDictionary
+        public SortedDictionary<string, SkillValue> SkillValueDictionary
         {
             get
             {
@@ -10818,7 +10817,7 @@ namespace CombatManager
             }
             set
             {
-                skillValueDictionary = new SortedDictionary<String, SkillValue>(StringComparer.OrdinalIgnoreCase);
+                skillValueDictionary = new SortedDictionary<string, SkillValue>(StringComparer.OrdinalIgnoreCase);
 
                 foreach (SkillValue val in value)
                 {
@@ -11177,7 +11176,7 @@ namespace CombatManager
             var regex = new Regex(@"((?<bonus>(\+|-)\d+) |(?<=\()(?<bonus>(\+|-)\d+).+?)" + maneuverName.ToLower());
             var x = regex.Match(CMB);
 
-            return x.Success ? Int32.Parse(x.Groups["bonus"].Value) : CMB_Numeric;
+            return x.Success ? int.Parse(x.Groups["bonus"].Value) : CMB_Numeric;
         }
 
 
@@ -11235,38 +11234,38 @@ namespace CombatManager
         }
 
 
-        public static List<String> DragonColors
+        public static List<string> DragonColors
         {
             get
             {
-                return new List<String>(dragonColorList.Keys);
+                return new List<string>(dragonColorList.Keys);
             }
         }
 
-        public static FlyQuality FlyQualityFromString(String strQuality)
+        public static FlyQuality FlyQualityFromString(string strQuality)
         {
             FlyQuality qual = FlyQuality.Average;
 
-            if (String.Compare(strQuality, "clumsy", true) == 0)
+            if (string.Compare(strQuality, "clumsy", true) == 0)
             {
                 qual = FlyQuality.Clumsy;
             }
-            if (String.Compare(strQuality, "poor", true) == 0)
+            if (string.Compare(strQuality, "poor", true) == 0)
             {
                 qual = FlyQuality.Poor;
             }
 
-            if (String.Compare(strQuality, "average", true) == 0)
+            if (string.Compare(strQuality, "average", true) == 0)
             {
                 qual = FlyQuality.Average;
             }
 
-            if (String.Compare(strQuality, "good", true) == 0)
+            if (string.Compare(strQuality, "good", true) == 0)
             {
                 qual = FlyQuality.Good;
             }
 
-            if (String.Compare(strQuality, "perfect", true) == 0)
+            if (string.Compare(strQuality, "perfect", true) == 0)
             {
                 qual = FlyQuality.Perfect;
             }
@@ -11319,7 +11318,7 @@ namespace CombatManager
 
             private Monster _Monster;
 
-            private String _FlyQuality;
+            private string _FlyQuality;
 
             public void NotifyPropertyChanged(string property)
             {
@@ -11921,7 +11920,7 @@ namespace CombatManager
             }
 
 
-            public String CR
+            public string CR
             {
                 get
                 {

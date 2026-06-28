@@ -1,4 +1,4 @@
-/*
+﻿/*
  *  SpellInfo.cs
  *
  *  Copyright (C) 2010-2012 Kyle Olson, kyle@kyleolson.com
@@ -19,7 +19,7 @@
  *
  */
 
-﻿using System;
+ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -33,14 +33,14 @@ namespace CombatManager
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private String _Name;
+        private string _Name;
         private int? _DC;
         private Spell _Spell;
         private int? _Count;
         private int? _Cast;
         private bool _AlreadyCast;
-        private String _Only;
-        private String _Other;
+        private string _Only;
+        private string _Other;
         private bool _Mythic;
 
         public SpellInfo() { }
@@ -63,7 +63,7 @@ namespace CombatManager
             return new SpellInfo(this);
         }
 
-        public String Name
+        public string Name
         {
             get { return _Name; }
             set
@@ -135,7 +135,7 @@ namespace CombatManager
                 }
             }
         }
-        public String Only
+        public string Only
         {
             get { return _Only; }
             set
@@ -148,7 +148,7 @@ namespace CombatManager
             }
         }
 
-        public String Other
+        public string Other
         {
             get { return _Other; }
             set

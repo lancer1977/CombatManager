@@ -1,15 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using System.Collections.ObjectModel;
 
 namespace CombatManager
@@ -31,7 +26,7 @@ namespace CombatManager
 
             foreach (CharacterAction type in Enum.GetValues(typeof(CharacterAction)))
             {
-                String name = UICharacterActionHandler.Description(type);
+                var name = UICharacterActionHandler.Description(type);
                 names[name] = type;
             }
 
@@ -39,7 +34,7 @@ namespace CombatManager
 
         private void DeleteButton_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            CombatHotKey hk = (CombatHotKey)((FrameworkElement)sender).DataContext;
+            var hk = (CombatHotKey)((FrameworkElement)sender).DataContext;
             _CombatHotKeys.Remove(hk);
         }
 
@@ -69,7 +64,7 @@ namespace CombatManager
             set
             {
                 _CombatHotKeys = new ObservableCollection<CombatHotKey>();
-                foreach (CombatHotKey hk in value)
+                foreach (var hk in value)
                 {
                     _CombatHotKeys.Add(new CombatHotKey(hk));
                 }
@@ -80,13 +75,13 @@ namespace CombatManager
 
         private void CommandComboBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
 		{
-            ComboBox typeCombo = (ComboBox)sender;
+            var typeCombo = (ComboBox)sender;
 
-            ComboBoxItem cbi = (ComboBoxItem)typeCombo.SelectedItem;
-            CombatHotKey hk = (CombatHotKey)typeCombo.DataContext;
+            var cbi = (ComboBoxItem)typeCombo.SelectedItem;
+            var hk = (CombatHotKey)typeCombo.DataContext;
             hk.Type = (CharacterAction)cbi.DataContext;
 
-            ComboBox subtypeCombo = typeCombo.GetSibling<ComboBox>("SubtypeComboBox");
+            var subtypeCombo = typeCombo.GetSibling<ComboBox>("SubtypeComboBox");
 
             UpdateSubtypeCombo(subtypeCombo);
 
@@ -97,8 +92,8 @@ namespace CombatManager
 
             if (subtypeCombo != null)
             {
-                ComboBox cb = subtypeCombo;
-                CombatHotKey hk = (CombatHotKey)cb.DataContext;
+                var cb = subtypeCombo;
+                var hk = (CombatHotKey)cb.DataContext;
 
             
                 subtypeCombo.Items.Clear();
@@ -113,7 +108,7 @@ namespace CombatManager
                         break;
                     case CharacterAction.Skill:
                         subtypeCombo.IsEnabled = true;
-                        foreach (Monster.SkillInfo si in Monster.SkillsDetails.Values)
+                        foreach (var si in Monster.SkillsDetails.Values)
                         {
                             subtypeCombo.Items.Add(new ComboBoxItem() { Content = si.Name, Tag = si });
                         }
@@ -135,24 +130,24 @@ namespace CombatManager
         {
             subtypeCombo.IsEnabled = true;
 
-            String hkcond = hk.Subtype;
-            bool found = false;
+            var hkcond = hk.Subtype;
+            var found = false;
 
-            foreach (Condition c in from x in Condition.Conditions where x.Spell == null select x )
+            foreach (var c in from x in Condition.Conditions where x.Spell == null select x )
             {
-                StackPanel panel = new StackPanel();
+                var panel = new StackPanel();
                 panel.Orientation = Orientation.Horizontal;
 
 
-                Image i = new Image();
-                BitmapImage bi = StringImageSmallIconConverter.FromName(c.Image);
+                var i = new Image();
+                var bi = StringImageSmallIconConverter.FromName(c.Image);
                 i.Source = bi;
                 i.Width = 16;
                 i.Height = 16;
 
                 panel.Children.Add(i);
                 panel.Children.Add(new TextBlock() { Text = c.Name });
-                ComboBoxItem cbi = new ComboBoxItem() { Content = panel, Tag = c };
+                var cbi = new ComboBoxItem() { Content = panel, Tag = c };
 
                 subtypeCombo.Items.Add(cbi);
 
@@ -170,10 +165,10 @@ namespace CombatManager
 
         private void SetIndexForString(ComboBox cb, String str)
         {
-            int val = -1;
-            for (int i = 0; i < cb.Items.Count; i++)
+            var val = -1;
+            for (var i = 0; i < cb.Items.Count; i++)
             {
-                ComboBoxItem it = (ComboBoxItem)cb.Items[i];
+                var it = (ComboBoxItem)cb.Items[i];
                 if ((it.Content as string) == str)
                 {
                     val = i;
@@ -197,19 +192,19 @@ namespace CombatManager
 
         private void KeyComboBox_Initialized(object sender, System.EventArgs e)
 		{
-            ComboBox cb = (ComboBox)sender;
-            CombatHotKey hk = (CombatHotKey)cb.DataContext;
+            var cb = (ComboBox)sender;
+            var hk = (CombatHotKey)cb.DataContext;
             
 
             foreach (var k in KeyToStringConverter.KeysList)
             {
-                ComboBoxItem item = new ComboBoxItem();
+                var item = new ComboBoxItem();
                 item.Content = k.Key;
                 item.DataContext = k.Value;
                 cb.Items.Add(item);
             }
 
-            string key = hk.Key.ToString();// (String)new KeyToStringConverter().Convert(hk.Key, 
+            var key = hk.Key.ToString();// (String)new KeyToStringConverter().Convert(hk.Key, 
                 //typeof(String), null, System.Globalization.CultureInfo.CurrentCulture);
 
 
@@ -222,15 +217,15 @@ namespace CombatManager
 
 		private void CommandComboBox_Initialized(object sender, System.EventArgs e)
 		{
-            ComboBox cb = (ComboBox)sender;
+            var cb = (ComboBox)sender;
 
-            CombatHotKey hk = (CombatHotKey)cb.DataContext;
+            var hk = (CombatHotKey)cb.DataContext;
 
             ComboBoxItem selected = null;
 
             foreach (var kv in names)
             {
-                ComboBoxItem cbi = new ComboBoxItem();
+                var cbi = new ComboBoxItem();
                 cbi.Content = kv.Key;
                 cbi.DataContext = kv.Value;
 
@@ -246,7 +241,7 @@ namespace CombatManager
        
 		private void SubtypeComboBox_Initialized(object sender, System.EventArgs e)
 		{
-            ComboBox cb = (ComboBox)sender;
+            var cb = (ComboBox)sender;
             UpdateSubtypeCombo(cb);
 
             
@@ -254,12 +249,12 @@ namespace CombatManager
 
 		private void SubtypeComboBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
 		{
-            ComboBox cb = ((ComboBox)sender);
+            var cb = ((ComboBox)sender);
 
-			CombatHotKey hk = (CombatHotKey)cb.DataContext;
+			var hk = (CombatHotKey)cb.DataContext;
             if (cb.SelectedValue != null)
             {
-                ComboBoxItem item = (ComboBoxItem)cb.SelectedItem;
+                var item = (ComboBoxItem)cb.SelectedItem;
                 if (item.Tag is Condition)
                 {
                     hk.Subtype = ((Condition)item.Tag).Name;
@@ -274,9 +269,9 @@ namespace CombatManager
 
 		private void CheckBox_Click(object sender, System.Windows.RoutedEventArgs e)
 		{
-            CheckBox cb = ((CheckBox)sender);
-			CombatHotKey hk = (CombatHotKey)cb.DataContext;
-            Grid parent = (Grid)VisualTreeHelper.GetParent(cb);
+            var cb = ((CheckBox)sender);
+			var hk = (CombatHotKey)cb.DataContext;
+            var parent = (Grid)VisualTreeHelper.GetParent(cb);
             UpdateBackground(parent, hk);
 		}
 
@@ -295,16 +290,16 @@ namespace CombatManager
         private void ItemBackground_DataContextChanged(object sender, System.Windows.DependencyPropertyChangedEventArgs e)
         {
 
-            Grid cb = ((Grid)sender);
-			CombatHotKey hk = (CombatHotKey)cb.DataContext;
+            var cb = ((Grid)sender);
+			var hk = (CombatHotKey)cb.DataContext;
             UpdateBackground(cb, hk);
         }
 
         private void ItemBackground_Loaded(object sender, System.Windows.RoutedEventArgs e)
         {
 
-            Grid cb = ((Grid)sender);
-			CombatHotKey hk = (CombatHotKey)cb.DataContext;
+            var cb = ((Grid)sender);
+			var hk = (CombatHotKey)cb.DataContext;
             UpdateBackground(cb, hk);
 
             UpdateSubtypeCombo(cb.GetChild<ComboBox>("SubtypeCombo"));
@@ -312,12 +307,12 @@ namespace CombatManager
 
         private void KeyPressButton_PreviewKeyDown(object sender, KeyEventArgs e)
         {
-            CombatHotKey hk = (CombatHotKey)((FrameworkElement)sender).DataContext;
+            var hk = (CombatHotKey)((FrameworkElement)sender).DataContext;
 
 
-            bool ctrl = Keyboard.Modifiers.HasFlag(ModifierKeys.Control);
-            bool alt = Keyboard.Modifiers.HasFlag(ModifierKeys.Alt);
-            bool shift = Keyboard.Modifiers.HasFlag(ModifierKeys.Shift);
+            var ctrl = Keyboard.Modifiers.HasFlag(ModifierKeys.Control);
+            var alt = Keyboard.Modifiers.HasFlag(ModifierKeys.Alt);
+            var shift = Keyboard.Modifiers.HasFlag(ModifierKeys.Shift);
             if (!KeyToStringConverter.IgnoreKeys.Contains(e.Key) && (ctrl | alt | shift))
             {
                 hk.Key = e.Key;

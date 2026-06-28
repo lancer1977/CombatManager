@@ -21,17 +21,10 @@
 
 using CombatManager.Personalization;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace CombatManager
 {
@@ -68,11 +61,11 @@ namespace CombatManager
 
             RollAlternateInitDiceBox.TextChanged += new TextChangedEventHandler(RollAlternateInitDiceBox_TextChanged);
 
-            int userScheme = UserSettings.Settings.ColorScheme;
+            var userScheme = UserSettings.Settings.ColorScheme;
 
-            foreach (ColorScheme scheme in ColorSchemeManager.Manager.SortedSchemes)
+            foreach (var scheme in ColorSchemeManager.Manager.SortedSchemes)
             {
-                ComboBoxItem item = new ComboBoxItem();
+                var item = new ComboBoxItem();
                 item.Content = scheme.Name;
                 item.Tag = scheme.ID;
                 ColorSchemeCombo.Items.Add(item);
@@ -88,13 +81,13 @@ namespace CombatManager
 
         void RollAlternateInitDiceBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            DieRoll dr = DieRoll.FromString(RollAlternateInitDiceBox.Text);
+            var dr = DieRoll.FromString(RollAlternateInitDiceBox.Text);
             OKButton.IsEnabled = (dr != null);
         }
 
         private bool EnableOK()
         {
-            bool enable = true;
+            var enable = true;
             if (GetLocalPort() == null)
             {
                 enable = false;
@@ -172,7 +165,7 @@ namespace CombatManager
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
 
-            bool needScheme = false;
+            var needScheme = false;
             if (UserSettings.Settings.DarkScheme != startDarkScheme)
             {
                 needScheme = true;
@@ -195,7 +188,7 @@ namespace CombatManager
         {
             get
             {
-                ComboBoxItem item = (ComboBoxItem)ColorSchemeCombo.SelectedItem;
+                var item = (ComboBoxItem)ColorSchemeCombo.SelectedItem;
                 return (int)item.Tag;
 
             }
@@ -222,8 +215,8 @@ namespace CombatManager
 
         private static bool IsPortTextAllowed(string text)
         {
-            Regex regex = new Regex("[^0-9]+");
-            bool allowed = !regex.IsMatch(text);
+            var regex = new Regex("[^0-9]+");
+            var allowed = !regex.IsMatch(text);
             return allowed;
         }
 
@@ -239,7 +232,7 @@ namespace CombatManager
         {
             if (e.DataObject.GetDataPresent(typeof(String)))
             {
-                String text = (String)e.DataObject.GetData(typeof(String));
+                var text = (String)e.DataObject.GetData(typeof(String));
                 if (!IsPortTextAllowed(text))
                 {
                     e.CancelCommand();
@@ -253,8 +246,8 @@ namespace CombatManager
 
         private static bool IsPasscodeTextAllowed(string text)
         {
-            Regex regex = new Regex("[^0-9A-Za-z!@#$%^&*]+");
-            bool allowed = !regex.IsMatch(text);
+            var regex = new Regex("[^0-9A-Za-z!@#$%^&*]+");
+            var allowed = !regex.IsMatch(text);
             return allowed;
         }
 
@@ -274,7 +267,7 @@ namespace CombatManager
         {
             if (e.DataObject.GetDataPresent(typeof(String)))
             {
-                String text = (String)e.DataObject.GetData(typeof(String));
+                var text = (String)e.DataObject.GetData(typeof(String));
                 if (!IsPasscodeTextAllowed(text))
                 {
                     e.CancelCommand();
@@ -298,7 +291,7 @@ namespace CombatManager
 
         private void UpdateLocalServiceControls()
         {
-            bool state = LocalWebServiceCheckbox.IsChecked == true;
+            var state = LocalWebServiceCheckbox.IsChecked == true;
             LocalServerPasscodeLabel.IsEnabled = state;
             PasscodeTextBox.IsEnabled = state;
             LocalServerPortLabel.IsEnabled = state;

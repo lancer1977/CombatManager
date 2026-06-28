@@ -137,7 +137,7 @@ namespace CombatManager
 
             string commandText = "Select id from " + table + " where " + field + " like ?";
 
-            return findIds(table, commandText, new List<String>(){value});
+            return findIds(table, commandText, new List<string>(){value});
 
         }
 
@@ -178,7 +178,7 @@ namespace CombatManager
 
                 RowsRet ret = null;
 
-                Object [] ob = new Object[parameters.Count];
+                object [] ob = new object[parameters.Count];
                 for (int i = 0; i < parameters.Count; i++)
                 {
                     ob[i] = parameters[i];

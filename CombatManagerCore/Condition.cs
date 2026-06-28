@@ -1,4 +1,4 @@
-/*
+﻿/*
  *  Condition.cs
  *
  *  Copyright (C) 2010-2012 Kyle Olson, kyle@kyleolson.com
@@ -19,7 +19,7 @@
  *
  */
 
-﻿using System;
+ using System;
 using System.ComponentModel;
 using System.Collections.Generic;
 using System.IO;
@@ -43,7 +43,7 @@ namespace CombatManager
         public event PropertyChangedEventHandler PropertyChanged;
 
         private ConditionType _Type;
-        private String _Name;
+        private string _Name;
 
 
         public FavoriteCondition()
@@ -69,7 +69,7 @@ namespace CombatManager
                 }
             }
         }
-        public String Name
+        public string Name
         {
             get { return _Name; }
             set
@@ -237,9 +237,9 @@ namespace CombatManager
         }
 
 
-        private String _Name;
-        private String _Text;
-        private String _Image;
+        private string _Name;
+        private string _Text;
+        private string _Image;
         private Spell _Spell;
         private Affliction _Affliction;
         private ConditionBonus _Bonus;
@@ -274,7 +274,7 @@ namespace CombatManager
         }
 
 
-        public String Name
+        public string Name
         {
             get { return _Name; }
             set
@@ -286,7 +286,7 @@ namespace CombatManager
                 }
             }
         }
-        public String Text
+        public string Text
         {
             get { return _Text; }
             set
@@ -299,7 +299,7 @@ namespace CombatManager
             }
         }
 
-        public String Image
+        public string Image
         {
             get { return _Image; }
             set
@@ -454,31 +454,31 @@ namespace CombatManager
 
         public static Condition ByName(string name)
         {
-            return Conditions.FirstOrDefault(a => String.Compare(a.Name, name, true) == 0);
+            return Conditions.FirstOrDefault(a => string.Compare(a.Name, name, true) == 0);
         }
 
         public static Condition ByNameCustom(string name)
         {
 
-            return _CustomConditions.FirstOrDefault(a => String.Compare(a.Name, name, true) == 0);
+            return _CustomConditions.FirstOrDefault(a => string.Compare(a.Name, name, true) == 0);
         }
 
         public static Condition FromFavorite(FavoriteCondition fc)
         {
             if (fc.Type == ConditionType.Custom)
             {
-                return _CustomConditions.FirstOrDefault(a => String.Compare(a.Name, fc.Name, true) == 0);
+                return _CustomConditions.FirstOrDefault(a => string.Compare(a.Name, fc.Name, true) == 0);
             }
             else
             {
-                return _Conditions.FirstOrDefault(a => (String.Compare(a.Name, fc.Name, true) == 0) &&
+                return _Conditions.FirstOrDefault(a => (string.Compare(a.Name, fc.Name, true) == 0) &&
                     (fc.Type == a.Type));
             }
         }
 
         public static bool HasFavorite(FavoriteCondition fc)
         {
-            return _FavoriteConditions.FirstOrDefault(a => String.Compare(a.Name, fc.Name, true) == 0 && a.Type == fc.Type) != null;
+            return _FavoriteConditions.FirstOrDefault(a => string.Compare(a.Name, fc.Name, true) == 0 && a.Type == fc.Type) != null;
         }
 
         public static int RecentIndex(FavoriteCondition fc)
@@ -486,7 +486,7 @@ namespace CombatManager
             for (int i = 0; i < _RecentCondtions.Count; i++)
             {
                 FavoriteCondition r = _RecentCondtions[i];
-                if (String.Compare(r.Name, fc.Name, true) == 0 && r.Type == fc.Type)
+                if (string.Compare(r.Name, fc.Name, true) == 0 && r.Type == fc.Type)
                 {
                     return i;
                 }

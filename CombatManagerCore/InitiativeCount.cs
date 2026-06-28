@@ -1,4 +1,4 @@
-/*
+﻿/*
  *  InitiativeCount.cs
  *
  *  Copyright (C) 2010-2012 Kyle Olson, kyle@kyleolson.com
@@ -19,7 +19,7 @@
  *
  */
 
-﻿using System;
+ using System;
 using System.ComponentModel;
 using System.Collections.Generic;
 using System.Linq;
@@ -89,8 +89,8 @@ namespace CombatManager
 
         public static bool operator == (InitiativeCount counta, InitiativeCount countb)
         {
-            Object a = (object)counta;
-            Object b = (object)countb;
+            object a = (object)counta;
+            object b = (object)countb;
             if (a == null || b == null)
             {
                 return (a == null && b == null);

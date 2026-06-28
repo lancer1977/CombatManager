@@ -1,4 +1,4 @@
-/*
+﻿/*
  *  SpellEditorWindow.xaml.cs
  *
  *  Copyright (C) 2010-2012 Kyle Olson, kyle@kyleolson.com
@@ -19,17 +19,8 @@
  *
  */
 
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace CombatManager
 {
@@ -46,7 +37,7 @@ namespace CombatManager
 
 			
 			
-            foreach (string s in SpellSchoolIndexConverter.Schools)
+            foreach (var s in SpellSchoolIndexConverter.Schools)
             {
                 SchoolComboBox.Items.Add(s.Capitalize());
             }
@@ -68,9 +59,9 @@ namespace CombatManager
                     _Spell = value;
 					DataContext = _Spell;
 
-                    for (int i = 0; i < SchoolComboBox.Items.Count; i++)
+                    for (var i = 0; i < SchoolComboBox.Items.Count; i++)
                     {
-                        string sch = (string)SchoolComboBox.Items[i];
+                        var sch = (string)SchoolComboBox.Items[i];
                         if (sch == StringCapitalizeConverter.Capitalize(_Spell.school))
                         {
                             SchoolComboBox.SelectedIndex = i;
@@ -90,14 +81,14 @@ namespace CombatManager
 
         private void DeleteButton_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            Spell.SpellAdjuster.LevelAdjusterInfo info = (Spell.SpellAdjuster.LevelAdjusterInfo)
+            var info = (Spell.SpellAdjuster.LevelAdjusterInfo)
                 ((FrameworkElement)sender).DataContext;
 
             Spell.Adjuster.Levels.Remove(info);
         }
         private void UnusedClassesList_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            ListBox box = ((ListBox)sender);
+            var box = ((ListBox)sender);
 
 
 
@@ -110,7 +101,7 @@ namespace CombatManager
         private void OKButton_Click(object sender, System.Windows.RoutedEventArgs e)
         {
 
-            ConditionBonus b = (ConditionBonus)CustomBonusBorder.DataContext;
+            var b = (ConditionBonus)CustomBonusBorder.DataContext;
 
             _Spell.Bonus = b;
 

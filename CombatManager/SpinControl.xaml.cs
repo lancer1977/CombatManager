@@ -1,4 +1,4 @@
-/*
+﻿/*
  *  SpinControl.xaml.cs
  *
  *  Copyright (C) 2010-2012 Kyle Olson, kyle@kyleolson.com
@@ -19,18 +19,9 @@
  *
  */
 
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Windows.Controls.Primitives;
 
 namespace CombatManager
@@ -60,8 +51,8 @@ namespace CombatManager
 
         private static object CoerceValue(DependencyObject element, object value)
         {
-            int? newValue = (int?)value;
-            SpinControl control = (SpinControl)element;
+            var newValue = (int?)value;
+            var control = (SpinControl)element;
 
 
 
@@ -70,9 +61,9 @@ namespace CombatManager
 
         private static void OnValueChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
         {
-            SpinControl control = (SpinControl)obj;
+            var control = (SpinControl)obj;
 
-            RoutedPropertyChangedEventArgs<int?> e = new RoutedPropertyChangedEventArgs<int?>(
+            var e = new RoutedPropertyChangedEventArgs<int?>(
                 (int?)args.OldValue, (int?)args.NewValue, ValueChangedEvent);
 
             control.OnValueChanged(e);
@@ -105,7 +96,7 @@ namespace CombatManager
         private void HPThumb_DragStarted(object sender, System.Windows.Controls.Primitives.DragStartedEventArgs e)
         {
 
-            Thumb thumb = (Thumb)sender;
+            var thumb = (Thumb)sender;
             if (Value != null)
             {
                 initialVal = Value.Value;
@@ -114,9 +105,9 @@ namespace CombatManager
 
         private void HPThumb_DragDelta(object sender, System.Windows.Controls.Primitives.DragDeltaEventArgs e)
         {
-            Thumb thumb = (Thumb)sender;
+            var thumb = (Thumb)sender;
 
-            int newHP = initialVal - (int)(e.VerticalChange / 5.0);
+            var newHP = initialVal - (int)(e.VerticalChange / 5.0);
 
             //int change = newHP - Value.Value;
 
@@ -125,7 +116,7 @@ namespace CombatManager
 
         private void HPThumb_DragCompleted(object sender, System.Windows.Controls.Primitives.DragCompletedEventArgs e)
         {
-            Thumb thumb = (Thumb)sender;
+            var thumb = (Thumb)sender;
 
             
             if (Value != null && Value == initialVal)
@@ -147,7 +138,7 @@ namespace CombatManager
 
         private void TextBox_GotFocus(object sender, System.Windows.RoutedEventArgs e)
         {
-            TextBox box = (TextBox)sender;
+            var box = (TextBox)sender;
 
             box.SelectAll();
         }
@@ -162,12 +153,12 @@ namespace CombatManager
         {
             if (e.Key == Key.Return || e.Key == Key.Enter)
             {
-                Control box = (Control)sender;
+                var box = (Control)sender;
 
-                Popup pop = (Popup)box.FindName("popup");
+                var pop = (Popup)box.FindName("popup");
                 pop.IsOpen = true;
 
-                TextBox hpBox = (TextBox)pop.FindName("textBox");
+                var hpBox = (TextBox)pop.FindName("textBox");
 
                 hpBox.Focus();
                 hpBox.SelectAll();
@@ -176,7 +167,7 @@ namespace CombatManager
 
         private void textBox_KeyUp(object sender, System.Windows.Input.KeyEventArgs e)
         {
-            TextBox box = (TextBox)sender;
+            var box = (TextBox)sender;
 
             if (e.Key == Key.Return || e.Key == Key.Enter || e.Key == Key.Down ||
                 e.Key == Key.Up)
@@ -213,7 +204,7 @@ namespace CombatManager
             else if (e.Key == Key.Escape)
             {
 
-                Popup pop = (Popup)box.FindName("popup");
+                var pop = (Popup)box.FindName("popup");
                 pop.IsOpen = false;
             }
         }
@@ -224,9 +215,9 @@ namespace CombatManager
         {
 
 
-            Button button = (Button)sender;
+            var button = (Button)sender;
 
-            TextBox box = (TextBox)button.FindName("textBox");
+            var box = (TextBox)button.FindName("textBox");
 
             if (box != null)
             {
@@ -244,9 +235,9 @@ namespace CombatManager
         private void AddHPButton_Click(object sender, RoutedEventArgs e)
         {
 
-            Button button = (Button)sender;
+            var button = (Button)sender;
 
-            TextBox box = (TextBox)button.FindName("textBox");
+            var box = (TextBox)button.FindName("textBox");
 
             if (box != null)
             {

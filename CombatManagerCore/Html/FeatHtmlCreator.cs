@@ -32,7 +32,7 @@ namespace CombatManager.Html
 		{
 		}
 		
-		public static String CreateHtml(Feat feat, bool showTitle = true, bool completepage = true, string css = null)
+		public static string CreateHtml(Feat feat, bool showTitle = true, bool completepage = true, string css = null)
         {
             StringBuilder blocks = new StringBuilder();
             if (completepage)
@@ -44,7 +44,7 @@ namespace CombatManager.Html
             {
                 featString = "";
                 bool first = true;
-                foreach (String featType in feat.Types)
+                foreach (string featType in feat.Types)
                 {
                     if (feat.Type != "General")
                     {

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using EmbedIO.Net;
 
 namespace CombatManager.LocalService
 {
@@ -41,7 +42,7 @@ namespace CombatManager.LocalService
 
 
         public delegate void ActionCallback(Action action);
-        
+
 
         public ActionCallback StateActionCallback { get; set; }
         public Action SaveCallback { get; set; }
@@ -91,28 +92,25 @@ namespace CombatManager.LocalService
 
         public void Start(bool runWeb = true)
         {
-            var url = "http://localhost:" + port + "/";
-
-
-            // Our web server is disposable.
-            server = new WebServer(o => o.WithUrlPrefix(url)
-            .WithMode(HttpListenerMode.EmbedIO))
+            //EndPointManager.UseIpv6 = false; 
+            var universalUrl = $"http://*:{port}";
+            server = new WebServer(o =>
+                    o
+                        .WithUrlPrefix(universalUrl)
+                        .WithMode(HttpListenerMode.EmbedIO)
+                        )
             .WithLocalSessionManager();
 
             if (runWeb)
             {
-               server.WithModule(new CombatManagerHTMLServer("/www/", state, RunActionCallback));
+                server.WithModule(new CombatManagerHTMLServer("/www/", state, RunActionCallback));
             }
 
             server.WithModule(new ImageServer())
             .WithModule(new CombatManagerNotificationServer("/api/notification/", state))
-            .WithWebApi("/api", m => m.RegisterController(() =>  new LocalCombatManagerServiceController(null, state, this, RunActionCallback, RunSaveCallback)));
- 
-
-            
-
+            .WithWebApi("/api", m => m.RegisterController(() => new LocalCombatManagerServiceController(null, state, this, RunActionCallback, RunSaveCallback)));
             server.RunAsync();
-    
+
         }
 
         public string Passcode

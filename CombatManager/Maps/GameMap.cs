@@ -22,12 +22,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.ComponentModel;
 using System.Windows.Media;
 using System.Windows;
 using System.Windows.Media.Imaging;
-using CombatManager;
 using System.Xml.Serialization;
 using System.IO;
 using System.Collections;
@@ -94,7 +92,7 @@ namespace CombatManager.Maps
             SourceFile = filename;
             cachedMap = true;
 
-            FileInfo info = new FileInfo(filename);
+            var info = new FileInfo(filename);
             Name = name;
             this.folderPath = folderPath;
         }
@@ -105,7 +103,7 @@ namespace CombatManager.Maps
             get { return scale; }
             set
             {
-                double setValue = value.Clamp(.01, 20);
+                var setValue = value.Clamp(.01, 20);
 
                 if (scale != setValue)
                 {
@@ -120,7 +118,7 @@ namespace CombatManager.Maps
             get { return tableScale; }
             set
             {
-                double setValue = value.Clamp(.01, 20);
+                var setValue = value.Clamp(.01, 20);
 
                 if (tableScale != setValue)
                 {
@@ -147,13 +145,13 @@ namespace CombatManager.Maps
             set
             {
 
-                double setValue = value.Clamp(1, 2000);
+                var setValue = value.Clamp(1, 2000);
 
 
                 if (cellSizeWidth != setValue)
                 {
                     cellSizeWidth = setValue;
-                    bool notifyHeight = false;
+                    var notifyHeight = false;
                     if (squareCellSize && cellSizeWidth != cellSizeHeight)
                     {
                         cellSizeHeight = cellSizeWidth;
@@ -174,12 +172,12 @@ namespace CombatManager.Maps
             get { return cellSizeHeight; }
             set
             {
-                double setValue = value.Clamp(1, 2000);
+                var setValue = value.Clamp(1, 2000);
                 if (cellSizeHeight != setValue)
                 {
                     cellSizeHeight = setValue;
 
-                    bool notifyWidth = false ;
+                    var notifyWidth = false ;
                     if (squareCellSize && cellSizeWidth != cellSizeHeight)
                     {
                         cellSizeWidth = cellSizeHeight;
@@ -235,7 +233,7 @@ namespace CombatManager.Maps
         {
             sourceFile = name;
 
-            bool notifyImage = false;
+            var notifyImage = false;
             if (image != null)
             {
                 image = null;
@@ -438,8 +436,8 @@ namespace CombatManager.Maps
             get
             {
 
-                double cellActualWidth = CellSizeWidth * Scale;
-                double cellActualHeight = CellSizeHeight * Scale;
+                var cellActualWidth = CellSizeWidth * Scale;
+                var cellActualHeight = CellSizeHeight * Scale;
                 return new Size(cellActualWidth, cellActualHeight);
             }
         }
@@ -450,8 +448,8 @@ namespace CombatManager.Maps
             get
             {
 
-                double cellActualWidth = CellSizeWidth * TableScale;
-                double cellActualHeight = CellSizeHeight * TableScale;
+                var cellActualWidth = CellSizeWidth * TableScale;
+                var cellActualHeight = CellSizeHeight * TableScale;
                 return new Size(cellActualWidth, cellActualHeight);
             }
         }
@@ -461,10 +459,10 @@ namespace CombatManager.Maps
         {
             get
             {
-                double xDistance = Math.Ceiling(cellOrigin.X / CellSizeWidth);
-                double yDistance = Math.Ceiling(cellOrigin.Y / CellSizeHeight);
+                var xDistance = Math.Ceiling(cellOrigin.X / CellSizeWidth);
+                var yDistance = Math.Ceiling(cellOrigin.Y / CellSizeHeight);
 
-                Point p = new Point();
+                var p = new Point();
                 p.X = cellOrigin.X - xDistance * CellSizeWidth;
                 p.Y = cellOrigin.Y - yDistance * CellSizeHeight;
 
@@ -538,10 +536,10 @@ namespace CombatManager.Maps
             get
             {
                
-                ObservableCollection<ExportMarkerItem> list = new ObservableCollection<ExportMarkerItem>();
-                foreach (KeyValuePair<int, List<Marker>> pair in markers)
+                var list = new ObservableCollection<ExportMarkerItem>();
+                foreach (var pair in markers)
                 {
-                    ExportMarkerItem t = new ExportMarkerItem() { Index = pair.Key, Markers = pair.Value };
+                    var t = new ExportMarkerItem() { Index = pair.Key, Markers = pair.Value };
                     list.Add(t);
 
                 }
@@ -551,7 +549,7 @@ namespace CombatManager.Maps
             set
             {
                 markers = new Dictionary<int, List<Marker>>();
-                foreach (ExportMarkerItem t in value)
+                foreach (var t in value)
                 {
                     markers[t.Index] = t.Markers;
                 }
@@ -624,7 +622,7 @@ namespace CombatManager.Maps
 
         public void SetMarker(int x, int y, Marker marker)
         {
-            int index = CellIndex(x, y);
+            var index = CellIndex(x, y);
             List<Marker> list;
 
             if (markers.ContainsKey(index))
@@ -648,7 +646,7 @@ namespace CombatManager.Maps
 
         public void DeleteAllMarkers(int x, int y)
         {
-            int index = CellIndex(x, y);
+            var index = CellIndex(x, y);
 
             if (markers.ContainsKey(index))
             {
@@ -690,7 +688,7 @@ namespace CombatManager.Maps
             }
             else
             {
-                List<Marker> list = new List<Marker>();
+                var list = new List<Marker>();
                 markers[id] = list;
                 return list;
             }
@@ -740,13 +738,13 @@ namespace CombatManager.Maps
 
         public static GameMap LoadMap(int id)
         {
-            GameMap map= (GameMap)XmlLoader<GameMap>.Load(CreateFileName(id), true);
+            var map= (GameMap)XmlLoader<GameMap>.Load(CreateFileName(id), true);
 
-            FileInfo info = new FileInfo(XmlLoader<GameMap>.SaveFileName(CreateFogFileName(id), true));
+            var info = new FileInfo(XmlLoader<GameMap>.SaveFileName(CreateFogFileName(id), true));
 
             if (info.Exists)
             {
-                using (FileStream stream = info.OpenRead())
+                using (var stream = info.OpenRead())
                 {
                     using (var memoryStream = new MemoryStream())
                     {
@@ -771,10 +769,10 @@ namespace CombatManager.Maps
 
                 if (saveFog)
                 {
-                    FileInfo info = new FileInfo(XmlLoader<GameMap>.SaveFileName(CreateFogFileName(id), true));
-                    using (FileStream stream = info.OpenWrite())
+                    var info = new FileInfo(XmlLoader<GameMap>.SaveFileName(CreateFogFileName(id), true));
+                    using (var stream = info.OpenWrite())
                     {
-                        byte[] byteArray = new byte[(int)Math.Ceiling((double)Fog.Length / 8)];
+                        var byteArray = new byte[(int)Math.Ceiling((double)Fog.Length / 8)];
                         Fog.CopyTo(byteArray, 0);
                         stream.Write(byteArray, 0, byteArray.Length);
 
@@ -788,7 +786,7 @@ namespace CombatManager.Maps
         public static void Delete(int id)
         {
             XmlLoader<GameMap>.Delete(CreateFileName(id), true);
-            FileInfo info = new FileInfo(XmlLoader<GameMap>.SaveFileName(CreateFogFileName(id), true));
+            var info = new FileInfo(XmlLoader<GameMap>.SaveFileName(CreateFogFileName(id), true));
             if (info.Exists)
             {
                 info.Delete();

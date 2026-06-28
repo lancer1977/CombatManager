@@ -128,7 +128,7 @@ namespace CombatManager.Html
         }
 
 
-        public static String CreateCombatListItem(Character ch, CombatState state = null, List<(CombatVisibility, Character)> filteredList = null, int index = 0, CombatVisibility visibility = CombatVisibility.Visible)
+        public static string CreateCombatListItem(Character ch, CombatState state = null, List<(CombatVisibility, Character)> filteredList = null, int index = 0, CombatVisibility visibility = CombatVisibility.Visible)
         {
             StringBuilder blocks = new StringBuilder();
 

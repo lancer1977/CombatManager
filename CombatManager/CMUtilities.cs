@@ -20,23 +20,13 @@
  */
 
 using System;
-using System.ComponentModel;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Xml.Serialization;
-using System.Text.RegularExpressions;
 using System.Windows;
-using System.Xml;
-using System.Globalization;
 using System.IO;
 using System.Windows.Media;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Runtime.InteropServices;
-using System.Windows.Shapes;
 using System.Windows.Media.Imaging;
 
 namespace CombatManager
@@ -48,13 +38,13 @@ namespace CombatManager
           where T : DependencyObject
         {
             // get parent item
-            DependencyObject parentObject = VisualTreeHelper.GetParent(child);
+            var parentObject = VisualTreeHelper.GetParent(child);
 
             // we’ve reached the end of the tree
             if (parentObject == null) return null;
 
             // check if the parent matches the type we’re looking for
-            T parent = parentObject as T;
+            var parent = parentObject as T;
             if (parent != null)
             {
                 return parent;
@@ -68,16 +58,16 @@ namespace CombatManager
 
         public static T FindVisualChild<T>(DependencyObject obj) where T : DependencyObject
         {
-            for (int i = 0; i < VisualTreeHelper.GetChildrenCount(obj); i++)
+            for (var i = 0; i < VisualTreeHelper.GetChildrenCount(obj); i++)
             {
-                DependencyObject child = VisualTreeHelper.GetChild(obj, i);
+                var child = VisualTreeHelper.GetChild(obj, i);
                 if (child != null && child is T)
                 {
                     return (T)child;
                 }
                 else
                 {
-                    T childOfChild = FindVisualChild<T>(child);
+                    var childOfChild = FindVisualChild<T>(child);
                     if (childOfChild != null)
                     {
                         return childOfChild;
@@ -89,7 +79,7 @@ namespace CombatManager
 
         public static T GetSibling<T>(this DependencyObject e, String name) where T : DependencyObject
         {
-            DependencyObject parent = VisualTreeHelper.GetParent(e);
+            var parent = VisualTreeHelper.GetParent(e);
             return parent.GetChild<T>(name);
 
         }
@@ -97,13 +87,13 @@ namespace CombatManager
 
         public static T GetChild<T>(this DependencyObject parent, String name) where T : DependencyObject
         {
-            int count = VisualTreeHelper.GetChildrenCount(parent);
-            for (int i = 0; i < count; i++)
+            var count = VisualTreeHelper.GetChildrenCount(parent);
+            for (var i = 0; i < count; i++)
             {
-                DependencyObject dob = VisualTreeHelper.GetChild(parent, i);
+                var dob = VisualTreeHelper.GetChild(parent, i);
                 if (dob is FrameworkElement)
                 {
-                    FrameworkElement fe = (FrameworkElement)dob;
+                    var fe = (FrameworkElement)dob;
                     if (fe.Name == name)
                     {
                         return fe as T;
@@ -117,7 +107,7 @@ namespace CombatManager
         public static void ScrollChildToBottom(this DependencyObject e)
         {
 
-            ScrollViewer s = CMUIUtilities.FindVisualChild<ScrollViewer>(e);
+            var s = CMUIUtilities.FindVisualChild<ScrollViewer>(e);
             if (s != null)
             {
                 s.ScrollToBottom();
@@ -135,17 +125,17 @@ namespace CombatManager
 
 
 
-            for (int i = 0; i < box.Items.Count; i++)
+            for (var i = 0; i < box.Items.Count; i++)
             {
-                ListBoxItem item = (ListBoxItem)box.ItemContainerGenerator.ContainerFromIndex(i);
+                var item = (ListBoxItem)box.ItemContainerGenerator.ContainerFromIndex(i);
 
                 if (item != null)
                 {
 
-                    Point p = e.GetPosition(item);
+                    var p = e.GetPosition(item);
                     if (p != null)
                     {
-                        Rect bounds = VisualTreeHelper.GetDescendantBounds(item);
+                        var bounds = VisualTreeHelper.GetDescendantBounds(item);
 
                         if (bounds.Contains(p))
                         {
@@ -162,7 +152,7 @@ namespace CombatManager
         public static Image GetNamedImageControl(string name)
         {
 
-            Image i = new Image();
+            var i = new Image();
             i.Source = StringImageSmallIconConverter.FromName(name);
             i.Width = 16;
             i.Height = 16;
@@ -239,7 +229,7 @@ namespace CombatManager
         public static Point Lerp(this Point pt1, Point pt2, double pct)
         {
             Point diff = pt2.Subtract(pt1);
-            Point change = diff.Multiply(pct.Clamp(0, 1));
+            var change = diff.Multiply(pct.Clamp(0, 1));
             return pt2.Add(change);
         }
 
@@ -256,7 +246,7 @@ namespace CombatManager
         public static Color ToColor(this UInt32 source)
         {
 
-            byte[] bytes = BitConverter.GetBytes(source);
+            var bytes = BitConverter.GetBytes(source);
             return Color.FromArgb(bytes[3], bytes[2], bytes[1], bytes[0]);
         }
 
@@ -308,19 +298,19 @@ namespace CombatManager
 
         public static Rect ScaleCenter(this Rect r, double x, double y)
         {
-            Rect rectOut = r;
-            double newWidth = r.Width * x;
-            double newHeight = r.Height * y;
+            var rectOut = r;
+            var newWidth = r.Width * x;
+            var newHeight = r.Height * y;
 
-            double widthInflate = (newWidth - r.Width) / 2.0;
-            double heightInflate = (newHeight - r.Height) / 2.0;
+            var widthInflate = (newWidth - r.Width) / 2.0;
+            var heightInflate = (newHeight - r.Height) / 2.0;
             rectOut.Inflate(widthInflate, heightInflate);
             return rectOut;
         }
 
         public static System.Windows.Shapes.Path ToButtonPath(this Geometry geo, Color color)
         {
-            System.Windows.Shapes.Path path = new System.Windows.Shapes.Path();
+            var path = new System.Windows.Shapes.Path();
             path.Data = geo;
             path.Fill = new SolidColorBrush(color);
             path.Height = 16;
@@ -338,9 +328,9 @@ namespace CombatManager
         public static Geometry RectanglePath(this Rect rect, double borderWidth)
         {
 
-            double diff = borderWidth / 2.0;
+            var diff = borderWidth / 2.0;
 
-            Rect shrinkRect = rect;
+            var shrinkRect = rect;
             shrinkRect.Inflate(-diff, -diff);
 
             return new RectangleGeometry(shrinkRect);
@@ -354,7 +344,7 @@ namespace CombatManager
 
         public static Geometry CirclePath(this Rect rect, double borderWidth)
         {
-            double circleSize = rect.CircleSize() - (borderWidth / 2.0);
+            var circleSize = rect.CircleSize() - (borderWidth / 2.0);
 
             return new EllipseGeometry(rect.Center(), circleSize, circleSize);
 
@@ -372,12 +362,12 @@ namespace CombatManager
 
         public static Geometry DiamondPath(this Rect rect, double borderWidth)
         {
-            double diff = borderWidth / 2.0;
+            var diff = borderWidth / 2.0;
 
-            Point p1 = new Point(rect.X + rect.Width / 2.0, rect.Y + diff);
-            Point p2 = new Point(rect.X + rect.Width - diff, rect.Y + rect.Height / 2.0);
-            Point p3 = new Point(rect.X + rect.Width / 2.0, rect.Y + rect.Height - diff);
-            Point p4 = new Point(rect.X + diff, rect.Y + rect.Height / 2.0);
+            var p1 = new Point(rect.X + rect.Width / 2.0, rect.Y + diff);
+            var p2 = new Point(rect.X + rect.Width - diff, rect.Y + rect.Height / 2.0);
+            var p3 = new Point(rect.X + rect.Width / 2.0, rect.Y + rect.Height - diff);
+            var p4 = new Point(rect.X + diff, rect.Y + rect.Height / 2.0);
 
             return CreatePathGeometry(new Point[] { p1, p2, p3, p4 });
 
@@ -389,18 +379,18 @@ namespace CombatManager
         public static Geometry TargetPath(this Rect rect, double borderWidth)
         {
 
-            double diff = borderWidth / 2.0;
-            double fullRadius = rect.CircleSize() - diff;
-            double bigRadius = fullRadius * .8;
-            double smallRadius = bigRadius * .7;
+            var diff = borderWidth / 2.0;
+            var fullRadius = rect.CircleSize() - diff;
+            var bigRadius = fullRadius * .8;
+            var smallRadius = bigRadius * .7;
 
-            Rect diffRect = rect;
+            var diffRect = rect;
             diffRect.Inflate(-diff, -diff);
 
-            EllipseGeometry ellipseOut = new EllipseGeometry(rect.Center(), bigRadius, bigRadius);
-            EllipseGeometry ellipseIn = new EllipseGeometry(rect.Center(), smallRadius, smallRadius);
+            var ellipseOut = new EllipseGeometry(rect.Center(), bigRadius, bigRadius);
+            var ellipseIn = new EllipseGeometry(rect.Center(), smallRadius, smallRadius);
 
-            CombinedGeometry cg = new CombinedGeometry(GeometryCombineMode.Xor, ellipseOut, ellipseIn);
+            var cg = new CombinedGeometry(GeometryCombineMode.Xor, ellipseOut, ellipseIn);
 
             Rect wRect = diffRect.ScaleCenter(1, .1);
             Rect hRect = diffRect.ScaleCenter(.1, 1);
@@ -420,19 +410,19 @@ namespace CombatManager
         public static Geometry StarPath(this Rect rect, double borderWidth)
         {
 
-            double diff = borderWidth / 2.0;
-            double radius = (rect.CircleSize() - diff) * .8;
+            var diff = borderWidth / 2.0;
+            var radius = (rect.CircleSize() - diff) * .8;
             Point center = rect.Center();
 
-            float innerScale = (float)(Math.Cos(2.0 * Math.PI / 5.0) / Math.Cos(Math.PI / 5.0));
+            var innerScale = (float)(Math.Cos(2.0 * Math.PI / 5.0) / Math.Cos(Math.PI / 5.0));
 
 
 
-            Point[] points = new Point[10];
+            var points = new Point[10];
 
-            for (int i = 0; i < 5; i++)
+            for (var i = 0; i < 5; i++)
             {
-                double angle = ((double)i) * (Math.PI * 2.0) / 5.0f - Math.PI / 2.0;
+                var angle = ((double)i) * (Math.PI * 2.0) / 5.0f - Math.PI / 2.0;
                 points[i * 2] = new Point(center.X + Math.Cos(angle) * radius, center.Y + Math.Sin(angle) * radius);
                 angle += Math.PI * 2.0 / 10.0;
                 points[i * 2 + 1] = new Point(center.X + Math.Cos(angle) * radius * innerScale, center.Y + Math.Sin(angle) * radius * innerScale);
@@ -448,14 +438,14 @@ namespace CombatManager
         {
             if (points.Length > 0)
             {
-                Point start = points[0];
-                List<LineSegment> segments = new List<LineSegment>();
-                for (int i = 1; i < points.Length; i++)
+                var start = points[0];
+                var segments = new List<LineSegment>();
+                for (var i = 1; i < points.Length; i++)
                 {
                     segments.Add(new LineSegment(points[i], true));
                 }
-                PathFigure figure = new PathFigure(start, segments, true);
-                PathGeometry geometry = new PathGeometry();
+                var figure = new PathFigure(start, segments, true);
+                var geometry = new PathGeometry();
                 geometry.Figures.Add(figure);
                 return geometry;
             }
@@ -477,7 +467,7 @@ namespace CombatManager
 
         public static DependencyObject SetElementVisibility(this DependencyObject dep, String name, Visibility visibility)
         {
-            UIElement ui = dep.FindLogicalNode(name) as UIElement;
+            var ui = dep.FindLogicalNode(name) as UIElement;
 
             if (ui != null)
             {
@@ -489,7 +479,7 @@ namespace CombatManager
 
         public static DependencyObject SetElementsVisibility(this DependencyObject dep, String[] names, Visibility visibility)
         {
-            foreach (String name in names)
+            foreach (var name in names)
             {
                 dep.SetElementVisibility(name, visibility);
             }
@@ -499,8 +489,8 @@ namespace CombatManager
 
         public static void ScrollBy(this ScrollViewer viewer, double x, double y)
         {
-            double newX = viewer.HorizontalOffset + x;
-            double newY = viewer.VerticalOffset + y;
+            var newX = viewer.HorizontalOffset + x;
+            var newY = viewer.VerticalOffset + y;
 
             viewer.ScrollToHorizontalOffset(newX);
             viewer.ScrollToVerticalOffset(newY);
@@ -568,7 +558,7 @@ namespace CombatManager
         {
             get
             {
-                String path = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+                var path = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
                 path = System.IO.Path.Combine(path, "Combat Manager");
 
                 if (!Directory.Exists(path))
@@ -582,7 +572,7 @@ namespace CombatManager
 
         public static string AppDataSubDir(String name)
         {
-            String path = System.IO.Path.Combine(AppDataDir, name);
+            var path = System.IO.Path.Combine(AppDataDir, name);
 
             if (!Directory.Exists(path))
             {
@@ -638,7 +628,7 @@ namespace CombatManager
         private void Mark(string message)
         {
 
-            uint newTime = timeGetTime();
+            var newTime = timeGetTime();
             TimeMessage(message, newTime);
             _Last = newTime;
         }
@@ -651,7 +641,7 @@ namespace CombatManager
         public void MarkEventIf(string message, uint time)
         {
 
-            uint newTime = timeGetTime();
+            var newTime = timeGetTime();
 
             if (newTime - _Last >= time)
             {
@@ -665,7 +655,7 @@ namespace CombatManager
         public void MarkEventIfTotal(string message, uint time)
         {
 
-            uint newTime = timeGetTime();
+            var newTime = timeGetTime();
 
             if (newTime - _Time >= time)
             {
@@ -676,7 +666,7 @@ namespace CombatManager
 
         public void SetLastTime()
         {
-            uint newTime = timeGetTime();
+            var newTime = timeGetTime();
             _Last = newTime;
         }
 
@@ -684,7 +674,7 @@ namespace CombatManager
         private void TimeMessage(string message, uint newTime)
         {
 
-            string output = message + ": " + (newTime - _Last);
+            var output = message + ": " + (newTime - _Last);
             if (_ShowTotals)
             {
                 output += " Total: " + (newTime - _Time);

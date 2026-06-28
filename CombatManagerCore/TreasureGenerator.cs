@@ -1,4 +1,4 @@
-/*
+﻿/*
  *  TreasureGenerator.cs
  *
  *  Copyright (C) 2010-2012 Kyle Olson, kyle@kyleolson.com
@@ -19,7 +19,7 @@
  *
  */
 
-﻿using System;
+ using System;
 using System.ComponentModel;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -287,7 +287,7 @@ namespace CombatManager
             MajorWondrous = 0x10000
         }
 
-        public static String RandomItemString(RandomItemType type)
+        public static string RandomItemString(RandomItemType type)
         {
             switch (type)
             {
@@ -1571,7 +1571,7 @@ namespace CombatManager
         }
 
 
-        public string GenerateSpecial(String type, ItemLevel level, string currentSpecial, out int bonusIncrease, out int costIncrease)
+        public string GenerateSpecial(string type, ItemLevel level, string currentSpecial, out int bonusIncrease, out int costIncrease)
         {
             bonusIncrease = 0;
             costIncrease = 0;
@@ -1764,7 +1764,7 @@ namespace CombatManager
 
         private static string RandomItemFromList(string items)
         {
-            List<String> list = TreasureStringList(items);
+            List<string> list = TreasureStringList(items);
 
             if (list.Count > 0)
             {
@@ -1774,9 +1774,9 @@ namespace CombatManager
             return "";
         }
 
-        public static List<String> TreasureStringList(string items)
+        public static List<string> TreasureStringList(string items)
         {
-            List<String> list = new List<string>();
+            List<string> list = new List<string>();
 
             Regex regList = new Regex("(?<value>.+?)(; |$)");
 
@@ -1831,9 +1831,9 @@ namespace CombatManager
         public event PropertyChangedEventHandler PropertyChanged;
 
         private int _Roll;
-        private String _Value;
+        private string _Value;
         private int _AverageValue;
-        private String _Gem;
+        private string _Gem;
 
         public int Roll
         {
@@ -1847,7 +1847,7 @@ namespace CombatManager
                 }
             }
         }
-        public String Value
+        public string Value
         {
             get { return _Value; }
             set
@@ -1871,7 +1871,7 @@ namespace CombatManager
                 }
             }
         }
-        public String Gem
+        public string Gem
         {
             get { return _Gem; }
             set
@@ -1892,9 +1892,9 @@ namespace CombatManager
         public event PropertyChangedEventHandler PropertyChanged;
 
         private int _Roll;
-        private String _Value;
+        private string _Value;
         private int _AverageValue;
-        private String _Art;
+        private string _Art;
 
         public int Roll
         {
@@ -1908,7 +1908,7 @@ namespace CombatManager
                 }
             }
         }
-        public String Value
+        public string Value
         {
             get { return _Value; }
             set
@@ -1932,7 +1932,7 @@ namespace CombatManager
                 }
             }
         }
-        public String Art
+        public string Art
         {
             get { return _Art; }
             set
@@ -1955,11 +1955,11 @@ namespace CombatManager
 
         private int _Level;
         private int? _CoinRoll;
-        private String _CoinValue;
+        private string _CoinValue;
         private int? _GoodsRoll;
-        private String _GoodsValue;
+        private string _GoodsValue;
         private int? _ItemsRoll;
-        private String _ItemsValue;
+        private string _ItemsValue;
 
         public int Level
         {
@@ -1985,7 +1985,7 @@ namespace CombatManager
                 }
             }
         }
-        public String CoinValue
+        public string CoinValue
         {
             get { return _CoinValue; }
             set
@@ -2009,7 +2009,7 @@ namespace CombatManager
                 }
             }
         }
-        public String GoodsValue
+        public string GoodsValue
         {
             get { return _GoodsValue; }
             set
@@ -2033,7 +2033,7 @@ namespace CombatManager
                 }
             }
         }
-        public String ItemsValue
+        public string ItemsValue
         {
             get { return _ItemsValue; }
             set

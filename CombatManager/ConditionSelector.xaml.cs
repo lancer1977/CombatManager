@@ -1,4 +1,4 @@
-/*
+﻿/*
  *  ConditionSelector.xaml.cs
  *
  *  Copyright (C) 2010-2012 Kyle Olson, kyle@kyleolson.com
@@ -19,30 +19,17 @@
  *
  */
 
-﻿using System;
-using System.Data;
-using System.ComponentModel;
-using System.Collections.ObjectModel;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
+ using System;
+ using System.ComponentModel;
+ using System.Collections.Generic;
+ using System.Linq;
+ using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
-using System.Windows.Data;
+ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using WinInterop = System.Windows.Interop;
-using System.Runtime.InteropServices;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Xml.Serialization;
-using Microsoft.Win32;
 
 namespace CombatManager
 {
@@ -90,7 +77,7 @@ namespace CombatManager
 
         bool ConditionViewFilter(object ob)
         {
-            Condition c = (Condition)ob;
+            var c = (Condition)ob;
 
             return ConditionViewTypeFilter(c) && ConditionViewTextFilter(c);
         }
@@ -113,11 +100,11 @@ namespace CombatManager
 
         bool ConditionViewTypeFilter(Condition c)
         {
-            bool showingSpells = SpellsRadioButton.IsChecked == true;
-			bool showingConditions = ConditionsRadioButton.IsChecked == true;
-			bool showingAfflictions = AfflictionsRadioButton.IsChecked == true;
-            bool showingCustom = CustomRadioButton.IsChecked == true;
-            bool showingFavorites = FavoritesRadioButton.IsChecked == true ;
+            var showingSpells = SpellsRadioButton.IsChecked == true;
+			var showingConditions = ConditionsRadioButton.IsChecked == true;
+			var showingAfflictions = AfflictionsRadioButton.IsChecked == true;
+            var showingCustom = CustomRadioButton.IsChecked == true;
+            var showingFavorites = FavoritesRadioButton.IsChecked == true ;
 
             if (showingFavorites)
             {
@@ -144,7 +131,7 @@ namespace CombatManager
 
         void UpdateConditionDisplay()
         {
-            Condition c = (Condition)conditionView.CurrentItem;            
+            var c = (Condition)conditionView.CurrentItem;            
 
 
             if (c != visibleCondition)
@@ -163,19 +150,19 @@ namespace CombatManager
                     {
                         if (c.Spell != null)
                         {
-                            SpellBlockCreator cs = new SpellBlockCreator(ConditionDocument, null);
+                            var cs = new SpellBlockCreator(ConditionDocument, null);
                             ConditionDocument.Blocks.AddRange(cs.CreateBlocks(c.Spell, true, true));
 
                         }
                         else if (c.Affliction != null)
                         {
 
-                            Paragraph p = new Paragraph();
+                            var p = new Paragraph();
                             p.Inlines.Add(new Bold(new Run(c.Name)));
                             p.Inlines.Add(new LineBreak());
                             p.Inlines.Add(new Run(c.Affliction.Text));
                             p.TextAlignment = TextAlignment.Left;
-                            Thickness m = p.Margin;
+                            var m = p.Margin;
                             m.Bottom = 0;
                             p.Margin = m;
 
@@ -184,12 +171,12 @@ namespace CombatManager
                         else
                         {
 
-                            Paragraph p = new Paragraph();
+                            var p = new Paragraph();
                             p.Inlines.Add(new Bold(new Run(c.Name)));
                             p.Inlines.Add(new LineBreak());
                             p.Inlines.Add(new Run(c.Text));
                             p.TextAlignment = TextAlignment.Left;
-                            Thickness m = p.Margin;
+                            var m = p.Margin;
                             m.Bottom = 0;
                             p.Margin = m;
 
@@ -255,11 +242,11 @@ namespace CombatManager
 
             if (characters != null)
             {
-                foreach (Character ch in characters)
+                foreach (var ch in characters)
                 {
 
                     
-                    Condition c = (Condition)conditionView.CurrentItem;
+                    var c = (Condition)conditionView.CurrentItem;
 
                     if (c != null)
                     {
@@ -315,10 +302,10 @@ namespace CombatManager
     && AfflictionsRadioButton != null
     && AddToFavoritesButton != null)
             {
-                bool showingCustom =
+                var showingCustom =
                     (CustomRadioButton.IsChecked == true);
 
-                bool showingFavorites =
+                var showingFavorites =
                     (FavoritesRadioButton.IsChecked == true);
 
 
@@ -410,7 +397,7 @@ namespace CombatManager
 
         private void DeleteButton_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            Condition c = (Condition)((Button)sender).DataContext;
+            var c = (Condition)((Button)sender).DataContext;
 
             if (c != null)
             {
@@ -432,7 +419,7 @@ namespace CombatManager
 
         private void AddToFavoritesButton_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            Condition c = (Condition)conditionView.CurrentItem;
+            var c = (Condition)conditionView.CurrentItem;
 
             if (c != null)
             {
@@ -477,11 +464,11 @@ namespace CombatManager
 
         private void Grid_Loaded(object sender, System.Windows.RoutedEventArgs e)
         {
-            FrameworkElement el = (FrameworkElement)sender;
+            var el = (FrameworkElement)sender;
 
-            Button delete = (Button)LogicalTreeHelper.FindLogicalNode(el, "DeleteButton");
+            var delete = (Button)LogicalTreeHelper.FindLogicalNode(el, "DeleteButton");
 
-            Condition c = (Condition)el.DataContext;
+            var c = (Condition)el.DataContext;
 
             if (CustomRadioButton.IsChecked == true || FavoritesRadioButton.IsChecked == true)
             {
@@ -495,10 +482,10 @@ namespace CombatManager
 
         private void EditCustomCondition_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-             Condition c = (Condition)conditionView.CurrentItem;
+             var c = (Condition)conditionView.CurrentItem;
              if (c != null)
              {
-                 CustomConditionDialog dlg = new CustomConditionDialog();
+                 var dlg = new CustomConditionDialog();
 
 
                  dlg.Condition = c;
@@ -518,7 +505,7 @@ namespace CombatManager
 
         private void NewCustomCondition_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            CustomConditionDialog dlg = new CustomConditionDialog();
+            var dlg = new CustomConditionDialog();
             dlg.Owner = this;
             if (dlg.ShowDialog() == true)
             {

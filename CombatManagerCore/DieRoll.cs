@@ -1,4 +1,4 @@
-/*
+﻿/*
  *  DieRoll.cs
  *
  *  Copyright (C) 2010-2012 Kyle Olson, kyle@kyleolson.com
@@ -19,7 +19,7 @@
  *
  */
 
-﻿using System;
+ using System;
 using System.ComponentModel;
 using System.Collections.Generic;
 using System.Linq;
@@ -876,9 +876,9 @@ namespace CombatManager
 
         }
 
-        public Double RollDouble(bool min1)
+        public double RollDouble(bool min1)
         {
-            Double val = 0;
+            double val = 0;
 
             if (Die == 1 && min1)
             {
@@ -888,7 +888,7 @@ namespace CombatManager
             {
                 for (int i = 0; i < Count; i++)
                 {
-                    Double d = DieRoll.Rand.NextDouble();
+                    double d = DieRoll.Rand.NextDouble();
 
                     if (min1)
                     {

@@ -1,4 +1,4 @@
-/*
+﻿/*
  *  MagicItemBlockCreator.cs
  *
  *  Copyright (C) 2010-2012 Kyle Olson, kyle@kyleolson.com
@@ -19,26 +19,9 @@
  *
  */
 
-﻿using System;
-using System.Data;
-using System.ComponentModel;
-using System.Collections.ObjectModel;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Xml.Serialization;
 
 namespace CombatManager
 {
@@ -57,7 +40,7 @@ namespace CombatManager
         public List<Block> CreateBlocks(MagicItem item, bool showTitle)
         {
 
-            List<Block> blocks = new List<Block>();
+            var blocks = new List<Block>();
 
             if (showTitle)
             {
@@ -65,7 +48,7 @@ namespace CombatManager
             }
 
 
-            Paragraph details = new Paragraph();
+            var details = new Paragraph();
             details.Margin = new Thickness(0, 2, 0, 0);
 
             CreateItemIfNotNull(details.Inlines, "Aura ", true, item.Aura, " ", false);
@@ -90,10 +73,10 @@ namespace CombatManager
                 {
 
 
-                    Paragraph description = new Paragraph();
+                    var description = new Paragraph();
                     description.Margin = new Thickness(0, 2, 0, 0);
 
-                    string text = FixBodyString(item.Description);
+                    var text = FixBodyString(item.Description);
 
                     CreateItemIfNotNull(description.Inlines, null, true, text, null, true);
 
@@ -108,7 +91,7 @@ namespace CombatManager
             {
                 blocks.AddRange(CreateSectionHeader("CONSTRUCTION"));
 
-                Paragraph construction = new Paragraph();
+                var construction = new Paragraph();
                 construction.Margin = new Thickness(0, 2, 0, 0);
 
                 CreateItemIfNotNull(construction.Inlines, "Requirements ", true, item.Requirements, "; ", false);
@@ -121,7 +104,7 @@ namespace CombatManager
             {
                 blocks.AddRange(CreateSectionHeader("DESTRUCTION"));
 
-                Paragraph desctruction = new Paragraph();
+                var desctruction = new Paragraph();
                 desctruction.Margin = new Thickness(0, 2, 0, 0);
 
 
@@ -133,7 +116,7 @@ namespace CombatManager
 
             if (SourceInfo.GetSourceType(item.Source) != SourceType.Core)
             {
-                Paragraph source = new Paragraph();
+                var source = new Paragraph();
                 source.Margin = new Thickness(0, 2, 0, 0);
                 CreateItemIfNotNull(source.Inlines, "Source: ", SourceInfo.GetSource(item.Source));
                 blocks.Add(source);

@@ -1,4 +1,4 @@
-/*
+﻿/*
  *  WeaponSelectWindow.xaml.cs
  *
  *  Copyright (C) 2010-2012 Kyle Olson, kyle@kyleolson.com
@@ -19,28 +19,12 @@
  *
  */
 
-﻿using System;
-using System.Data;
 using System.ComponentModel;
-using System.Collections.ObjectModel;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
 using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Runtime.InteropServices;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Xml.Serialization;
 
 namespace CombatManager
 {
@@ -78,7 +62,7 @@ namespace CombatManager
 
         private bool WeaponFilter(object ob)
         {
-            Weapon weapon = (Weapon)ob;
+            var weapon = (Weapon)ob;
 
             return TypeFilter(weapon) && HandsFilter(weapon)  && NameFilter(weapon);
 
@@ -127,7 +111,7 @@ namespace CombatManager
 
         private bool SourceFilter(Weapon wp)
         {
-            SourceType type = SourceInfo.GetSourceType(wp.Source);
+            var type = SourceInfo.GetSourceType(wp.Source);
 
             return (type == SourceType.Core || type == SourceType.APG);
         }
@@ -140,7 +124,7 @@ namespace CombatManager
 			}
 			else
 			{
-				Regex regName = new Regex(Regex.Escape(NameFilterBox.Text.Trim()), RegexOptions.IgnoreCase);
+				var regName = new Regex(Regex.Escape(NameFilterBox.Text.Trim()), RegexOptions.IgnoreCase);
 			
 				return regName.Match(wp.Name).Success;
 			}
@@ -247,9 +231,9 @@ namespace CombatManager
 
         private void DamageText_Loaded(object sender, RoutedEventArgs e)
         {
-            TextBlock box = (TextBlock)sender;
+            var box = (TextBlock)sender;
 
-            Weapon wp = (Weapon)box.DataContext;
+            var wp = (Weapon)box.DataContext;
 
             box.Text = wp.SizeDamageText(Size);
         }

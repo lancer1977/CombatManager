@@ -19,26 +19,22 @@
  *
  */
 
-﻿using System;
+using System;
 using System.ComponentModel;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Xml.Serialization;
 using Microsoft.Win32;
-using System.IO;
 using CombatManager.LocalService;
 
 namespace CombatManager
 {
 
-    
+
     public class UserSettings : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
         private static UserSettings _Settings;
+        private IPreferences _preferences;
 
         public enum SettingsSaveSection
         {
@@ -68,7 +64,7 @@ namespace CombatManager
         private bool _UseModules;
         private bool _UseUltimateMagic;
         private bool _UseUltimateCombat;
-        private bool _UseOther; 
+        private bool _UseOther;
         private bool _ConfirmInitiativeRoll;
         private bool _ConfirmCharacterDelete;
         private bool _ConfirmClose;
@@ -95,13 +91,13 @@ namespace CombatManager
 
         private bool _RunCombatViewService;
 
-  
+
 
 
         private bool _InitiativeShowPlayers;
-        private bool _InitiativeShowMonsters;        
-		private bool  _InitiativeHideMonsterNames;
-        private bool  _InitiativeHidePlayerNames;
+        private bool _InitiativeShowMonsters;
+        private bool _InitiativeHideMonsterNames;
+        private bool _InitiativeHidePlayerNames;
         private bool _InitiativeShowConditions;
 
         private int _InitiativeConditionsSize;
@@ -136,6 +132,7 @@ namespace CombatManager
 
         public UserSettings()
         {
+            _preferences = CoreSettings.Instance.Preferences;
             _RollHP = false;
             _UseAPG = true;
             _UseCore = true;
@@ -541,13 +538,13 @@ namespace CombatManager
                     _InitiativeConditionsSize = value;
                     if (PropertyChanged != null) { PropertyChanged(this, new PropertyChangedEventArgs("InitiativeConditionsSize")); }
                     if (PropertyChanged != null) { PropertyChanged(this, new PropertyChangedEventArgs("InitiativeConditionsSizePercent")); }
-                    
+
                 }
             }
         }
         public double InitiativeConditionsSizePercent
         {
-            get { return .5 + .25 * (double)_InitiativeConditionsSize ; }
+            get { return .5 + .25 * (double)_InitiativeConditionsSize; }
         }
 
         public bool InitiativeAlwaysOnTop
@@ -690,7 +687,7 @@ namespace CombatManager
                 }
             }
         }
-        
+
         public bool StatsOpenByDefault
         {
             get { return _StatsOpenByDefault; }
@@ -890,7 +887,7 @@ namespace CombatManager
                 }
             }
         }
-        
+
 
 
 
@@ -899,62 +896,62 @@ namespace CombatManager
         {
             try
             {
-                RollHP = CoreSettings.LoadBoolValue("RollHP", false);
-                UseCore = CoreSettings.LoadBoolValue("UseCore", true);
-                UseAPG = CoreSettings.LoadBoolValue("UseAPG", true);
-                UseChronicles = CoreSettings.LoadBoolValue("UseChronicles", true);
-                UseModules = CoreSettings.LoadBoolValue("UseModules", true); 
-                UseUltimateMagic = CoreSettings.LoadBoolValue("UseUltimateMagic", true);
-                UseUltimateCombat = CoreSettings.LoadBoolValue("UseUltimateCombat", true);
-                UseOther = CoreSettings.LoadBoolValue("UseOther", true);
-                ConfirmCharacterDelete = CoreSettings.LoadBoolValue("ConfirmCharacterDelete", false);
-                ConfirmInitiativeRoll = CoreSettings.LoadBoolValue("ConfirmInitiativeRoll", false);
-                ConfirmClose = CoreSettings.LoadBoolValue("ConfirmClose", false);
-                ShowAllDamageDice = CoreSettings.LoadBoolValue("ShowAllDamageDice", false);
-                PlayerMiniMode = CoreSettings.LoadBoolValue("PlayerMiniMode", false);
-                MonsterMiniMode = CoreSettings.LoadBoolValue("MonsterMiniMode", false);
-                MainWindowWidth = CoreSettings.LoadIntValue("MainWindowWidth", -1);
-                MainWindowHeight = CoreSettings.LoadIntValue("MainWindowHeight", -1);
-                MainWindowLeft = CoreSettings.LoadIntValue("MainWindowLeft", int.MinValue);
-                MainWindowTop = CoreSettings.LoadIntValue("MainWindowTop", int.MinValue);
-                SelectedTab = CoreSettings.LoadIntValue("SelectedTab", 0);
-                AlternateInitRoll = CoreSettings.LoadStringValue("AlternateInitRoll", "3d6");
-                AlternateInit3d6 = CoreSettings.LoadBoolValue("AlternateInit3d6", false);
-                InitiativeShowPlayers = CoreSettings.LoadBoolValue("InitiativeShowPlayers", true);
-                InitiativeShowMonsters = CoreSettings.LoadBoolValue("InitiativeShowMonsters", true);
-                InitiativeHideMonsterNames = CoreSettings.LoadBoolValue("InitiativeHideMonsterNames", false);
-                InitiativeHidePlayerNames = CoreSettings.LoadBoolValue("InitiativeHidePlayerNames", false);
-                InitiativeShowConditions = CoreSettings.LoadBoolValue("InitiativeShowConditions", false);
-                InitiativeConditionsSize = CoreSettings.LoadIntValue("InitiativeConditionsSize", 2);
-                InitiativeAlwaysOnTop  = CoreSettings.LoadBoolValue("InitiativeAlwaysOnTop", false);
-                InitiativeScale = CoreSettings.LoadDoubleValue("InitiativeScale", 1.0);
-                InitiativeFlip  = CoreSettings.LoadBoolValue("InitiativeFlip", false);
-                RunCombatViewService = CoreSettings.LoadBoolValue("RunCombatViewService", false);
-                ShowHiddenInitValue = CoreSettings.LoadBoolValue("ShowHiddenInitValue", false);
-                AddMonstersHidden = CoreSettings.LoadBoolValue("AddMonstersHidden", false);
-                StatsOpenByDefault = CoreSettings.LoadBoolValue("StatsOpenByDefault", false);
-                CheckForUpdates = CoreSettings.LoadBoolValue("CheckForUpdates", true);
-                DefaultHPMode = (Character.HPMode)CoreSettings.LoadIntValue("DefaultHPMode", 0);
-                MonsterDBFilter = (MonsterSetFilter)CoreSettings.LoadIntValue("MonsterDBFilter", (int)MonsterSetFilter.Monsters);
-                MonsterTabFilter = (MonsterSetFilter)CoreSettings.LoadIntValue("MonsterTabFilter", (int)MonsterSetFilter.Monsters);
-                ColorScheme = CoreSettings.LoadIntValue("ColorScheme", 0);
-                DarkScheme = CoreSettings.LoadBoolValue("DarkScheme", false);
-                RulesSystem = (RulesSystem)CoreSettings.LoadIntValue("RulesSystem", 0);
-                RunLocalService = CoreSettings.LoadBoolValue("RunLocalService", false);
-                RunWebService = CoreSettings.LoadBoolValue("RunWebService", true);
-                LocalServicePort = (ushort)CoreSettings.LoadIntValue("LocalServicePort", LocalCombatManagerService.DefaultPort);
-                LocalServicePasscode = CoreSettings.LoadStringValue("LocalServicePasscode", "");
+                RollHP = _preferences.LoadBoolValue("RollHP", false);
+                UseCore = _preferences.LoadBoolValue("UseCore", true);
+                UseAPG = _preferences.LoadBoolValue("UseAPG", true);
+                UseChronicles = _preferences.LoadBoolValue("UseChronicles", true);
+                UseModules = _preferences.LoadBoolValue("UseModules", true);
+                UseUltimateMagic = _preferences.LoadBoolValue("UseUltimateMagic", true);
+                UseUltimateCombat = _preferences.LoadBoolValue("UseUltimateCombat", true);
+                UseOther = _preferences.LoadBoolValue("UseOther", true);
+                ConfirmCharacterDelete = _preferences.LoadBoolValue("ConfirmCharacterDelete", false);
+                ConfirmInitiativeRoll = _preferences.LoadBoolValue("ConfirmInitiativeRoll", false);
+                ConfirmClose = _preferences.LoadBoolValue("ConfirmClose", false);
+                ShowAllDamageDice = _preferences.LoadBoolValue("ShowAllDamageDice", false);
+                PlayerMiniMode = _preferences.LoadBoolValue("PlayerMiniMode", false);
+                MonsterMiniMode = _preferences.LoadBoolValue("MonsterMiniMode", false);
+                MainWindowWidth = _preferences.LoadIntValue("MainWindowWidth", -1);
+                MainWindowHeight = _preferences.LoadIntValue("MainWindowHeight", -1);
+                MainWindowLeft = _preferences.LoadIntValue("MainWindowLeft", int.MinValue);
+                MainWindowTop = _preferences.LoadIntValue("MainWindowTop", int.MinValue);
+                SelectedTab = _preferences.LoadIntValue("SelectedTab", 0);
+                AlternateInitRoll = _preferences.LoadStringValue("AlternateInitRoll", "3d6");
+                AlternateInit3d6 = _preferences.LoadBoolValue("AlternateInit3d6", false);
+                InitiativeShowPlayers = _preferences.LoadBoolValue("InitiativeShowPlayers", true);
+                InitiativeShowMonsters = _preferences.LoadBoolValue("InitiativeShowMonsters", true);
+                InitiativeHideMonsterNames = _preferences.LoadBoolValue("InitiativeHideMonsterNames", false);
+                InitiativeHidePlayerNames = _preferences.LoadBoolValue("InitiativeHidePlayerNames", false);
+                InitiativeShowConditions = _preferences.LoadBoolValue("InitiativeShowConditions", false);
+                InitiativeConditionsSize = _preferences.LoadIntValue("InitiativeConditionsSize", 2);
+                InitiativeAlwaysOnTop = _preferences.LoadBoolValue("InitiativeAlwaysOnTop", false);
+                InitiativeScale = _preferences.LoadDoubleValue("InitiativeScale", 1.0);
+                InitiativeFlip = _preferences.LoadBoolValue("InitiativeFlip", false);
+                RunCombatViewService = _preferences.LoadBoolValue("RunCombatViewService", false);
+                ShowHiddenInitValue = _preferences.LoadBoolValue("ShowHiddenInitValue", false);
+                AddMonstersHidden = _preferences.LoadBoolValue("AddMonstersHidden", false);
+                StatsOpenByDefault = _preferences.LoadBoolValue("StatsOpenByDefault", false);
+                CheckForUpdates = _preferences.LoadBoolValue("CheckForUpdates", true);
+                DefaultHPMode = (Character.HPMode)_preferences.LoadIntValue("DefaultHPMode", 0);
+                MonsterDBFilter = (MonsterSetFilter)_preferences.LoadIntValue("MonsterDBFilter", (int)MonsterSetFilter.Monsters);
+                MonsterTabFilter = (MonsterSetFilter)_preferences.LoadIntValue("MonsterTabFilter", (int)MonsterSetFilter.Monsters);
+                ColorScheme = _preferences.LoadIntValue("ColorScheme", 0);
+                DarkScheme = _preferences.LoadBoolValue("DarkScheme", false);
+                RulesSystem = (RulesSystem)_preferences.LoadIntValue("RulesSystem", 0);
+                RunLocalService = _preferences.LoadBoolValue("RunLocalService", false);
+                RunWebService = _preferences.LoadBoolValue("RunWebService", true);
+                LocalServicePort = (ushort)_preferences.LoadIntValue("LocalServicePort", LocalCombatManagerService.DefaultPort);
+                LocalServicePasscode = _preferences.LoadStringValue("LocalServicePasscode", "");
 
-                UseTurnClock = CoreSettings.LoadBoolValue("UseTurnClock", false);
-                CountdownToNextTurn = CoreSettings.LoadBoolValue("CountdownToNextTurn", true);
-                MoveAutomaticallyOnTurnTimer = CoreSettings.LoadBoolValue("MoveAutomaticallyOnTurnTimer", false);
-                TurnTimeSeconds = CoreSettings.LoadIntValue("TurnTimeSeconds", 180);
-                WarningTimeSeconds = CoreSettings.LoadIntValue("WarningTimeSeconds", 10);
-                PlayWarningSound = CoreSettings.LoadBoolValue("PlayWarningSound", true);
-                WarningSound = CoreSettings.LoadStringValue("WarningSound","");
-                PlayTurnEndSound = CoreSettings.LoadBoolValue("PlayTurnEndSound", true);
-                TurnEndSound = CoreSettings.LoadStringValue("TurnEndSound","");
-                ShowClockForMonsters = CoreSettings.LoadBoolValue("ShowClockForMonsters", true);
+                UseTurnClock = _preferences.LoadBoolValue("UseTurnClock", false);
+                CountdownToNextTurn = _preferences.LoadBoolValue("CountdownToNextTurn", true);
+                MoveAutomaticallyOnTurnTimer = _preferences.LoadBoolValue("MoveAutomaticallyOnTurnTimer", false);
+                TurnTimeSeconds = _preferences.LoadIntValue("TurnTimeSeconds", 180);
+                WarningTimeSeconds = _preferences.LoadIntValue("WarningTimeSeconds", 10);
+                PlayWarningSound = _preferences.LoadBoolValue("PlayWarningSound", true);
+                WarningSound = _preferences.LoadStringValue("WarningSound", "");
+                PlayTurnEndSound = _preferences.LoadBoolValue("PlayTurnEndSound", true);
+                TurnEndSound = _preferences.LoadStringValue("TurnEndSound", "");
+                ShowClockForMonsters = _preferences.LoadBoolValue("ShowClockForMonsters", true);
 
                 optionsLoaded = true;
             }
@@ -964,7 +961,7 @@ namespace CombatManager
             }
         }
 
-        
+
         public void SaveOptions()
         {
             SaveOptions(SettingsSaveSection.All);
@@ -977,94 +974,94 @@ namespace CombatManager
                 try
                 {
 
-                    RegistryKey key = Microsoft.Win32.Registry.CurrentUser.CreateSubKey("Software\\CombatManager", RegistryKeyPermissionCheck.Default);
+                    var key = Microsoft.Win32.Registry.CurrentUser.CreateSubKey("Software\\CombatManager", RegistryKeyPermissionCheck.Default);
 
 
                     if (section == SettingsSaveSection.All)
                     {
-                        CoreSettings.SaveBoolValue("RollHP", RollHP);
-                        CoreSettings.SaveBoolValue("ConfirmCharacterDelete", ConfirmCharacterDelete);
-                        CoreSettings.SaveBoolValue("ConfirmInitiativeRoll", ConfirmInitiativeRoll);
-                        CoreSettings.SaveBoolValue("ConfirmClose", ConfirmClose);
-                        CoreSettings.SaveBoolValue("ShowAllDamageDice", ShowAllDamageDice);
-                        CoreSettings.SaveBoolValue("AlternateInit3d6", AlternateInit3d6);
-                        CoreSettings.SaveStringValue("AlternateInitRoll", AlternateInitRoll);
-                        CoreSettings.SaveBoolValue("RunCombatViewService", RunCombatViewService);
-                        CoreSettings.SaveBoolValue("ShowHiddenInitValue", ShowHiddenInitValue);
-                        CoreSettings.SaveBoolValue("AddMonstersHidden", AddMonstersHidden);
-                        CoreSettings.SaveBoolValue("StatsOpenByDefault", StatsOpenByDefault);
-                        CoreSettings.SaveBoolValue("CheckForUpdates", CheckForUpdates);
-                        CoreSettings.SaveIntValue("ColorScheme", ColorScheme);
-                        CoreSettings.SaveIntValue("DefaultHPMode", (int)DefaultHPMode);
+                        _preferences.SaveBoolValue("RollHP", RollHP);
+                        _preferences.SaveBoolValue("ConfirmCharacterDelete", ConfirmCharacterDelete);
+                        _preferences.SaveBoolValue("ConfirmInitiativeRoll", ConfirmInitiativeRoll);
+                        _preferences.SaveBoolValue("ConfirmClose", ConfirmClose);
+                        _preferences.SaveBoolValue("ShowAllDamageDice", ShowAllDamageDice);
+                        _preferences.SaveBoolValue("AlternateInit3d6", AlternateInit3d6);
+                        _preferences.SaveStringValue("AlternateInitRoll", AlternateInitRoll);
+                        _preferences.SaveBoolValue("RunCombatViewService", RunCombatViewService);
+                        _preferences.SaveBoolValue("ShowHiddenInitValue", ShowHiddenInitValue);
+                        _preferences.SaveBoolValue("AddMonstersHidden", AddMonstersHidden);
+                        _preferences.SaveBoolValue("StatsOpenByDefault", StatsOpenByDefault);
+                        _preferences.SaveBoolValue("CheckForUpdates", CheckForUpdates);
+                        _preferences.SaveIntValue("ColorScheme", ColorScheme);
+                        _preferences.SaveIntValue("DefaultHPMode", (int)DefaultHPMode);
 
 
                     }
 
                     if (section == SettingsSaveSection.System || section == SettingsSaveSection.All)
                     {
-                        CoreSettings.SaveIntValue("RulesSystem", (int)RulesSystem);
+                        _preferences.SaveIntValue("RulesSystem", (int)RulesSystem);
                     }
 
                     if (section == SettingsSaveSection.WindowState || section == SettingsSaveSection.All)
                     {
-                        CoreSettings.SaveBoolValue("PlayerMiniMode", PlayerMiniMode);
-                        CoreSettings.SaveBoolValue("MonsterMiniMode", MonsterMiniMode);
-                        CoreSettings.SaveIntValue("MainWindowWidth", MainWindowWidth);
-                        CoreSettings.SaveIntValue("MainWindowHeight", MainWindowHeight);
-                        CoreSettings.SaveIntValue("MainWindowLeft", MainWindowLeft);
-                        CoreSettings.SaveIntValue("MainWindowTop", MainWindowTop);
-                        CoreSettings.SaveIntValue("SelectedTab", SelectedTab);
+                        _preferences.SaveBoolValue("PlayerMiniMode", PlayerMiniMode);
+                        _preferences.SaveBoolValue("MonsterMiniMode", MonsterMiniMode);
+                        _preferences.SaveIntValue("MainWindowWidth", MainWindowWidth);
+                        _preferences.SaveIntValue("MainWindowHeight", MainWindowHeight);
+                        _preferences.SaveIntValue("MainWindowLeft", MainWindowLeft);
+                        _preferences.SaveIntValue("MainWindowTop", MainWindowTop);
+                        _preferences.SaveIntValue("SelectedTab", SelectedTab);
                     }
 
                     if (section == SettingsSaveSection.Sources || section == SettingsSaveSection.All)
                     {
 
-                        CoreSettings.SaveBoolValue("UseCore", UseCore);
-                        CoreSettings.SaveBoolValue("UseAPG", UseAPG);
-                        CoreSettings.SaveBoolValue("UseChronicles", UseChronicles);
-                        CoreSettings.SaveBoolValue("UseModules", UseModules);
-                        CoreSettings.SaveBoolValue("UseUltimateMagic", UseUltimateMagic);
-                        CoreSettings.SaveBoolValue("UseUltimateCombat", UseUltimateCombat);
-                        CoreSettings.SaveBoolValue("UseOther", UseOther);
+                        _preferences.SaveBoolValue("UseCore", UseCore);
+                        _preferences.SaveBoolValue("UseAPG", UseAPG);
+                        _preferences.SaveBoolValue("UseChronicles", UseChronicles);
+                        _preferences.SaveBoolValue("UseModules", UseModules);
+                        _preferences.SaveBoolValue("UseUltimateMagic", UseUltimateMagic);
+                        _preferences.SaveBoolValue("UseUltimateCombat", UseUltimateCombat);
+                        _preferences.SaveBoolValue("UseOther", UseOther);
                     }
 
                     if (section == SettingsSaveSection.All || section == SettingsSaveSection.Initiative)
                     {
-                        CoreSettings.SaveBoolValue("InitiativeShowPlayers", InitiativeShowPlayers);
-                        CoreSettings.SaveBoolValue("InitiativeShowMonsters", InitiativeShowMonsters);
-                        CoreSettings.SaveBoolValue("InitiativeHideMonsterNames", InitiativeHideMonsterNames);
-                        CoreSettings.SaveBoolValue("InitiativeHidePlayerNames", InitiativeHidePlayerNames);
-                        CoreSettings.SaveBoolValue("InitiativeShowConditions", InitiativeShowConditions);
-                        CoreSettings.SaveIntValue("InitiativeConditionsSize", InitiativeConditionsSize);
-                        CoreSettings.SaveBoolValue("InitiativeAlwaysOnTop", InitiativeAlwaysOnTop);
-                        CoreSettings.SaveDoubleValue("InitiativeScale", InitiativeScale);
-                        CoreSettings.SaveBoolValue("InitiativeFlip", InitiativeFlip);
+                        _preferences.SaveBoolValue("InitiativeShowPlayers", InitiativeShowPlayers);
+                        _preferences.SaveBoolValue("InitiativeShowMonsters", InitiativeShowMonsters);
+                        _preferences.SaveBoolValue("InitiativeHideMonsterNames", InitiativeHideMonsterNames);
+                        _preferences.SaveBoolValue("InitiativeHidePlayerNames", InitiativeHidePlayerNames);
+                        _preferences.SaveBoolValue("InitiativeShowConditions", InitiativeShowConditions);
+                        _preferences.SaveIntValue("InitiativeConditionsSize", InitiativeConditionsSize);
+                        _preferences.SaveBoolValue("InitiativeAlwaysOnTop", InitiativeAlwaysOnTop);
+                        _preferences.SaveDoubleValue("InitiativeScale", InitiativeScale);
+                        _preferences.SaveBoolValue("InitiativeFlip", InitiativeFlip);
                     }
                     if (section == SettingsSaveSection.All || section == SettingsSaveSection.LocalService)
                     {
-                        CoreSettings.SaveBoolValue("RunLocalService", RunLocalService);
-                        CoreSettings.SaveBoolValue("RunWebService", RunWebService);
-                        CoreSettings.SaveIntValue("LocalServicePort", LocalServicePort);
-                        CoreSettings.SaveStringValue("LocalServicePasscode", LocalServicePasscode);
+                        _preferences.SaveBoolValue("RunLocalService", RunLocalService);
+                        _preferences.SaveBoolValue("RunWebService", RunWebService);
+                        _preferences.SaveIntValue("LocalServicePort", LocalServicePort);
+                        _preferences.SaveStringValue("LocalServicePasscode", LocalServicePasscode);
 
                     }
                     if (section == SettingsSaveSection.All || section == SettingsSaveSection.Filters)
                     {
-                        CoreSettings.SaveIntValue( "MonsterDBFilter", (int)MonsterDBFilter);
-                        CoreSettings.SaveIntValue( "MonsterTabFilter", (int)MonsterTabFilter);
+                        _preferences.SaveIntValue("MonsterDBFilter", (int)MonsterDBFilter);
+                        _preferences.SaveIntValue("MonsterTabFilter", (int)MonsterTabFilter);
                     }
                     if (section == SettingsSaveSection.All || section == SettingsSaveSection.Timer)
                     {
-                        CoreSettings.LoadBoolValue("UseTurnClock", UseTurnClock);
-                        CoreSettings.LoadBoolValue("CountdownToNextTurn", CountdownToNextTurn);
-                        CoreSettings.LoadBoolValue("MoveAutomaticallyOnTurnTimer", MoveAutomaticallyOnTurnTimer);
-                        CoreSettings.LoadIntValue("TurnTimeSeconds", TurnTimeSeconds);
-                        CoreSettings.LoadIntValue("WarningTimeSeconds", WarningTimeSeconds);
-                        CoreSettings.LoadBoolValue("PlayWarningSound", PlayWarningSound);
-                        CoreSettings.LoadStringValue("WarningSound", WarningSound);
-                        CoreSettings.LoadBoolValue("PlayTurnEndSound", PlayTurnEndSound);
-                        CoreSettings.LoadStringValue("TurnEndSound", TurnEndSound);
-                        CoreSettings.LoadBoolValue("ShowClockForMonsters", ShowClockForMonsters);
+                        _preferences.LoadBoolValue("UseTurnClock", UseTurnClock);
+                        _preferences.LoadBoolValue("CountdownToNextTurn", CountdownToNextTurn);
+                        _preferences.LoadBoolValue("MoveAutomaticallyOnTurnTimer", MoveAutomaticallyOnTurnTimer);
+                        _preferences.LoadIntValue("TurnTimeSeconds", TurnTimeSeconds);
+                        _preferences.LoadIntValue("WarningTimeSeconds", WarningTimeSeconds);
+                        _preferences.LoadBoolValue("PlayWarningSound", PlayWarningSound);
+                        _preferences.LoadStringValue("WarningSound", WarningSound);
+                        _preferences.LoadBoolValue("PlayTurnEndSound", PlayTurnEndSound);
+                        _preferences.LoadStringValue("TurnEndSound", TurnEndSound);
+                        _preferences.LoadBoolValue("ShowClockForMonsters", ShowClockForMonsters);
                     }
 
 
@@ -1099,7 +1096,7 @@ namespace CombatManager
             return timeSettings.Contains(name);
         }
 
-       
+
 
         public static bool Loaded
         {
@@ -1129,5 +1126,5 @@ namespace CombatManager
 
 
 
- 
+
 }

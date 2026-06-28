@@ -62,7 +62,7 @@ namespace CombatManager.LocalService
             return Task.CompletedTask;
         }
 
-        private void SendUnmanagedStream(IHttpContext context, String contentType, Stream umStream)
+        private void SendUnmanagedStream(IHttpContext context, string contentType, Stream umStream)
         {
             context.Response.ContentType = contentType;
             context.Response.StatusCode = 200;

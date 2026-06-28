@@ -1,4 +1,4 @@
-/*
+﻿/*
  *  CampaignEventWindow.xaml.cs
  *
  *  Copyright (C) 2010-2012 Kyle Olson, kyle@kyleolson.com
@@ -19,17 +19,9 @@
  *
  */
 
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows;
+ using System;
+ using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace CombatManager
 {
@@ -98,26 +90,26 @@ namespace CombatManager
 		void BuildCombos( ComboBox hourCombo, ComboBox minuteCombo, ComboBox ampmCombo)
         {
             updatingCombos = true;
-            for (int i = 0; i < 12; i++)
+            for (var i = 0; i < 12; i++)
             {
-                int val = (i == 0) ? 12 : i;
-                ComboBoxItem item = new ComboBoxItem();
+                var val = (i == 0) ? 12 : i;
+                var item = new ComboBoxItem();
                 item.Content = val.ToString();
                 item.Tag = i;
                 hourCombo.Items.Add(item);
 
             }
-            for (int i = 0; i < 60; i++)
+            for (var i = 0; i < 60; i++)
             {
 
-                ComboBoxItem item = new ComboBoxItem();
+                var item = new ComboBoxItem();
                 item.Content = ":" + i.ToString("00");
                 item.Tag = i;
                 minuteCombo.Items.Add(item);
             }
-            for (int i = 0; i < 2; i++)
+            for (var i = 0; i < 2; i++)
             {
-                ComboBoxItem item = new ComboBoxItem();
+                var item = new ComboBoxItem();
                 item.Content = (i==0)?"AM":"PM";
                 item.Tag = i;
                 ampmCombo.Items.Add(item);
@@ -138,9 +130,9 @@ namespace CombatManager
 
             picker.SelectedDate = time;
 			
-			int hourVal = time.Hour % 12;
-			int minuteVal = time.Minute;
-			int amPM = time.Hour /12;
+			var hourVal = time.Hour % 12;
+			var minuteVal = time.Minute;
+			var amPM = time.Hour /12;
 			
 			hourCombo.SelectedIndex = hourVal;
 			minuteCombo.SelectedIndex = minuteVal;
@@ -161,17 +153,17 @@ namespace CombatManager
 		
 		DateTime GetComboTime(DateTime startTime, DatePicker picker, ComboBox hourCombo, ComboBox minuteCombo, ComboBox ampmCombo)
 		{
-            DateTime newTime = startTime;
+            var newTime = startTime;
             if (picker.SelectedDate != null)
             {
                 startTime = picker.SelectedDate.Value;
             }
 
-            int hour = hourCombo.SelectedIndex + ampmCombo.SelectedIndex * 12;
+            var hour = hourCombo.SelectedIndex + ampmCombo.SelectedIndex * 12;
 
             newTime = newTime.AddHours(hour - newTime.Hour);
 
-            int minute = minuteCombo.SelectedIndex;
+            var minute = minuteCombo.SelectedIndex;
             newTime = newTime.AddMinutes(minute - newTime.Minute);
 
             return newTime;

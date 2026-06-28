@@ -1,4 +1,4 @@
-/*
+﻿/*
  *  WeaponSpecialAbility.cs
  *
  *  Copyright (C) 2010-2012 Kyle Olson, kyle@kyleolson.com
@@ -19,7 +19,7 @@
  *
  */
 
-﻿using System;
+ using System;
 using System.ComponentModel;
 using System.Collections.Generic;
 using System.IO;
@@ -36,19 +36,19 @@ namespace CombatManager
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private String _Minor;
-        private String _Medium;
-        private String _Major;
-        private String _RangedMinor;
-        private String _RangedMedium;
-        private String _RangedMajor;
-        private String _Name;
-        private String _AltName;
+        private string _Minor;
+        private string _Medium;
+        private string _Major;
+        private string _RangedMinor;
+        private string _RangedMedium;
+        private string _RangedMajor;
+        private string _Name;
+        private string _AltName;
         private int _BasePriceMod;
         private bool _Melee;
         private bool _Ranged;
-        private String _Plus;
-        private String _Text;
+        private string _Plus;
+        private string _Text;
 
         private static List<WeaponSpecialAbility> abilities;
         static WeaponSpecialAbility()
@@ -111,7 +111,7 @@ namespace CombatManager
         }
 
 
-        public String Minor
+        public string Minor
         {
             get { return _Minor; }
             set
@@ -123,7 +123,7 @@ namespace CombatManager
                 }
             }
         }
-        public String Medium
+        public string Medium
         {
             get { return _Medium; }
             set
@@ -135,7 +135,7 @@ namespace CombatManager
                 }
             }
         }
-        public String Major
+        public string Major
         {
             get { return _Major; }
             set
@@ -147,7 +147,7 @@ namespace CombatManager
                 }
             }
         }
-        public String RangedMinor
+        public string RangedMinor
         {
             get { return _RangedMinor; }
             set
@@ -159,7 +159,7 @@ namespace CombatManager
                 }
             }
         }
-        public String RangedMedium
+        public string RangedMedium
         {
             get { return _RangedMedium; }
             set
@@ -171,7 +171,7 @@ namespace CombatManager
                 }
             }
         }
-        public String RangedMajor
+        public string RangedMajor
         {
             get { return _RangedMajor; }
             set
@@ -183,7 +183,7 @@ namespace CombatManager
                 }
             }
         }
-        public String Name
+        public string Name
         {
             get { return _Name; }
             set
@@ -195,7 +195,7 @@ namespace CombatManager
                 }
             }
         }
-        public String AltName
+        public string AltName
         {
             get { return _AltName; }
             set
@@ -243,7 +243,7 @@ namespace CombatManager
                 }
             }
         }
-        public String Plus
+        public string Plus
         {
             get { return _Plus; }
             set
@@ -256,7 +256,7 @@ namespace CombatManager
             }
         }
 
-        public String Text
+        public string Text
         {
             get { return _Text; }
             set

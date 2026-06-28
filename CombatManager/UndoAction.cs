@@ -1,4 +1,4 @@
-/*
+﻿/*
  *  UndoAction.cs
  *
  *  Copyright (C) 2010-2012 Kyle Olson, kyle@kyleolson.com
@@ -19,11 +19,8 @@
  *
  */
 
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Collections;
+ using System;
+ using System.Collections;
 using System.Collections.Specialized;
 
 namespace CombatManager

@@ -782,14 +782,6 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CombatManagerCore\CombatManagerCoreMono.csproj">
-      <Project>{A1770C4F-09EE-41F9-86AB-5672C3D42980}</Project>
-      <Name>CombatManagerCoreMono</Name>
-      <IsAppExtension>false</IsAppExtension>
-      <IsWatchApp>false</IsWatchApp>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <ITunesArtwork Include="iTunesArtwork.png" />
     <ITunesArtwork Include="iTunesArtwork%402x" />
   </ItemGroup>
@@ -864,5 +856,11 @@
     <ImageAsset Include="Assets.xcassets\LaunchImage.launchimage\DiePencilPortPro.png">
       <Visible>false</Visible>
     </ImageAsset>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CombatManagerCore\CombatManagerCore.csproj">
+      <Project>{89cf9a2f-fae7-46e5-b2cc-fc478d9662fa}</Project>
+      <Name>CombatManagerCore</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>

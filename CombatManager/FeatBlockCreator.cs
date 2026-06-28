@@ -1,4 +1,4 @@
-/*
+﻿/*
  *  FeatBlockCreator.cs
  *
  *  Copyright (C) 2010-2012 Kyle Olson, kyle@kyleolson.com
@@ -19,26 +19,9 @@
  *
  */
 
-﻿using System;
-using System.Data;
-using System.ComponentModel;
-using System.Collections.ObjectModel;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Xml.Serialization;
 
 namespace CombatManager
 {
@@ -57,14 +40,14 @@ namespace CombatManager
 
         public List<Block> CreateBlocks(Feat feat, bool showTitle)
         {
-            List<Block> blocks = new List<Block>();
+            var blocks = new List<Block>();
 
             string featString = null;
             if (feat.Types != null)
             {
                 featString = "";
-                bool first = true;
-                foreach (String featType in feat.Types)
+                var first = true;
+                foreach (var featType in feat.Types)
                 {
                     if (feat.Type != "General")
                     {
@@ -82,16 +65,16 @@ namespace CombatManager
                 }
             }
 
-            Paragraph details = new Paragraph();
+            var details = new Paragraph();
             details.Margin = new Thickness(0, 2, 0, 0);
             if (showTitle)
             {
-                Run titleRun = new Run(feat.Name);
+                var titleRun = new Run(feat.Name);
                 titleRun.FontStyle = FontStyles.Italic;
                 titleRun.FontWeight = FontWeights.Bold;
                 titleRun.FontSize = titleRun.FontSize * 1.8;
 
-                string text = feat.Name;
+                var text = feat.Name;
                 
 
                 if (featString != null && featString.Length > 0)

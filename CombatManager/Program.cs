@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 
 using CombatManager.Pipes;
@@ -26,7 +23,7 @@ namespace CombatManager
             else
             {
 
-                App app = new App();
+                var app = new App();
                 app.InitializeComponent();
                 app.Run();
 

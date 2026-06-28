@@ -1,0 +1,21 @@
+name: rpg-combat-manager
+repo_root: /mnt/data/lancer1977/code/rpg-combat-manager
+
+languages:
+  - csharp
+frameworks:
+  - dotnet
+  - wpf
+  - xamarin
+
+ci:
+  build:
+    - bash scripts/validate.sh
+  test:
+    - bash scripts/validate.sh
+
+devstudio:
+  runtime_model: three-agent
+  backlog_ordering: filename
+  skip_promoted_planning: true
+  one_stage_per_run: true

@@ -1,4 +1,4 @@
-/*
+﻿/*
  *  Rule.cs
  *
  *  Copyright (C) 2010-2012 Kyle Olson, kyle@kyleolson.com
@@ -19,7 +19,7 @@
  *
  */
 
-﻿using System;
+ using System;
 using System.ComponentModel;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -50,19 +50,19 @@ namespace CombatManager
     {
 
         public event PropertyChangedEventHandler PropertyChanged;
-        private String _ID;
-        private String _Name;
-        private String _Details;
-        private String _Source;
-        private String _Type;
-        private String _AbilityType;
-        private String _Format;
-        private String _Location;
-        private String _Format2;
-        private String _Location2; 
+        private string _ID;
+        private string _Name;
+        private string _Details;
+        private string _Source;
+        private string _Type;
+        private string _AbilityType;
+        private string _Format;
+        private string _Location;
+        private string _Format2;
+        private string _Location2; 
         private bool _Untrained;
-        private String _Ability; 
-        private String _Subtype;
+        private string _Ability; 
+        private string _Subtype;
 
         private bool _DBDetailsLoaded;
 
@@ -139,9 +139,9 @@ namespace CombatManager
             }
         }
 
-        public static Rule Find(String name, String type)
+        public static Rule Find(string name, string type)
         {
-            return Rule.Rules.FirstOrDefault<Rule>(a => (String.Compare(a.Name,name, true) == 0 && a.Type == type));
+            return Rule.Rules.FirstOrDefault<Rule>(a => (string.Compare(a.Name,name, true) == 0 && a.Type == type));
         }
 
 #if ANDROID
@@ -242,7 +242,7 @@ namespace CombatManager
             }
         }
 
-        public String ID
+        public string ID
         {
             get { return _ID; }
             set
@@ -254,7 +254,7 @@ namespace CombatManager
                 }
             }
         }
-        public String Name
+        public string Name
         {
             get { return _Name; }
             set
@@ -266,7 +266,7 @@ namespace CombatManager
                 }
             }
         }
-        public String Details
+        public string Details
         {
             get 
             {
@@ -290,7 +290,7 @@ namespace CombatManager
                 }
             }
         }
-        public String Source
+        public string Source
         {
             get { return _Source; }
             set
@@ -303,7 +303,7 @@ namespace CombatManager
             }
         }
 
-        public String Type
+        public string Type
         {
             get { return _Type; }
             set
@@ -316,7 +316,7 @@ namespace CombatManager
             }
         }
 
-        public String AbilityType
+        public string AbilityType
         {
             get { return _AbilityType; }
             set
@@ -328,7 +328,7 @@ namespace CombatManager
                 }
             }
         }
-        public String Format
+        public string Format
         {
             get { return _Format; }
             set
@@ -340,7 +340,7 @@ namespace CombatManager
                 }
             }
         }
-        public String Location
+        public string Location
         {
             get { return _Location; }
             set
@@ -352,7 +352,7 @@ namespace CombatManager
                 }
             }
         }
-        public String Format2
+        public string Format2
         {
             get { return _Format2; }
             set
@@ -364,7 +364,7 @@ namespace CombatManager
                 }
             }
         }
-        public String Location2
+        public string Location2
         {
             get { return _Location2; }
             set
@@ -388,7 +388,7 @@ namespace CombatManager
                 }
             }
         }
-        public String Ability
+        public string Ability
         {
             get { return _Ability; }
             set
@@ -400,7 +400,7 @@ namespace CombatManager
                 }
             }
         }
-        public String Subtype
+        public string Subtype
         {
             get { return _Subtype; }
             set

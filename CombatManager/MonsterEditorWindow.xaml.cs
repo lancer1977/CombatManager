@@ -1,4 +1,4 @@
-/*
+﻿/*
  *  MonsterEditorWindow.xaml.cs
  *
  *  Copyright (C) 2010-2012 Kyle Olson, kyle@kyleolson.com
@@ -19,22 +19,13 @@
  *
  */
 
-﻿using System;
+ using System;
 using System.Collections.Generic;
-﻿using System.Globalization;
-﻿using System.Text;
-﻿using System.Text.RegularExpressions;
-﻿using System.Windows;
+ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using System.ComponentModel;
-using System.Windows.Controls.Primitives;
-using System.Threading;
+ using System.ComponentModel;
+ using System.Threading;
 
 namespace CombatManager
 {
@@ -58,20 +49,20 @@ namespace CombatManager
 		{
 			this.InitializeComponent();
 
-            List<String> skillList = new List<string>(Monster.SkillsList.Keys);
+            var skillList = new List<string>(Monster.SkillsList.Keys);
 
             _SelectableSkillsView = new ListCollectionView(skillList);
             _SelectableSkillsView.Filter += new Predicate<object>(SelectableSkillsFilter);
             
             AvailableSkillsList.DataContext = _SelectableSkillsView;
 			AvailableSkillsList.SelectionChanged += new System.Windows.Controls.SelectionChangedEventHandler(AvailableSkillsList_SelectionChanged);
-            bool loaded = false;
+            var loaded = false;
             SkillSubtypeTextBox.GotFocus += delegate
             {
                 if (!loaded)
                 {
 
-                    TextBox tb = SkillSubtypeTextBox.Template.FindName("PART_EditableTextBox", SkillSubtypeTextBox) as TextBox;
+                    var tb = SkillSubtypeTextBox.Template.FindName("PART_EditableTextBox", SkillSubtypeTextBox) as TextBox;
                     if (tb != null)
                     {
                         tb.TextChanged += new TextChangedEventHandler(SkillSubtypeTextBox_TextChanged);
@@ -86,7 +77,7 @@ namespace CombatManager
                 if (!loaded)
                 {
 
-                    TextBox tb = SkillSubtypeTextBox.Template.FindName("PART_EditableTextBox", SkillSubtypeTextBox) as TextBox;
+                    var tb = SkillSubtypeTextBox.Template.FindName("PART_EditableTextBox", SkillSubtypeTextBox) as TextBox;
                     if (tb != null)
                     {
                         tb.TextChanged += new TextChangedEventHandler(SkillSubtypeTextBox_TextChanged);
@@ -168,7 +159,7 @@ namespace CombatManager
 
         private void TextBox_GotFocus(object sender, System.Windows.RoutedEventArgs e)
         {
-            TextBox box = (TextBox)sender;
+            var box = (TextBox)sender;
 
             box.SelectAll();
         }
@@ -180,7 +171,7 @@ namespace CombatManager
 
         private void HDButton_Click(object sender, RoutedEventArgs e)
         {
-            DieRollEditWindow editWindow = new DieRollEditWindow();
+            var editWindow = new DieRollEditWindow();
             editWindow.Roll = DieRoll.FromString(Monster.HD);
             editWindow.HasToughness = _Monster.HasFeat("Toughness");
             
@@ -206,7 +197,7 @@ namespace CombatManager
 
         private void AttacksEditorButton_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            AttacksWindow window = new AttacksWindow();
+            var window = new AttacksWindow();
             window.Monster = _Monster;
             window.Owner = this;
             window.WindowStartupLocation = System.Windows.WindowStartupLocation.CenterOwner;
@@ -215,7 +206,7 @@ namespace CombatManager
 
         private void ManualEditButton_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            ManualAttacksEditWindow window = new ManualAttacksEditWindow();
+            var window = new ManualAttacksEditWindow();
             window.Monster = _Monster;
             window.Owner = this;
             window.WindowStartupLocation = System.Windows.WindowStartupLocation.CenterOwner;
@@ -224,7 +215,7 @@ namespace CombatManager
 
         private void SkillDeleteButton_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-        	SkillValue sv = (SkillValue)((FrameworkElement)sender).DataContext;
+        	var sv = (SkillValue)((FrameworkElement)sender).DataContext;
             _Monster.SkillValueDictionary.Remove(sv.FullName);
             _Monster.UpdateSkillValueList();
             _SkillsView.Refresh();
@@ -233,7 +224,7 @@ namespace CombatManager
 
         public bool SelectableSkillsFilter(object ob)
         {
-            string skill = (string)ob;
+            var skill = (string)ob;
 
             if (_Monster == null)
             {
@@ -258,14 +249,14 @@ namespace CombatManager
 
 		private void AddSelectedSkill()
 		{            
-			bool add = true;
-            String skill = (string)AvailableSkillsList.SelectedValue;
+			var add = true;
+            var skill = (string)AvailableSkillsList.SelectedValue;
 
-            SkillValue sv = new SkillValue(skill);
+            var sv = new SkillValue(skill);
 
             if (_OptionsSkills.Contains(skill))
             {
-                string subtype = SkillSubtypeTextBox.Text.Trim().ToLower();
+                var subtype = SkillSubtypeTextBox.Text.Trim().ToLower();
 
                 if (subtype.Length == 0)
                 {
@@ -291,7 +282,7 @@ namespace CombatManager
 		
         private void AvailableSkillsList_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
-        	String skill = (string)AvailableSkillsList.SelectedValue;
+        	var skill = (string)AvailableSkillsList.SelectedValue;
 			
 			if (skill == null)
 			{
@@ -305,7 +296,7 @@ namespace CombatManager
                 if (SkillSubtypeTextBox.Visibility == System.Windows.Visibility.Visible)
                 {
 
-                    Monster.SkillInfo det = Monster.SkillsDetails[skill];
+                    var det = Monster.SkillsDetails[skill];
 
                     foreach (var v in det.Subtypes)
                     {
@@ -329,7 +320,7 @@ namespace CombatManager
 
         private void UpdateAddSkillButton()
         {
-            String skill = (string)AvailableSkillsList.SelectedValue;
+            var skill = (string)AvailableSkillsList.SelectedValue;
 
             if (skill == null)
             {
@@ -343,7 +334,7 @@ namespace CombatManager
                 }
                 else
                 {
-                    string subtype = SkillSubtypeTextBox.Text.Trim().ToLower();
+                    var subtype = SkillSubtypeTextBox.Text.Trim().ToLower();
 
                     if (subtype.Length == 0)
                     {
@@ -351,7 +342,7 @@ namespace CombatManager
                     }
                     else
                     {
-                        SkillValue sv = new SkillValue(skill);
+                        var sv = new SkillValue(skill);
 
                         sv.Subtype = subtype;
 
@@ -375,14 +366,14 @@ namespace CombatManager
 
         private void SpecialAbilityDeleteButton_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-        	SpecialAbility ab = (SpecialAbility)((FrameworkElement)sender).DataContext;
+        	var ab = (SpecialAbility)((FrameworkElement)sender).DataContext;
 			
 			_Monster.SpecialAbilitiesList.Remove(ab);
         }
 
         private void AddSpecialAbilityButton_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-        	SpecialAbility ab = new SpecialAbility();
+        	var ab = new SpecialAbility();
 			ab.Name = "";
 			ab.Type = "Ex";
 			
@@ -425,14 +416,14 @@ namespace CombatManager
 
 	    private void FixSenses()
 	    {
-	        Type targeTypes = typeof(string);
+	        var targeTypes = typeof(string);
 	        var objects = new object[2];
-            CultureInfo currentCulture = Thread.CurrentThread.CurrentCulture;
+            var currentCulture = Thread.CurrentThread.CurrentCulture;
 	        var xConverter = new SensesConverter();
 	        objects[0] = _Monster.Senses;
 	        objects[1] = _Monster.Perception;
 	        var senses = (string)xConverter.Convert(objects, targeTypes, null, currentCulture);
-	        string sensesText = "";
+	        var sensesText = "";
 	        if (senses.Length > 0)
 	        {
 	            sensesText += senses + "; ";

@@ -11,9 +11,9 @@ namespace CombatManager
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private String _Name;
-        private String _Uses;
-        private String _Type;
+        private string _Name;
+        private string _Uses;
+        private string _Type;
         private int _Min;
         private int _Max;
         private int _Current;
@@ -32,7 +32,7 @@ namespace CombatManager
             _Current = resource.Current;
         }
 
-        public String Name
+        public string Name
         {
             get { return _Name; }
             set
@@ -44,7 +44,7 @@ namespace CombatManager
                 }
             }
         }
-        public String Uses
+        public string Uses
         {
             get { return _Uses; }
             set
@@ -56,7 +56,7 @@ namespace CombatManager
                 }
             }
         }
-        public String Type
+        public string Type
         {
             get { return _Type; }
             set

@@ -34,20 +34,20 @@ namespace CombatManager
     public class DD5Stats : SimpleNotifyClass
     {
 
-        private String age;
-        private String eyes;
-        private String skin;
-        private String hair;
+        private string age;
+        private string eyes;
+        private string skin;
+        private string hair;
 
 
         private int proficiencyBonus;
         private int deathSaveSuccesses;
         private int deathSaveFailures;
 
-        private ObservableCollection<String> personalityTrails;
-        private ObservableCollection<String> bonds;
-        private ObservableCollection<String> ideals;
-        private ObservableCollection<String> flaws;
+        private ObservableCollection<string> personalityTrails;
+        private ObservableCollection<string> bonds;
+        private ObservableCollection<string> ideals;
+        private ObservableCollection<string> flaws;
 
         private int? spellSaveDC;
         private int? spellAttack;
@@ -55,7 +55,7 @@ namespace CombatManager
 
         private ObservableCollection<bool> skillsList;
 
-        public String Age
+        public string Age
         {
             get { return age; }
             set
@@ -67,7 +67,7 @@ namespace CombatManager
                 }
             }
         }
-        public String Eyes
+        public string Eyes
         {
             get { return eyes; }
             set
@@ -79,7 +79,7 @@ namespace CombatManager
                 }
             }
         }
-        public String Skin
+        public string Skin
         {
             get { return skin; }
             set
@@ -91,7 +91,7 @@ namespace CombatManager
                 }
             }
         }
-        public String Hair
+        public string Hair
         {
             get { return hair; }
             set
@@ -219,7 +219,7 @@ namespace CombatManager
             }
         }
 
-        public ObservableCollection<String> PersonalityTrails
+        public ObservableCollection<string> PersonalityTrails
         {
             get { return personalityTrails; }
             set
@@ -231,7 +231,7 @@ namespace CombatManager
                 }
             }
         }
-        public ObservableCollection<String> Bonds
+        public ObservableCollection<string> Bonds
         {
             get { return bonds; }
             set
@@ -243,7 +243,7 @@ namespace CombatManager
                 }
             }
         }
-        public ObservableCollection<String> Ideals
+        public ObservableCollection<string> Ideals
         {
             get { return ideals; }
             set
@@ -255,7 +255,7 @@ namespace CombatManager
                 }
             }
         }
-        public ObservableCollection<String> Flaws
+        public ObservableCollection<string> Flaws
         {
             get { return flaws; }
             set

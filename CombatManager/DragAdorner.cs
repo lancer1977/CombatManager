@@ -20,15 +20,11 @@
  */
 
 // Copyright (C) Josh Smith - January 2007
-using System;
-using System.Collections.Generic;
-using System.Text;
+
 using System.Windows.Documents;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Shapes;
-using System.Windows.Media.Animation;
-using System.Windows.Controls;
 
 namespace WPF.JoshSmith.Adorners
 {
@@ -54,7 +50,7 @@ namespace WPF.JoshSmith.Adorners
 		public DragAdorner( UIElement adornedElement, Size size, Brush brush )
 			: base( adornedElement )
 		{
-			Rectangle rect = new Rectangle();
+			var rect = new Rectangle();
 			rect.Fill = brush;
 			rect.Width = size.Width;
 			rect.Height = size.Height;
@@ -70,7 +66,7 @@ namespace WPF.JoshSmith.Adorners
 		/// <returns></returns>
 		public override GeneralTransform GetDesiredTransform( GeneralTransform transform )
 		{
-			GeneralTransformGroup result = new GeneralTransformGroup();
+			var result = new GeneralTransformGroup();
 			result.Children.Add( base.GetDesiredTransform( transform ) );
 			result.Children.Add( new TranslateTransform( this.offsetLeft, this.offsetTop ) );
 			return result;
@@ -160,7 +156,7 @@ namespace WPF.JoshSmith.Adorners
 
 		private void UpdateLocation()
 		{
-			AdornerLayer adornerLayer = this.Parent as AdornerLayer;
+			var adornerLayer = this.Parent as AdornerLayer;
 			if( adornerLayer != null )
 				adornerLayer.Update( this.AdornedElement );
 		}

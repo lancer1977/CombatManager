@@ -1,19 +1,11 @@
 ﻿
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
-using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 using WinInterop = System.Windows.Interop;
@@ -165,7 +157,7 @@ namespace CombatManager.Maps
 
             MapImageControl.Source = map.Image;
 
-            Size size = new Size(map.Image.Width, map.Image.Height);
+            var size = new Size(map.Image.Width, map.Image.Height);
             size = size.Multiply(UseScale);
 
             MapImageControl.Width = size.Width;
@@ -186,15 +178,15 @@ namespace CombatManager.Maps
             {
                 if (map.ShowGrid)
                 {
-                    double xSize = map.CellSize.Width / map.Image.Width;
-                    double ySize = map.CellSize.Height / map.Image.Height;
-                    double xStart = map.CellOrigin.X / map.Image.Width;
-                    double yStart = map.CellOrigin.Y / map.Image.Height;
+                    var xSize = map.CellSize.Width / map.Image.Width;
+                    var ySize = map.CellSize.Height / map.Image.Height;
+                    var xStart = map.CellOrigin.X / map.Image.Width;
+                    var yStart = map.CellOrigin.Y / map.Image.Height;
 
-                    RectangleGeometry r = new RectangleGeometry(new Rect(0, 0, 100, 100));
-                    Pen p = new Pen(new SolidColorBrush(map.GridColor), 1);
-                    GeometryDrawing gd = new GeometryDrawing(null, p, r);
-                    DrawingBrush db = new DrawingBrush(gd);
+                    var r = new RectangleGeometry(new Rect(0, 0, 100, 100));
+                    var p = new Pen(new SolidColorBrush(map.GridColor), 1);
+                    var gd = new GeometryDrawing(null, p, r);
+                    var db = new DrawingBrush(gd);
                     db.TileMode = TileMode.Tile;
                     db.Viewport = new Rect(xStart, yStart, xSize, ySize);
 
@@ -249,7 +241,7 @@ namespace CombatManager.Maps
             if (e.ChangedButton == MouseButton.Middle)
             {
 
-                Point p = e.GetPosition((Canvas)sender);
+                var p = e.GetPosition((Canvas)sender);
                 lastPosition = p;
 
                 draggingMap = true;
@@ -273,7 +265,7 @@ namespace CombatManager.Maps
         {
             if (e.ClickCount == 1)
             {
-                Point p = e.GetPosition((Canvas)sender);
+                var p = e.GetPosition((Canvas)sender);
                 lastPosition = p;
                 switch (mode)
                 {
@@ -286,17 +278,17 @@ namespace CombatManager.Maps
                     case GameMapActionMode.SetCorner:
                         p = p.Divide(UseScale);
 
-                        Size s = map.CellOrigin.Difference(p);
+                        var s = map.CellOrigin.Difference(p);
                         map.CellSize = s;
 
                         break;
                     case GameMapActionMode.SetFog:
 
                         {
-                            GameMap.MapCell cell = PointToCell(p);
+                            var cell = PointToCell(p);
                             if (CellOnBoard(cell))
                             {
-                                List<GameMap.MapCell> list = PointToCellArray(p, brushSize);
+                                var list = PointToCellArray(p, brushSize);
 
                                 newFogState = !map[cell.X, cell.Y];
                                 foreach (var c in list)
@@ -341,10 +333,10 @@ namespace CombatManager.Maps
 
         private void SetMarkers(Point p)
         {
-            GameMap.MapCell cell = PointToCell(p);
+            var cell = PointToCell(p);
             if (CellOnBoard(cell))
             {
-                List<GameMap.MapCell> list = PointToCellArray(p, brushSize);
+                var list = PointToCellArray(p, brushSize);
 
                 foreach (var c in list)
                 {
@@ -356,7 +348,7 @@ namespace CombatManager.Maps
                         }
                         else
                         {
-                            GameMap.Marker marker = new GameMap.Marker();
+                            var marker = new GameMap.Marker();
                             marker.Style = markerStyle;
                             marker.Color = markerColor;
                             map.SetMarker(c, marker);
@@ -389,7 +381,7 @@ namespace CombatManager.Maps
             {
                 rightClickDown = false;
 
-                GameMap.MapCell cell = PointToCell(rightClickPosition);
+                var cell = PointToCell(rightClickPosition);
 
                 ShowContextMenu(cell);
             }
@@ -397,7 +389,7 @@ namespace CombatManager.Maps
 
         void ShowContextMenu(GameMap.MapCell cell)
         {
-            ContextMenu menu = (ContextMenu)Resources["MapContextMenu"];
+            var menu = (ContextMenu)Resources["MapContextMenu"];
             if (menu.IsOpen)
             {
                 return;
@@ -407,7 +399,7 @@ namespace CombatManager.Maps
 
             menu.DataContext = cell;
 
-            bool hasMarkers = map.CellHasMarkers(cell);
+            var hasMarkers = map.CellHasMarkers(cell);
 
             menu.Placement = System.Windows.Controls.Primitives.PlacementMode.MousePoint;
             menu.IsOpen = true;
@@ -455,7 +447,7 @@ namespace CombatManager.Maps
 
         private void MapGridCanvas_MouseMove(object sender, MouseEventArgs e)
         {
-            Point p = e.GetPosition((Canvas)sender);
+            var p = e.GetPosition((Canvas)sender);
             if (settingFog)
             {
                 if (e.LeftButton == MouseButtonState.Released)
@@ -466,10 +458,10 @@ namespace CombatManager.Maps
                 else
                 {
 
-                    GameMap.MapCell cell = PointToCell(p);
+                    var cell = PointToCell(p);
 
-                    List<GameMap.MapCell> list = PointToCellArray(p, brushSize);
-                    bool changed = false;
+                    var list = PointToCellArray(p, brushSize);
+                    var changed = false;
                     foreach (var c in list)
                     {
                         if (CellOnBoard(c))
@@ -510,10 +502,10 @@ namespace CombatManager.Maps
                 }
                 else
                 {
-                    Vector v = p - lastPosition;
+                    var v = p - lastPosition;
 
-                    double newVerticalOffset = MapScrollViewer.VerticalOffset - v.Y;
-                    double newHorizontalOffset = MapScrollViewer.HorizontalOffset - v.X;
+                    var newVerticalOffset = MapScrollViewer.VerticalOffset - v.Y;
+                    var newHorizontalOffset = MapScrollViewer.HorizontalOffset - v.X;
 
                     double verticalDiff = 0;
                     double horizontalDiff = 0;
@@ -561,9 +553,9 @@ namespace CombatManager.Maps
 
         private GameMap.MapCell PointToCell(Point p)
         {
-            GameMap.MapCell cell = new GameMap.MapCell();
+            var cell = new GameMap.MapCell();
 
-            Vector v = p - UseGridOrigin;
+            var v = p - UseGridOrigin;
             cell.X = (int)(v.X / UseCellSize.Width);
             cell.Y = (int)(v.Y / UseCellSize.Height);
 
@@ -573,7 +565,7 @@ namespace CombatManager.Maps
 
         private List<GameMap.MapCell> PointToCellArray(Point p, int size)
         {
-            List<GameMap.MapCell> list = new List<GameMap.MapCell>();
+            var list = new List<GameMap.MapCell>();
 
             if (size == 1)
             {
@@ -584,16 +576,16 @@ namespace CombatManager.Maps
             {
 
 
-                GameMap.MapCell c = PointToCell(p);
+                var c = PointToCell(p);
 
-                int minx = c.X - size / 2;
-                int miny = c.Y - size / 2;
-                int maxx = c.X + size / 2;
-                int maxy = c.Y + size / 2;
+                var minx = c.X - size / 2;
+                var miny = c.Y - size / 2;
+                var maxx = c.X + size / 2;
+                var maxy = c.Y + size / 2;
 
-                for (int y = miny; y <= maxy; y++)
+                for (var y = miny; y <= maxy; y++)
                 {
-                    for (int x = minx; x <= maxx; x++)
+                    for (var x = minx; x <= maxx; x++)
                     {
                         list.Add(new GameMap.MapCell(x, y));
                     }
@@ -602,13 +594,13 @@ namespace CombatManager.Maps
             }
             else
             {
-                Point start = p;
+                var start = p;
                 start.X = start.X - UseCellSize.Width * ((double)size) / 2.0 + UseCellSize.Width / 2.0;
                 start.Y = start.Y - UseCellSize.Height * ((double)size) / 2.0 + UseCellSize.Height / 2.0;
 
-                for (int x = 0; x < size; x++)
+                for (var x = 0; x < size; x++)
                 {
-                    for (int y = 0; y < size; y++)
+                    for (var y = 0; y < size; y++)
                     {
                         list.Add(PointToCell(new Point(start.X + UseCellSize.Width * (double)x,
                             start.Y + UseCellSize.Width * (double)y)));
@@ -665,7 +657,7 @@ namespace CombatManager.Maps
         {
             try
             {
-                ActionButtonState state = XmlLoader<ActionButtonState>.Load(
+                var state = XmlLoader<ActionButtonState>.Load(
                     "GameMapDisplayWindowActionButtonState.xml", true);
                 if (state != null)
                 {
@@ -785,7 +777,7 @@ namespace CombatManager.Maps
         {
             if (!eraseMode)
             {
-                Path path = new Path();
+                var path = new Path();
                 path.Data = GetUnitMarkerStylePath(markerStyle);
                 path.Fill = new SolidColorBrush(markerColor);
                 path.Height = 16;
@@ -795,7 +787,7 @@ namespace CombatManager.Maps
             }
             else
             {
-                Image image = new Image();
+                var image = new Image();
                 image.Source = CMUIUtilities.LoadBitmapFromImagesDir("eraser-48.png");
                 SetMarkerButton.Content = image;
             }
@@ -805,7 +797,7 @@ namespace CombatManager.Maps
         Geometry GetUnitMarkerStylePath(GameMap.MarkerStyle style)
         {
 
-            Rect rect = new Rect(0, 0, 1, 1);
+            var rect = new Rect(0, 0, 1, 1);
             return GetMarkerStylePath(rect, style);
         }
 
@@ -861,7 +853,7 @@ namespace CombatManager.Maps
         private void FogOptionsButton_Click(object sender, RoutedEventArgs e)
         {
 
-            ContextMenu menu = (ContextMenu)Resources["FogOfWarContextMenu"];
+            var menu = (ContextMenu)Resources["FogOfWarContextMenu"];
 
             menu.PlacementTarget = FogOptionsButton;
             menu.Placement = System.Windows.Controls.Primitives.PlacementMode.Bottom;
@@ -872,22 +864,22 @@ namespace CombatManager.Maps
         private void MarkerOptionsButton_Click(object sender, RoutedEventArgs e)
         {
 
-            ContextMenu menu = (ContextMenu)Resources["MarkerContextMenu"];
+            var menu = (ContextMenu)Resources["MarkerContextMenu"];
 
             menu.PlacementTarget = MarkerOptionsButton;
             menu.Placement = System.Windows.Controls.Primitives.PlacementMode.Bottom;
             menu.IsOpen = true;
 
-            MenuItem shapeMenu = (MenuItem)menu.FindLogicalNode("ShapeMenuItem");
-            foreach (object c in shapeMenu.Items)
+            var shapeMenu = (MenuItem)menu.FindLogicalNode("ShapeMenuItem");
+            foreach (var c in shapeMenu.Items)
             {
-                MenuItem mi = c as MenuItem;
+                var mi = c as MenuItem;
                 if (mi != null)
                 {
-                    int i = int.Parse(mi.Tag as String);
+                    var i = int.Parse(mi.Tag as String);
                     if (i >= 0)
                     {
-                        Path path = new Path();
+                        var path = new Path();
                         path.Data = GetUnitMarkerStylePath((GameMap.MarkerStyle)i);
                         path.Fill = new SolidColorBrush(markerColor);
                         path.Height = 16;
@@ -904,8 +896,8 @@ namespace CombatManager.Maps
 
         private void Shape_Click(object sender, RoutedEventArgs e)
         {
-            String shapeTag = (String)((FrameworkElement)sender).Tag;
-            int id = int.Parse(shapeTag);
+            var shapeTag = (String)((FrameworkElement)sender).Tag;
+            var id = int.Parse(shapeTag);
 
             if (id == -1)
             {
@@ -943,7 +935,7 @@ namespace CombatManager.Maps
         private void ToggleFogItem_Click(object sender, RoutedEventArgs e)
         {
 
-            GameMap.MapCell cell = (GameMap.MapCell)((FrameworkElement)sender).DataContext;
+            var cell = (GameMap.MapCell)((FrameworkElement)sender).DataContext;
             if (CellOnBoard(cell))
             {
                 map[cell.X, cell.Y] = !map[cell.X, cell.Y];
@@ -955,7 +947,7 @@ namespace CombatManager.Maps
         private void DeleteMarkerItem_Click(object sender, RoutedEventArgs e)
         {
 
-            GameMap.MapCell cell = (GameMap.MapCell)((FrameworkElement)sender).DataContext;
+            var cell = (GameMap.MapCell)((FrameworkElement)sender).DataContext;
             if (CellOnBoard(cell))
             {
                 map.DeleteAllMarkers(cell);
@@ -970,7 +962,7 @@ namespace CombatManager.Maps
             var scrollControl = sender as ScrollViewer;
             if (!e.Handled && sender != null)
             {
-                double steps = ((double)e.Delta) / 120.0;
+                var steps = ((double)e.Delta) / 120.0;
 
                 e.Handled = true;
                 var eventArg = new MouseWheelEventArgs(e.MouseDevice, e.Timestamp, e.Delta);
@@ -978,24 +970,24 @@ namespace CombatManager.Maps
                 eventArg.Source = sender;
 
 
-                int delta = e.Delta;
+                var delta = e.Delta;
                 if (delta != 0)
                 {
-                    double diff = Math.Pow(1.1, steps);
+                    var diff = Math.Pow(1.1, steps);
 
-                    Size mapSizeStart = new Size(MapScrollViewer.ViewportWidth, MapScrollViewer.ViewportHeight);
+                    var mapSizeStart = new Size(MapScrollViewer.ViewportWidth, MapScrollViewer.ViewportHeight);
 
-                    double vertOffset = MapScrollViewer.VerticalOffset;
-                    double horzOffset = MapScrollViewer.HorizontalOffset;
+                    var vertOffset = MapScrollViewer.VerticalOffset;
+                    var horzOffset = MapScrollViewer.HorizontalOffset;
 
                     UseScale = UseScale * diff;
 
-                    Size mapSizeEnd = mapSizeStart.Multiply(diff);
+                    var mapSizeEnd = mapSizeStart.Multiply(diff);
 
-                    Point mapSizeDiff = mapSizeEnd.Subtract(mapSizeStart).Divide(2.0);
+                    var mapSizeDiff = mapSizeEnd.Subtract(mapSizeStart).Divide(2.0);
 
-                    double scrollOnSizeX = horzOffset * diff + mapSizeDiff.X;
-                    double scrollOnSizeY = vertOffset * diff + mapSizeDiff.Y;
+                    var scrollOnSizeX = horzOffset * diff + mapSizeDiff.X;
+                    var scrollOnSizeY = vertOffset * diff + mapSizeDiff.Y;
 
                     MapScrollViewer.ScrollTo(scrollOnSizeX, scrollOnSizeY);
                 }
@@ -1063,7 +1055,7 @@ namespace CombatManager.Maps
         private void ScaleTimer_Tick(object sender, EventArgs e)
         {
 
-            double diff = Math.Pow(1.1, this.scaleTimerUp ? 1:-1);
+            var diff = Math.Pow(1.1, this.scaleTimerUp ? 1:-1);
             ChangeScale(scaleTimerPlayer, diff);
         }
 
@@ -1126,7 +1118,7 @@ namespace CombatManager.Maps
             scaleTimer.Tick += ScaleTimer_Tick;
             scaleTimer.Interval = new TimeSpan(30000);
             scaleTimer.Start();
-            double diff = Math.Pow(1.1, 1);
+            var diff = Math.Pow(1.1, 1);
             ChangeScale(player, diff);
         }
 
@@ -1271,7 +1263,7 @@ namespace CombatManager.Maps
             if (playerMode)
             {
                 rotation += 90.0;
-                DoubleAnimation animate = new DoubleAnimation();
+                var animate = new DoubleAnimation();
                 animate.To = rotation;
                 animate.Duration = new Duration(TimeSpan.FromMilliseconds(100.0));
 
@@ -1289,7 +1281,7 @@ namespace CombatManager.Maps
 
         private void UpdateTextBinding(object sender)
         {
-            TextBox box = (TextBox)sender;
+            var box = (TextBox)sender;
             var be = box.GetBindingExpression(TextBox.TextProperty);
             be.UpdateSource();
         }

@@ -1,4 +1,4 @@
-/*
+﻿/*
  *  SpellBlockCreator.cs
  *
  *  Copyright (C) 2010-2012 Kyle Olson, kyle@kyleolson.com
@@ -19,26 +19,12 @@
  *
  */
 
-﻿using System;
-using System.Data;
-using System.ComponentModel;
-using System.Collections.ObjectModel;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Windows;
+ using System;
+ using System.Collections.Generic;
+ using System.Linq;
+ using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Xml.Serialization;
+ using System.Windows.Documents;
 
 namespace CombatManager
 {
@@ -65,7 +51,7 @@ namespace CombatManager
         public List<Block> CreateBlocks(Spell spell, bool shortForm, bool showTitle)
         {
 
-            List<Block> blocks = new List<Block>();
+            var blocks = new List<Block>();
 
             if (!shortForm)
             {
@@ -74,9 +60,9 @@ namespace CombatManager
                     blocks.Add(CreateHeaderParagraph(spell.name));
                 }
 
-                Paragraph details = new Paragraph();
+                var details = new Paragraph();
                 details.Margin = new Thickness(0, 4, 0, 0);
-                Span span1 = new Span();
+                var span1 = new Span();
                 span1.Inlines.Add(new Bold(new Run("School ")));
 
                 if (_LinkHandler == null)
@@ -85,18 +71,18 @@ namespace CombatManager
                 }
                 else
                 {
-                    Hyperlink link = new Hyperlink(new Run(spell.school));
+                    var link = new Hyperlink(new Run(spell.school));
                     link.Click += new RoutedEventHandler(link_Click);
                     link.DataContext = spell.school;
 
-                    Rule rule = Rule.Rules.FirstOrDefault
+                    var rule = Rule.Rules.FirstOrDefault
                         (a => String.Compare(a.Name, spell.school, true) == 0 &&
                           String.Compare(a.Type, "Magic") == 0);
 
                     if (rule != null)
                     {
                         link.Tag = rule;
-                        ToolTip t = (ToolTip)App.Current.MainWindow.FindResource("ObjectToolTip");
+                        var t = (ToolTip)App.Current.MainWindow.FindResource("ObjectToolTip");
 
                         if (t != null)
                         {
@@ -176,9 +162,9 @@ namespace CombatManager
 
                 blocks.Add(details);
 
-                List<Block> flow = new List<Block>();
+                var flow = new List<Block>();
 
-                Thickness th =  new Thickness(0, showTitle ? 5 : 0, 0, 0);
+                var th =  new Thickness(0, showTitle ? 5 : 0, 0, 0);
 
                 if (spell.description_formated != null && spell.description_formated.Length > 0)
                 {
@@ -193,7 +179,7 @@ namespace CombatManager
                 }
                 else if (spell.description != null && spell.description.Length > 0)
                 {
-                    Paragraph p = new Paragraph();
+                    var p = new Paragraph();
                     p.Margin = th;
 
                     p.Inlines.Add(new Run(spell.description));
@@ -205,7 +191,7 @@ namespace CombatManager
             {
                 if (showTitle)
                 {
-                    Paragraph titleParagraph = new Paragraph();
+                    var titleParagraph = new Paragraph();
                     titleParagraph.Inlines.Add(new Bold(new Run(spell.name)));
                     titleParagraph.Margin = new Thickness(0);
                     titleParagraph.Padding = new Thickness(0);
@@ -213,14 +199,14 @@ namespace CombatManager
 
                     blocks.Add(titleParagraph);
                 }
-                List<Block> flow = new List<Block>(); ;
+                var flow = new List<Block>(); ;
                 if (spell.description_formated != null && spell.description_formated.Length > 0)
                 {
                     flow = CreateFlowFromDescription(spell.description_formated);
 
 
-                    Block block = flow[0];
-                    Thickness m = block.Margin;
+                    var block = flow[0];
+                    var m = block.Margin;
                     m.Top = 0;
                     block.Margin = m;
 
@@ -228,9 +214,9 @@ namespace CombatManager
                 }
                 else if (spell.description != null && spell.description.Length > 0)
                 {
-                    Paragraph p = new Paragraph();
+                    var p = new Paragraph();
 
-                    Thickness th = new Thickness(0, showTitle ? 5 : 0, 0, 0);
+                    var th = new Thickness(0, showTitle ? 5 : 0, 0, 0);
                     p.Margin = th;
 
                     p.Inlines.Add(new Run(spell.description));
@@ -238,7 +224,7 @@ namespace CombatManager
 
                 }
 
-                foreach (Block b in flow)
+                foreach (var b in flow)
                 {
                     b.TextAlignment = TextAlignment.Left;
                     
@@ -257,7 +243,7 @@ namespace CombatManager
 
         void SpellBlockLink_ToolTipOpening(object sender, ToolTipEventArgs e)
         {
-            Hyperlink l = (Hyperlink)sender;
+            var l = (Hyperlink)sender;
             ((ToolTip)l.ToolTip).DataContext = l.Tag;
         }
 
@@ -265,7 +251,7 @@ namespace CombatManager
         {
             if (_LinkHandler != null)
             {
-                string school = (string)((Hyperlink)sender).DataContext;
+                var school = (string)((Hyperlink)sender).DataContext;
                 _LinkHandler(this, new DocumentLinkEventArgs(school, "School"));
             }
         }

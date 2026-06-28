@@ -19,34 +19,19 @@
  *
  */
 
-﻿using System;
-using System.Data;
-using System.ComponentModel;
+using System;
 using System.Collections.ObjectModel;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Documents;
-﻿using System.Windows.Forms.VisualStyles;
-﻿using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Xml.Serialization;
- using static System.Text.RegularExpressions.Regex;
+using static System.Text.RegularExpressions.Regex;
 
 namespace CombatManager
 {
-
-
-
     public class MonsterBlockCreator : BlockCreator
     {
 
@@ -65,30 +50,30 @@ namespace CombatManager
             Description
         }
 
-        DocumentLinkHander _LinkHandler;
+        DocumentLinkHander _linkHandler;
 
 
-        static string _ClassRegexString;
+        static string _classRegexString;
         static MonsterBlockCreator()
         {
-            bool first = true;
-            _ClassRegexString = "(";
-            foreach (Rule rule in Rule.Rules.Where(a => (a.Type == "Classes")))
+            var first = true;
+            _classRegexString = "(";
+            foreach (var rule in Rule.Rules.Where(a => (a.Type == "Classes")))
             {
                 if (!first)
                 {
-                    _ClassRegexString += "|";
+                    _classRegexString += "|";
                 }
                 first = false;
-                _ClassRegexString += rule.Name;
+                _classRegexString += rule.Name;
             }
-            _ClassRegexString += ")";
-               
+            _classRegexString += ")";
+
         }
 
-        public MonsterBlockCreator(FlowDocument document, DocumentLinkHander linkHandler): base(document)
+        public MonsterBlockCreator(FlowDocument document, DocumentLinkHander linkHandler) : base(document)
         {
-            _LinkHandler = linkHandler;
+            _linkHandler = linkHandler;
         }
 
 
@@ -107,14 +92,9 @@ namespace CombatManager
 
         private List<Block> CreateBlocks(Monster monster, Character ch, bool addDescription)
         {
-
-            
-            List<Block> blocks = new List<Block>();
-
+            var blocks = new List<Block>();
             CreateTopSection(monster, ch, blocks);
-
             CreateDefenseSection(monster, blocks);
-
             CreateOffenseSection(monster, blocks);
             CreateTacticsSection(monster, blocks);
             CreateStatisticsSection(monster, blocks);
@@ -125,36 +105,34 @@ namespace CombatManager
                 CreateDescriptionSection(monster, blocks);
             }
 
-           
-
             if (SourceInfo.GetSourceType(monster.Source) != SourceType.Core)
             {
-                Paragraph sourceParagraph = new Paragraph();
+                var sourceParagraph = new Paragraph();
 
                 sourceParagraph.Margin = new Thickness(0);
-                String source = SourceInfo.GetSource(monster.Source);
+                var source = SourceInfo.GetSource(monster.Source);
                 if (source == "")
                 {
                     source = monster.Source;
                 }
-                CreateItemIfNotNull(sourceParagraph.Inlines, "Source ", source) ;
+                CreateItemIfNotNull(sourceParagraph.Inlines, "Source ", source);
                 blocks.Add(sourceParagraph);
             }
 
-            
+
             return blocks;
         }
 
         private void CreateTopSection(Monster monster, Character ch, List<Block> blocks)
         {
-            string name = monster.Name;
+            var name = monster.Name;
 
             if ((name == null || name.Length == 0) && ch != null)
             {
                 name = ch.Name;
             }
 
-            string header =  "CR " + monster.CR;
+            var header = "CR " + monster.CR;
             if (monster.MR != null && monster.MR > 0 && monster.IsMythic)
             {
                 header += "/MR " + monster.MR;
@@ -162,7 +140,7 @@ namespace CombatManager
 
             blocks.Add(CreateHeaderParagraph(name, header));
 
-            Paragraph topParagraph = new Paragraph();
+            var topParagraph = new Paragraph();
             topParagraph.Inlines.AddRange(CreateItemIfNotNull("Description: ", true, monster.Description_Visual, null, true));
             topParagraph.Inlines.Add(new Bold(new Run("XP: " + monster.XP)));
             topParagraph.Inlines.Add(new LineBreak());
@@ -188,7 +166,7 @@ namespace CombatManager
                 topParagraph.Inlines.AddRange(CreateItemIfNotNull("Init ", true, monster.Init.PlusFormat(), "; ", false));
             }
             var regex = new Regex(@"Perception\s?[+-]\d+");
-            if(regex.IsMatch(monster.Senses))
+            if (regex.IsMatch(monster.Senses))
             {
                 // Make Perception in Senses Linked
                 // Need to move the regex away from here. Also best to check results of Regex operation, Will blow up on nonstandard data
@@ -198,7 +176,7 @@ namespace CombatManager
                 var mod = Perception_Modifier(monster.Senses);
                 if (mod != null)
                 {
-                    newSenses =  Remove_Mod(newSenses,mod);
+                    newSenses = Remove_Mod(newSenses, mod);
 
                 }
                 var rank = Get_Perception(monster.Senses);
@@ -235,8 +213,8 @@ namespace CombatManager
         }
 
         private string Remove_Mod(string old, string match)
-        { 
-            return old.Replace(old, " "); 
+        {
+            return old.Replace(old, " ");
         }
         private string Perception_Modifier(string senses)
         {
@@ -259,11 +237,11 @@ namespace CombatManager
 
         private List<Inline> CreateRulesLink(string text, string rule, string ruleType, string end)
         {
-            List<Inline> inlines = new List<Inline>();
+            var inlines = new List<Inline>();
             if (text != null)
             {
                 ToolTip t = null;
-                Rule ruleObject = Rule.Find(rule, ruleType);
+                var ruleObject = Rule.Find(rule, ruleType);
                 if (ruleObject != null)
                 {
                     t = (ToolTip)App.Current.MainWindow.FindResource("ObjectToolTip");
@@ -282,7 +260,7 @@ namespace CombatManager
         {
             blocks.AddRange(CreateSectionHeader("DEFENSE"));
 
-            Paragraph defensesParagraph = new Paragraph();
+            var defensesParagraph = new Paragraph();
             defensesParagraph.Margin = new Thickness(0);
             defensesParagraph.Inlines.AddRange(CreateItemIfNotNull("AC ", true, monster.FullAC.ToString(), ", ", false));
             defensesParagraph.Inlines.AddRange(CreateItemIfNotNull("touch ", false, monster.TouchAC.ToString(), ", ", false));
@@ -301,7 +279,7 @@ namespace CombatManager
             defensesParagraph.Inlines.AddRange(CreateItemIfNotNull("Will ", true, monster.Will.PlusFormat(), null, false));
             defensesParagraph.Inlines.AddRange(CreateItemIfNotNull("; ", true, monster.Save_Mods, null, false));
             defensesParagraph.Inlines.Add(new LineBreak());
-            List<TitleValuePair> defLine = new List<TitleValuePair>();
+            var defLine = new List<TitleValuePair>();
             defLine.Add(new TitleValuePair { Title = "Defensive Abilities ", Value = monster.DefensiveAbilities });
             defLine.Add(new TitleValuePair { Title = "DR ", Value = monster.DR });
             defLine.Add(new TitleValuePair { Title = "Immune ", Value = monster.Immune });
@@ -317,29 +295,29 @@ namespace CombatManager
 
         private void CreateOffenseSection(Monster monster, List<Block> blocks)
         {
-                    blocks.AddRange(CreateSectionHeader("OFFENSE"));
+            blocks.AddRange(CreateSectionHeader("OFFENSE"));
 
 
-            Paragraph offenseParagraph = new Paragraph();
+            var offenseParagraph = new Paragraph();
             offenseParagraph.Margin = new Thickness(0);
             offenseParagraph.Inlines.AddRange(CreateItemIfNotNull("Speed ", monster.Speed));
             offenseParagraph.Inlines.AddRange(CreateItemIfNotNull("Melee ", monster.Melee));
             offenseParagraph.Inlines.AddRange(CreateItemIfNotNull("Ranged ", monster.Ranged));
 
 
-            List<TitleValuePair> reachLine = new List<TitleValuePair>();
+            var reachLine = new List<TitleValuePair>();
             reachLine.Add(new TitleValuePair { Title = "Space ", Value = monster.Space });
             reachLine.Add(new TitleValuePair { Title = "Reach ", Value = monster.Reach });
             offenseParagraph.Inlines.AddRange(CreateMultiValueLine(reachLine, ", "));
 
-            
+
             offenseParagraph.Inlines.AddRange(CreateItemIfNotNull("Special Attacks ", monster.SpecialAttacks));
-            
-            string spellLike = monster.SpellLikeAbilities;
+
+            var spellLike = monster.SpellLikeAbilities;
             if (spellLike != null && spellLike.Length > 0)
             {
                 List<Inline> spellInlines = null;
-                if (_LinkHandler != null)
+                if (_linkHandler != null)
                 {
                     spellInlines = CreateSpellsBlockItem(monster.SpellLikeAbilitiesBlock);
                 }
@@ -361,11 +339,11 @@ namespace CombatManager
             }
             if (monster.SpellsKnownBlock == null)
             {
-                string spellsKnown = monster.SpellsKnown;
+                var spellsKnown = monster.SpellsKnown;
                 if (spellsKnown != null && spellsKnown.Length > 0)
                 {
                     List<Inline> spellInlines = null;
-                    if (_LinkHandler != null)
+                    if (_linkHandler != null)
                     {
                         spellInlines = CreateSpellsBlockItem(monster.SpellsKnownBlock);
                     }
@@ -388,7 +366,7 @@ namespace CombatManager
             else
             {
                 List<Inline> spellInlines = null;
-                if (_LinkHandler != null)
+                if (_linkHandler != null)
                 {
                     spellInlines = CreateSpellsBlockItem(monster.SpellsKnownBlock);
                 }
@@ -400,11 +378,11 @@ namespace CombatManager
             }
             if (monster.SpellsPreparedBlock == null)
             {
-                string spellsPrepared = monster.SpellsPrepared;
+                var spellsPrepared = monster.SpellsPrepared;
                 if (spellsPrepared != null && spellsPrepared.Length > 0)
                 {
                     List<Inline> spellInlines = null;
-                    if (_LinkHandler != null)
+                    if (_linkHandler != null)
                     {
                         spellInlines = CreateSpellsBlockItem(monster.SpellsPreparedBlock);
                     }
@@ -427,7 +405,7 @@ namespace CombatManager
             else
             {
                 List<Inline> spellInlines = null;
-                if (_LinkHandler != null)
+                if (_linkHandler != null)
                 {
                     spellInlines = CreateSpellsBlockItem(monster.SpellsPreparedBlock);
                 }
@@ -438,9 +416,9 @@ namespace CombatManager
                 }
             }
 
-                offenseParagraph.Inlines.AddRange(CreateItemIfNotNull("Opposition Schools: ", monster.ProhibitedSchools));
-                offenseParagraph.Inlines.AddRange(CreateItemIfNotNull("Bloodline: ",monster.Bloodline));
-                offenseParagraph.Inlines.AddRange(CreateItemIfNotNull("Domain: ",monster.SpellDomains));
+            offenseParagraph.Inlines.AddRange(CreateItemIfNotNull("Opposition Schools: ", monster.ProhibitedSchools));
+            offenseParagraph.Inlines.AddRange(CreateItemIfNotNull("Bloodline: ", monster.Bloodline));
+            offenseParagraph.Inlines.AddRange(CreateItemIfNotNull("Domain: ", monster.SpellDomains));
 
             blocks.Add(offenseParagraph);
         }
@@ -450,12 +428,12 @@ namespace CombatManager
         delegate void After();
         List<Inline> CreateSpellsBlockItem(ObservableCollection<SpellBlockInfo> list)
         {
-            List<Inline> lines = new List<Inline>();
+            var lines = new List<Inline>();
 
-            bool multiblock = false;
-            foreach (SpellBlockInfo blockinfo in list)
+            var multiblock = false;
+            foreach (var blockinfo in list)
             {
-                string titleText = "";
+                var titleText = "";
 
                 if (blockinfo.SpellLikeAbilities)
                 {
@@ -477,7 +455,7 @@ namespace CombatManager
                 {
                     lines.Add(new LineBreak());
                 }
-                
+
                 multiblock = true;
                 lines.Add(new Bold(new Run(titleText)));
 
@@ -505,7 +483,7 @@ namespace CombatManager
                 //start spells on their own line
                 lines.Add(new LineBreak());
                 var text = "";
-                foreach (SpellLevelInfo levelinfo in blockinfo.Levels)
+                foreach (var levelinfo in blockinfo.Levels)
                 {
                     //indentation of spell list
                     text = "  ";
@@ -554,8 +532,8 @@ namespace CombatManager
 
                     lines.Add(new Run(text));
 
-                    bool firstLink = true;
-                    foreach (SpellInfo spellInfo in levelinfo.Spells)
+                    var firstLink = true;
+                    foreach (var spellInfo in levelinfo.Spells)
                     {
                         if (!firstLink)
                         {
@@ -566,13 +544,13 @@ namespace CombatManager
 
 
 
-                        Hyperlink link = new Hyperlink(new Run(spellInfo.Name));
+                        var link = new Hyperlink(new Run(spellInfo.Name));
                         link.Tag = spellInfo.Name;
                         link.Click += new RoutedEventHandler(SpellLinkClicked);
                         if (spellInfo.Spell != null)
                         {
                             link.DataContext = spellInfo.Spell;
-                            ToolTip t = (ToolTip)App.Current.MainWindow.FindResource("ObjectToolTip");
+                            var t = (ToolTip)App.Current.MainWindow.FindResource("ObjectToolTip");
 
                             if (t != null)
                             {
@@ -591,8 +569,8 @@ namespace CombatManager
                         }
 
 
-                        String afterBlock = "";
-                        After addAfter = delegate()
+                        var afterBlock = "";
+                        After addAfter = delegate ()
                             {
                                 if (afterBlock.Length != 0)
                                 {
@@ -662,7 +640,7 @@ namespace CombatManager
             {
                 lines.Add(new LineBreak());
             }
-            
+
             return lines;
         }
 
@@ -676,7 +654,7 @@ namespace CombatManager
 
                 blocks.AddRange(CreateSectionHeader("TACTICS"));
 
-                Paragraph tacticsParagraph = new Paragraph();
+                var tacticsParagraph = new Paragraph();
                 tacticsParagraph.Margin = new Thickness(0);
 
 
@@ -692,10 +670,10 @@ namespace CombatManager
         {
             blocks.AddRange(CreateSectionHeader("STATISTICS"));
 
-            Paragraph statsParagraph = new Paragraph();
+            var statsParagraph = new Paragraph();
             statsParagraph.Margin = new Thickness(0);
 
-            List<TitleValuePair> statsLine = new List<TitleValuePair>();
+            var statsLine = new List<TitleValuePair>();
             statsLine.Add(new TitleValuePair
             {
                 Title = "Str ",
@@ -729,7 +707,7 @@ namespace CombatManager
 
             statsParagraph.Inlines.AddRange(CreateMultiValueLine(statsLine, ", "));
 
-            List<TitleValuePair> combatLine = new List<TitleValuePair>();
+            var combatLine = new List<TitleValuePair>();
             combatLine.Add(new TitleValuePair { Title = "Base Atk ", Value = monster.BaseAtk.PlusFormat() });
             combatLine.Add(new TitleValuePair { Title = "CMB ", Value = monster.CMB });
             combatLine.Add(new TitleValuePair { Title = "CMD ", Value = monster.CMD });
@@ -739,21 +717,21 @@ namespace CombatManager
             if (monster.FeatsList.Count > 0)
             {
 
-                int count = 0;
+                var count = 0;
 
 
                 statsParagraph.Inlines.Add(new Bold(new Run("Feats ")));
-                foreach (string feat in monster.FeatsList)
+                foreach (var feat in monster.FeatsList)
                 {
                     if (count > 0)
                     {
                         statsParagraph.Inlines.Add(", ");
                     }
 
-                    Hyperlink link = new Hyperlink(new Run(feat));
-                    Regex regFeat = new Regex("(?<name>[-'\\p{L} ]+) +\\(");
-                    string featname = feat;
-                    Match m = regFeat.Match(feat);
+                    var link = new Hyperlink(new Run(feat));
+                    var regFeat = new Regex("(?<name>[-'\\p{L} ]+) +\\(");
+                    var featname = feat;
+                    var m = regFeat.Match(feat);
                     if (m.Success)
                     {
                         featname = m.Groups["name"].Value;
@@ -762,11 +740,11 @@ namespace CombatManager
                     link.Tag = featname;
                     link.Click += new RoutedEventHandler(FeatLinkClicked);
 
-                    Feat featObject = Feat.Feats.FirstOrDefault<Feat>(a => String.Compare(a.Name, featname, true) == 0);
+                    var featObject = Feat.Feats.FirstOrDefault<Feat>(a => String.Compare(a.Name, featname, true) == 0);
                     if (featObject != null)
                     {
                         link.DataContext = featObject;
-                        ToolTip t = (ToolTip)App.Current.MainWindow.FindResource("ObjectToolTip");
+                        var t = (ToolTip)App.Current.MainWindow.FindResource("ObjectToolTip");
 
                         if (t != null)
                         {
@@ -789,12 +767,12 @@ namespace CombatManager
             if (monster.SkillValueDictionary.Count > 0)
             {
 
-                
+
                 statsParagraph.Inlines.Add(new Bold(new Run("Skills ")));
 
-                int count = 0;
+                var count = 0;
 
-                foreach (SkillValue val in monster.SkillValueDictionary.Values)
+                foreach (var val in monster.SkillValueDictionary.Values)
                 {
                     if (count > 0)
                     {
@@ -805,7 +783,7 @@ namespace CombatManager
                     count++;
                 }
                 statsParagraph.Inlines.Add(new LineBreak());
-                
+
             }
 
             statsParagraph.Inlines.AddRange(CreateItemIfNotNull("  Racial Modifiers ", monster.RacialMods));
@@ -827,10 +805,10 @@ namespace CombatManager
                 blocks.AddRange(CreateSectionHeader("ECOLOGY"));
 
 
-                Paragraph ecoParagraph = new Paragraph();
+                var ecoParagraph = new Paragraph();
                 ecoParagraph.Margin = new Thickness(0);
 
-                
+
                 ecoParagraph.Inlines.AddRange(CreateItemIfNotNull("Environment ", monster.Environment));
                 ecoParagraph.Inlines.AddRange(CreateItemIfNotNull("Organization ", monster.Organization));
                 ecoParagraph.Inlines.AddRange(CreateItemIfNotNull("Treasure ", monster.Treasure));
@@ -848,16 +826,16 @@ namespace CombatManager
 
                 blocks.AddRange(CreateSectionHeader("SPECIAL ABILITIES"));
 
-                Paragraph specialParagraph = new Paragraph();
+                var specialParagraph = new Paragraph();
                 specialParagraph.Margin = new Thickness(0);
 
 
-                foreach (SpecialAbility spec in monster.SpecialAbilitiesList)
+                foreach (var spec in monster.SpecialAbilitiesList)
                 {
                     if (spec.Name.Length > 0)
                     {
 
-                        string type = spec.Type;
+                        var type = spec.Type;
 
                         if (spec.ConstructionPoints != null)
                         {
@@ -887,7 +865,7 @@ namespace CombatManager
 
             if (monster.Description_Visual != null && monster.Description_Visual.Length > 0)
             {
-                Paragraph descriptionParagraph = new Paragraph();
+                var descriptionParagraph = new Paragraph();
 
                 try
                 {
@@ -927,10 +905,10 @@ namespace CombatManager
             }
             else if (monster.Description != null && monster.Description.Length > 0)
             {
-                Paragraph descriptionParagraph = new Paragraph();
+                var descriptionParagraph = new Paragraph();
 
                 try
-                { 
+                {
                     if (Fonts.SystemFontFamilies.Contains(new FontFamily("Nyala")))
                     {
 
@@ -948,7 +926,7 @@ namespace CombatManager
 
                 }
 
-                string description = FixBodyString(monster.Description);
+                var description = FixBodyString(monster.Description);
 
 
                 descriptionParagraph.Inlines.Add(new Run(description));
@@ -960,35 +938,35 @@ namespace CombatManager
 
         void FeatLinkClicked(object sender, RoutedEventArgs e)
         {
-            if (_LinkHandler != null)
+            if (_linkHandler != null)
             {
-                Hyperlink link = (Hyperlink)sender;
+                var link = (Hyperlink)sender;
 
-                string feat = (string)link.Tag;
+                var feat = (string)link.Tag;
 
-                _LinkHandler(this, new DocumentLinkEventArgs(feat, "Feat"));
-                
+                _linkHandler(this, new DocumentLinkEventArgs(feat, "Feat"));
+
             }
         }
 
         void RuleLinkClicked(object sender, RoutedEventArgs e)
         {
-            if (_LinkHandler != null)
+            if (_linkHandler != null)
             {
-                Hyperlink link = (Hyperlink)sender;
+                var link = (Hyperlink)sender;
 
-                string rule = (string)link.Tag;
+                var rule = (string)link.Tag;
 
-                _LinkHandler(this, new DocumentLinkEventArgs(rule, "Rule"));
+                _linkHandler(this, new DocumentLinkEventArgs(rule, "Rule"));
 
             }
         }
 
         void SpellLinkClicked(object sender, RoutedEventArgs e)
         {
-            if (_LinkHandler != null)
+            if (_linkHandler != null)
             {
-                Hyperlink link = (Hyperlink)sender;
+                var link = (Hyperlink)sender;
 
                 string spell;
 
@@ -1003,7 +981,7 @@ namespace CombatManager
 
                 spell = Spell.StandarizeSpellName(spell);
 
-                _LinkHandler(this, new DocumentLinkEventArgs(spell, "Spell"));
+                _linkHandler(this, new DocumentLinkEventArgs(spell, "Spell"));
 
             }
         }

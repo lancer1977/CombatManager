@@ -10,9 +10,9 @@ namespace CombatManager
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private String _Name;
-        private String _Choice;
-        private String _FeatSource;
+        private string _Name;
+        private string _Choice;
+        private string _FeatSource;
 
         public ParsedFeat()
         {
@@ -48,7 +48,7 @@ namespace CombatManager
 
         }
 
-        public String Name
+        public string Name
         {
             get { return _Name; }
             set
@@ -60,7 +60,7 @@ namespace CombatManager
                 }
             }
         }
-        public String Choice
+        public string Choice
         {
             get { return _Choice; }
             set
@@ -73,7 +73,7 @@ namespace CombatManager
             }
         }
         
-        public String FeatSource
+        public string FeatSource
         {
             
             get { return _FeatSource; }
@@ -88,7 +88,7 @@ namespace CombatManager
         }
 
         [XmlIgnore]
-        public String Text
+        public string Text
         {
             get
             {

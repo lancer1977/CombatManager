@@ -1,4 +1,4 @@
-/*
+﻿/*
  *  StringCapitalizer.cs
  *
  *  Copyright (C) 2010-2012 Kyle Olson, kyle@kyleolson.com
@@ -19,7 +19,7 @@
  *
  */
 
-﻿using System;
+ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -31,11 +31,11 @@ namespace CombatManager
     public class StringCapitalizer
     {
 
-        public static SortedDictionary<String, String> ignoreWords;
+        public static SortedDictionary<string, string> ignoreWords;
 
         static StringCapitalizer()
         {
-            ignoreWords = new SortedDictionary<String, String>(new InsensitiveComparer());
+            ignoreWords = new SortedDictionary<string, string>(new InsensitiveComparer());
 
             string[] ignore = { "the", "of", "from", "to", "and" };
 
