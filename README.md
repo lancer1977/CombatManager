@@ -67,6 +67,7 @@ available.
 - [Project Atlas](./docs/project-atlas/README.md)
 - [Code Health](./code_health.md)
 - [Architecture Notes](./ARCHITECTURE.md)
+- [Xamarin/PCL/WPF modernization disposition](./docs/features/xamarin-pcl-wpf-modernization-disposition.md)
 
 ## Legacy Validation
 

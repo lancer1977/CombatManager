@@ -20,6 +20,7 @@ This directory documents all features and roadmap items. All state is now tracke
 - [Sub-module: SQLite](./sub-module-sqlite.md)
 - [Sub-module: CombatManagerMono](./sub-module-combatmanagermono.md)
 - [Sub-module: CombatStateViewer](./sub-module-combatstateviewer.md)
+- [Xamarin PCL WPF Modernization Disposition](./xamarin-pcl-wpf-modernization-disposition.md)
 
 
 ## Beyond the App
