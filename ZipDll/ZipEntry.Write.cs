@@ -2284,8 +2284,9 @@ namespace Ionic.Zip
                 return;
             }
 
-            TraceWriteLine("WriteSecurityMetadata: e({0}) crypto({1}) pw({2})",
-                           FileName, Encryption.ToString(), pwd);
+            // Never include the runtime encryption password in trace output.
+            TraceWriteLine("WriteSecurityMetadata: e({0}) crypto({1}) passwordSet({2})",
+                           FileName, Encryption.ToString(), pwd != null);
 
             if (Encryption == EncryptionAlgorithm.PkzipWeak)
             {
