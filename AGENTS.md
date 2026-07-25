@@ -1,5 +1,16 @@
 # AGENTS.md
 
+## Repository Retired - Archived/Read-Only Policy
+
+This repository is retired and is intended to be archived and read-only.
+
+- Do not start new agent work in this repository.
+- Do not create or generate issues, features, stories, roadmaps, backlog items, or follow-up work.
+- Do not modify code, dependencies, workflows, or documentation during routine maintenance or portfolio scans.
+- Permitted activity is limited to inspection, history/reference work, or an explicitly authorized unarchive/recovery operation.
+- An unarchive or recovery operation must be explicitly authorized for this repository and must define its bounded scope before any mutation.
+- Residual validation limitation: the complete legacy application cannot be reproduced in the current automation environment because the required .NET Framework 4.7.1 reference assemblies and proprietary/legacy toolchain components are unavailable. Preserve this limitation in any recovery assessment.
+
 ## Purpose
 
 This file is the repo-local guide for coding agents working in this repository.
