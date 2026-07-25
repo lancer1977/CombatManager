@@ -372,7 +372,7 @@ namespace CombatManager
             {
                 return false;
             }
-            return target.ToLower().Contains(contains.ToLower());
+            return target.IndexOf(contains, StringComparison.OrdinalIgnoreCase) >= 0;
         }
 
         public static bool ContainsOrNullIgnoreCase(this string target, string contains)
@@ -382,7 +382,8 @@ namespace CombatManager
                 return true;
             }
 
-            return target.ToLower().Contains(contains.ToLower());
+            return target != null &&
+                target.IndexOf(contains, StringComparison.OrdinalIgnoreCase) >= 0;
         }
         
     }
